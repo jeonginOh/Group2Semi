@@ -930,7 +930,7 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 38,
           "top": 86,
           "zIndex": 1068,
