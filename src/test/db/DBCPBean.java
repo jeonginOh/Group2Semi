@@ -11,17 +11,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-/*
-  	Context initContext = new InitialContext();
-	Context envContext  = (Context)initContext.lookup("java:/comp/env");
-	DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");
- */
 public class DBCPBean {
 	private static DataSource ds;
-	//static ºí·Ï - static ¸â¹öº¯¼ö¸¦ ÃÊ±âÈ­ ÇÒ¶§ »ç¿ë
 	static {
 		try {
-			System.out.println("staticºí·Ï ½ÇÇà..");
+			System.out.println("staticï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½..");
 			Context initContext = new InitialContext();
 			Context envContext  = (Context)initContext.lookup("java:/comp/env");
 			ds = (DataSource)envContext.lookup("jdbc/myoracle");
