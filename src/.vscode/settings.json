@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/jeoneuokyun/git/Group2Semi/WebContent/WEB-INF/lib/**/*.jar",
+        "/usr/local/Cellar/tomcat@8/8.5.59/libexec/lib/**/*.jar"
+    ]
+}

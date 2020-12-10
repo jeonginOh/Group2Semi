@@ -27,8 +27,9 @@ public class DBCPBean {
         return ds.getConnection();
     }
     /**
-     * 
-     * @param obj
+     * {@link Connection} conn, {@link PreparedStatement} pstmt, {@link ResultSet} res
+     * 순서와 갯수에 상관없음.
+     * @param AutoCloseable 
      */
     public static void close(AutoCloseable...obj) {
         try {
