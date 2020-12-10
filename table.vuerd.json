@@ -2,7 +2,7 @@
   "canvas": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 64,
+    "scrollTop": 0,
     "scrollLeft": 0,
     "show": {
       "tableComment": true,
@@ -17,7 +17,7 @@
     },
     "database": "Oracle",
     "databaseName": "",
-    "canvasType": "ERD",
+    "canvasType": "SQL",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
