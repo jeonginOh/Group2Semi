@@ -1,4 +1,4 @@
-package semiVvo;
+package semiVo;
 
 import java.sql.Date;
 
