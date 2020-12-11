@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import db.DBCPBean;
+import semiVo.MemberinfoVo;
 
 /**
  * 싱글톤 패턴
@@ -64,7 +65,18 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt1, pstmt2, res1, res2);
         }
     }
+    public void insert(MemberinfoVo vo) {
+        Connection conn=null;
+        PreparedStatement pstmt =null;
 
+        try {
+            conn = DBCPBean.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBCPBean.close(conn, pstmt);
+        }
+    }
 
 
 
