@@ -1,3 +1,16 @@
+drop table itemreview;
+drop table rev_child;
+drop table memberinfo;
+drop table logistic;
+drop table iteminfo;
+drop table itemask;
+drop table discount;
+drop table coupon;
+drop table category;
+drop table buylist;
+drop table basket;
+drop table anstable;
+drop table asktable;
 
         
 CREATE TABLE anstable
@@ -52,14 +65,14 @@ COMMENT ON COLUMN asktable.image IS '이미지';
 
 CREATE TABLE basket
 (
-  basid  number(10)  NOT NULL,
-  memid  number(10)  NOT NULL,
-  itemid number(10)  NOT NULL,
-  count  number(100),
+  basid  number(10) NOT NULL,
+  memid  number(10) NOT NULL,
+  itemid number(10) NOT NULL,
+  count  number(10),
   CONSTRAINT PK_basket PRIMARY KEY (basid, memid, itemid)
 );
 
-COMMENT ON TABLE basket IS '장바구니&찜';
+COMMENT ON TABLE basket IS '장바구니n찜';
 
 COMMENT ON COLUMN basket.basid IS '바구니번호';
 
@@ -116,7 +129,7 @@ CREATE TABLE coupon
   expire  date          ,
   memid   number(10)    ,
   context varchar2(2000),
-  avail   boolean       ,
+  avail   number(1)     ,
   CONSTRAINT PK_coupon PRIMARY KEY (coupid)
 );
 
@@ -192,7 +205,7 @@ CREATE TABLE iteminfo
   expire    date          NOT NULL,
   storedate date          DEFAULT sysdate NOT NULL,
   image     varchar2(200),
-  avail     boolean       DEFAULT false,
+  avail     number(1)    ,
   CONSTRAINT PK_iteminfo PRIMARY KEY (itemid)
 );
 
@@ -220,20 +233,57 @@ COMMENT ON COLUMN iteminfo.image IS '이미지';
 
 COMMENT ON COLUMN iteminfo.avail IS '판매가능여부';
 
+CREATE TABLE itemreview
+(
+  revid   number(10)     NOT NULL,
+  itemid  number(10)    ,
+  memid   number(10)    ,
+  title   varchar2(50)  ,
+  image   varchar2(200) ,
+  context varchar2(2000),
+  star    number(1)     ,
+  revdate date          ,
+  CONSTRAINT PK_itemreview PRIMARY KEY (revid)
+);
+
+COMMENT ON TABLE itemreview IS '리뷰';
+
+COMMENT ON COLUMN itemreview.revid IS '리뷰번호';
+
+COMMENT ON COLUMN itemreview.itemid IS '물품번호';
+
+COMMENT ON COLUMN itemreview.memid IS '사용자번호';
+
+COMMENT ON COLUMN itemreview.title IS '제목';
+
+COMMENT ON COLUMN itemreview.image IS '이미지';
+
+COMMENT ON COLUMN itemreview.context IS '내용';
+
+COMMENT ON COLUMN itemreview.star IS '별점';
+
+COMMENT ON COLUMN itemreview.revdate IS '작성일 ';
+
 CREATE TABLE logistic
 (
   logiid   number(10)     NOT NULL,
+  memid    number(10)     NOT NULL,
   buyid    number(10)     NOT NULL,
+  itemid   number(10)     NOT NULL,
   addr     varchar2(2000),
   logiinfo varchar2(200) ,
-  CONSTRAINT PK_logistic PRIMARY KEY (logiid, buyid)
+  CONSTRAINT PK_logistic PRIMARY KEY (logiid, memid, buyid, itemid)
 );
 
 COMMENT ON TABLE logistic IS '배송정보';
 
 COMMENT ON COLUMN logistic.logiid IS '배송번호';
 
+COMMENT ON COLUMN logistic.memid IS '사용자번호';
+
 COMMENT ON COLUMN logistic.buyid IS '구매번호';
+
+COMMENT ON COLUMN logistic.itemid IS '물품번호';
 
 COMMENT ON COLUMN logistic.addr IS '배송주소';
 
@@ -301,37 +351,6 @@ COMMENT ON COLUMN rev_child.context IS '내용';
 
 COMMENT ON COLUMN rev_child.rchilddate IS '작성일 ';
 
-CREATE TABLE review
-(
-  revid   number(10)     NOT NULL,
-  itemid  number(10)    ,
-  memid   number(10)    ,
-  title   varchar2(50)  ,
-  image   varchar2(200) ,
-  context varchar2(2000),
-  star    number(1)     ,
-  revdate date          ,
-  CONSTRAINT PK_review PRIMARY KEY (revid)
-);
-
-COMMENT ON TABLE review IS '리뷰';
-
-COMMENT ON COLUMN review.revid IS '리뷰번호';
-
-COMMENT ON COLUMN review.itemid IS '물품번호';
-
-COMMENT ON COLUMN review.memid IS '사용자번호';
-
-COMMENT ON COLUMN review.title IS '제목';
-
-COMMENT ON COLUMN review.image IS '이미지';
-
-COMMENT ON COLUMN review.context IS '내용';
-
-COMMENT ON COLUMN review.star IS '별점';
-
-COMMENT ON COLUMN review.revdate IS '작성일 ';
-
 ALTER TABLE buylist
   ADD CONSTRAINT FK_memberinfo_TO_buylist
     FOREIGN KEY (memid)
@@ -346,11 +365,6 @@ ALTER TABLE buylist
   ADD CONSTRAINT FK_iteminfo_TO_buylist
     FOREIGN KEY (itemid)
     REFERENCES iteminfo (itemid);
-
-ALTER TABLE logistic
-  ADD CONSTRAINT FK_buylist_TO_logistic
-    FOREIGN KEY (buyid)
-    REFERENCES buylist (buyid);
 
 ALTER TABLE basket
   ADD CONSTRAINT FK_memberinfo_TO_basket
@@ -372,20 +386,20 @@ ALTER TABLE iteminfo
     FOREIGN KEY (catid)
     REFERENCES category (catid);
 
-ALTER TABLE review
-  ADD CONSTRAINT FK_iteminfo_TO_review
+ALTER TABLE itemreview
+  ADD CONSTRAINT FK_iteminfo_TO_itemreview
     FOREIGN KEY (itemid)
     REFERENCES iteminfo (itemid);
 
-ALTER TABLE review
-  ADD CONSTRAINT FK_memberinfo_TO_review
+ALTER TABLE itemreview
+  ADD CONSTRAINT FK_memberinfo_TO_itemreview
     FOREIGN KEY (memid)
     REFERENCES memberinfo (memid);
 
 ALTER TABLE rev_child
-  ADD CONSTRAINT FK_review_TO_rev_child
+  ADD CONSTRAINT FK_itemreview_TO_rev_child
     FOREIGN KEY (revid)
-    REFERENCES review (revid);
+    REFERENCES itemreview (revid);
 
 ALTER TABLE itemask
   ADD CONSTRAINT FK_iteminfo_TO_itemask
@@ -411,5 +425,10 @@ ALTER TABLE coupon
   ADD CONSTRAINT FK_memberinfo_TO_coupon
     FOREIGN KEY (memid)
     REFERENCES memberinfo (memid);
+
+ALTER TABLE logistic
+  ADD CONSTRAINT FK_buylist_TO_logistic
+    FOREIGN KEY (buyid, memid, itemid)
+    REFERENCES buylist (buyid, memid, itemid);
 
       

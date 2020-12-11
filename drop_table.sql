@@ -1,0 +1,13 @@
+drop table itemreview;
+drop table rev_child;
+drop table memberinfo;
+drop table logistic;
+drop table iteminfo;
+drop table itemask;
+drop table discount;
+drop table coupon;
+drop table category;
+drop table buylist;
+drop table basket;
+drop table anstable;
+drop table asktable;
