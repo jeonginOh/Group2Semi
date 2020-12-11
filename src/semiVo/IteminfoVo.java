@@ -17,6 +17,7 @@ public class IteminfoVo {
 	
 	public IteminfoVo() {}
 
+	
 	public IteminfoVo(int itemid, String itemname, int catid, int price, String factory, String origin, int stock,
 			Date expire, Date storedate, String image, int avail) {
 		super();
