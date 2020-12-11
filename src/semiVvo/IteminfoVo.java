@@ -1,4 +1,4 @@
-package semiVo;
+package semiVvo;
 
 import java.sql.Date;
 
@@ -109,6 +109,7 @@ public class IteminfoVo {
 		return this.image;
 	}
 
+	//ㅠㅠ
 	public void setImage(String image) {
 		this.image = image;
 	}
