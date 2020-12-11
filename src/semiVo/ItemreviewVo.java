@@ -72,5 +72,5 @@ public class ItemreviewVo {
 		this.revdate = revdate;
 	}
 	
-	
+	//새로올림
 }
