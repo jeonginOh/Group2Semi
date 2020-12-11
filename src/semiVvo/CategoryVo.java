@@ -1,4 +1,4 @@
-package semiVo;
+package semiVvo;
 
 public class CategoryVo {
 	private int catid;

@@ -1,4 +1,4 @@
-package semiVo;
+package semiVvo;
 
 public class LogisticVo {
 	private int logiid;

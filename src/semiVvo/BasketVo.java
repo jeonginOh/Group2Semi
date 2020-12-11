@@ -1,4 +1,4 @@
-package semiVo;
+package semiVvo;
 
 public class BasketVo {
 	private int basid;

@@ -1,4 +1,4 @@
-package semiVo;
+package semiVvo;
 
 import java.sql.Date;
 
@@ -72,5 +72,5 @@ public class ItemreviewVo {
 		this.revdate = revdate;
 	}
 	
-	
+	//새로올림
 }
