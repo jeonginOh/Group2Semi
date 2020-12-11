@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login/login.html</title>
+    <script type="text/javascript">
+    let xhr=null;
+        function login() {
+            let id = document.getElementById("id");
+            let pwd = document.getElementById('pwd');
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=function() {
+                if (xhr.readyState==4 && xhr.status==200) {
+                    let json = JSON.parse(xhr.responseText);
+                    
+                }
+            }
+            xhr.open('post', "login.do?", true);
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <h1>쇼핑몰</h1>
+    <form action="login.do" method="post">
+        <legend>로그인</legend>
+        <div id="idrow">
+            <input type="text" name="" id="id" placeholder="아이디">
+        </div>
+        <div id="pwdrow">
+            <input type="password" name="" id="pwd" placeholder="비밀번호">
+        </div>
+        
+        <input type="button" value="로그인" class="btn_01">
+    </form>
+</body>
+</html>
