@@ -31,7 +31,7 @@ public class MemberinfoDao {
      */
     public int getMemId(HashMap<String, String> map) {
         String id = map.get("id");
-        byte[] pwd = map.get("pwd").getBytes();
+        String pwd = map.get("pwd");
         byte[] salt=null;
         Connection conn = null;
         //get salt
@@ -48,10 +48,7 @@ public class MemberinfoDao {
             res1 = pstmt1.executeQuery();
             if (res1.next()) {
                 salt = res1.getString("salt").getBytes();
-                byte[] tmp = new byte[pwd.length+salt.length];
-                System.arraycopy(pwd, 0, salt, 0, pwd.length);
-                System.arraycopy(salt, 0, salt, pwd.length, salt.length);
-                String cryptedpwd = crypt(tmp);
+                String cryptedpwd = crypt(pwd, salt);
                 pstmt2 = conn.prepareStatement("select memid from memberinfo where id=? and pwd=?");
                 pstmt2.setString(1, id);
                 pstmt2.setString(2, cryptedpwd);
@@ -85,7 +82,7 @@ public class MemberinfoDao {
 		}
 		return sb.toString();
     }
-    private static String crypt(byte[] b) {
+    private static String crypt(byte[] b) {// pw단방향 암호화
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(b);
@@ -99,7 +96,11 @@ public class MemberinfoDao {
             return null;
         }
     }
-    private static String crypt(String s) {	// pw단방향 암호화
-        return crypt(s.getBytes());
+    private static String crypt(String pwd, byte[] salt) {
+        byte[] bpwd = pwd.getBytes();
+        byte[] tmp = new byte[bpwd.length+salt.length];
+        System.arraycopy(bpwd, 0, tmp, 0, bpwd.length);
+        System.arraycopy(salt, 0, tmp, bpwd.length, salt.length);
+        return crypt(tmp);
     }
 }

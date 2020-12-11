@@ -5,15 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login/login.html</title>
     <script type="text/javascript">
+    window.onload=function() {
+        let loginbtn = document.getElementById('login');
+        loginbtn.addEventListener('click', login(), false);
+    }
     let xhr=null;
         function login() {
             let id = document.getElementById("id");
             let pwd = document.getElementById('pwd');
+            let errMsg = document.getElementById('errMsg');
+            
             xhr = new XMLHttpRequest();
             xhr.onreadystatechange=function() {
                 if (xhr.readyState==4 && xhr.status==200) {
                     let json = JSON.parse(xhr.responseText);
-                    
+                    console.log(json.errMsg);
+                    if (json.errMsg) {
+                        errMsg.innerText=json.errMsg;
+                    }else errMsg.innerHTML="";
+                    if (json.memid) {
+                        location.href="/";
+                    }
                 }
             }
             xhr.open('post', "login.do?", true);
@@ -31,8 +43,8 @@
         <div id="pwdrow">
             <input type="password" name="" id="pwd" placeholder="비밀번호">
         </div>
-        
-        <input type="button" value="로그인" class="btn_01">
+        <div id="errMsg"></div>
+        <input type="button" value="로그인" class="btn_01" id="login">
     </form>
 </body>
 </html>
