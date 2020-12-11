@@ -38,5 +38,5 @@ public class Rev_childVo {
 	public void setRchilddate(Date rchilddate) {
 		this.rchilddate = rchilddate;
 	}
-	
+	//새로올림
 }

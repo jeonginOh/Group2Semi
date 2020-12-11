@@ -47,6 +47,6 @@ public class CouponVo {
 		this.avail = avail;
 	}
 	
-	
+	//새로올림
 	
 }
