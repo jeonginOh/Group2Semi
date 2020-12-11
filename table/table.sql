@@ -13,6 +13,8 @@ drop table anstable;
 drop table asktable;
 
         
+
+        
 CREATE TABLE anstable
 (
   ansid   number(10)     NOT NULL,
@@ -293,7 +295,8 @@ CREATE TABLE memberinfo
 (
   memid   number(10)     NOT NULL,
   id      VARCHAR2(15)   NOT NULL,
-  pwd     varchar2(15)   NOT NULL,
+  pwd     varchar2(100)  NOT NULL,
+  salt    varchar2(100)  NOT NULL,
   age     number(7)     ,
   email   varchar2(100) ,
   addr    varchar2(2000) NOT NULL,

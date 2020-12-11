@@ -2,8 +2,8 @@
   "canvas": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 4.320000171661377,
-    "scrollLeft": 0,
+    "scrollTop": 0,
+    "scrollLeft": 728,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -17,7 +17,7 @@
     },
     "database": "Oracle",
     "databaseName": "",
-    "canvasType": "ERD",
+    "canvasType": "SQL",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -89,7 +89,7 @@
           {
             "name": "pwd",
             "comment": "memberpwd",
-            "dataType": "varchar2(15)",
+            "dataType": "varchar2(100)",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -104,10 +104,33 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 74,
-              "widthDataType": 76,
+              "widthDataType": 83,
               "widthDefault": 60
             },
             "id": "f6063e38-3a23-f321-607f-9e6a03fd4ad2"
+          },
+          {
+            "name": "salt",
+            "comment": "",
+            "dataType": "varchar2(100)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 83,
+              "widthDefault": 60
+            },
+            "id": "39dbe033-bb22-9b70-78c8-cbbbc43b04ae"
           },
           {
             "name": "age",
@@ -249,10 +272,10 @@
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 927,
           "top": 30,
-          "zIndex": 1286,
+          "zIndex": 1355,
           "widthName": 71,
           "widthComment": 60
         },
@@ -976,7 +999,7 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 1572,
           "top": 881,
           "zIndex": 1336,
@@ -2087,7 +2110,7 @@
             "9fb422fd-7e7c-7721-a516-0dfcebed58ca"
           ],
           "x": 1244.25,
-          "y": 283.5,
+          "y": 304,
           "direction": "bottom"
         },
         "end": {
@@ -2156,7 +2179,7 @@
             "9fb422fd-7e7c-7721-a516-0dfcebed58ca"
           ],
           "x": 927,
-          "y": 93.375,
+          "y": 98.5,
           "direction": "left"
         },
         "end": {
@@ -2257,7 +2280,7 @@
             "ca783634-8ba3-95eb-0460-d5b49bebad59"
           ],
           "x": 653,
-          "y": 282.75,
+          "y": 166.25,
           "direction": "right"
         },
         "id": "83aabc50-30b4-e0cd-3b32-16af234b0135",
@@ -2271,7 +2294,7 @@
             "9fb422fd-7e7c-7721-a516-0dfcebed58ca"
           ],
           "x": 927,
-          "y": 220.125,
+          "y": 235.5,
           "direction": "left"
         },
         "end": {
@@ -2280,7 +2303,7 @@
             "86d817bc-c5a7-44ee-a643-ceaf6d379d7d"
           ],
           "x": 653,
-          "y": 166.25,
+          "y": 282.75,
           "direction": "right"
         },
         "id": "2e6d5237-9035-d3a2-5fbc-99e92e352d34",
@@ -2340,7 +2363,7 @@
             "9fb422fd-7e7c-7721-a516-0dfcebed58ca"
           ],
           "x": 1032.75,
-          "y": 283.5,
+          "y": 304,
           "direction": "bottom"
         },
         "end": {
@@ -2386,7 +2409,7 @@
             "9fb422fd-7e7c-7721-a516-0dfcebed58ca"
           ],
           "x": 1350,
-          "y": 93.375,
+          "y": 98.5,
           "direction": "right"
         },
         "end": {
@@ -2409,7 +2432,7 @@
             "9fb422fd-7e7c-7721-a516-0dfcebed58ca"
           ],
           "x": 1350,
-          "y": 220.125,
+          "y": 235.5,
           "direction": "right"
         },
         "end": {

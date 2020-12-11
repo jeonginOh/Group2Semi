@@ -6,6 +6,7 @@ public class MemberinfoVo {
     private int memid;
     private String id;
     private String pwd;
+    private String salt;
     private int age;
     private String email;
     private String addr;
@@ -16,10 +17,11 @@ public class MemberinfoVo {
     public MemberinfoVo() {
     }
 
-    public MemberinfoVo(int memid, String id, String pwd, int age, String email, String addr, Date regdate, String phone, int point) {
+    public MemberinfoVo(int memid, String id, String pwd, String salt, int age, String email, String addr, Date regdate, String phone, int point) {
         this.memid = memid;
         this.id = id;
         this.pwd = pwd;
+        this.salt = salt;
         this.age = age;
         this.email = email;
         this.addr = addr;
@@ -27,7 +29,10 @@ public class MemberinfoVo {
         this.phone = phone;
         this.point = point;
     }
-
+    public void setSalt(String salt) {
+        this.salt=salt;
+    }
+    public String getSalt() {return this.salt;}
     public int getMemid() {
         return this.memid;
     }
