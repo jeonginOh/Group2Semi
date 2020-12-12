@@ -15,7 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import semiVo.IteminfoVo;
-import yang_dao.IteminfoDao;
+import yang_dao.IteminfoDao_y;
 
 @WebServlet("/basketlist.do")
 public class BasketListController extends HttpServlet{
@@ -23,13 +23,15 @@ public class BasketListController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session=req.getSession();
 		String id=(String)session.getAttribute("id");
-		IteminfoDao dao=IteminfoDao.getInstance();
-		ArrayList<IteminfoVo> list=dao.list(id);
+		String bd=req.getParameter("bd");
+		IteminfoDao_y dao=IteminfoDao_y.getInstance();
+		ArrayList<IteminfoVo> list=dao.list(id,bd);
 		JSONArray arr=new JSONArray();
 		for(IteminfoVo vo:list) {
 			//System.out.println(vo.getItemname());
 			//System.out.println("aaa");
 			JSONObject json=new JSONObject();
+			json.put("itemid", vo.getItemid());
 			json.put("itemname", vo.getItemname());
 			json.put("price", vo.getPrice());
 			json.put("image", vo.getImage());

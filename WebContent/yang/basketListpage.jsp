@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>yang/dibsListpage</title>
+<title>yang/basketListpage</title>
 <style>
 	.item{width: 150px; height: 150px;}
 	#tbl{width: 1400px; border: 1px solid black;}
@@ -12,7 +12,8 @@
 </style>
 </head>
 <body>
-<h1>찜페이지</h1>
+<h1>장바구니 페이지</h1>
+<form method="post" action="#">
 <table id="tbl">
 	<tr>
 		<th><input type="checkbox" id="allck" onclick="checkAll()">전체선택</th>
@@ -20,13 +21,18 @@
 		<th>가격</th>
 		<th>남은수량</th>
 		<th>판매여부</th>
+		<th>개수</th>
 		<th>삭제</th>
-		<th>장바구니 추가</th>
 	</tr>
 </table>
 <div>
-	<input type="button" value="찜삭제" onclick="checkDel()">
+	<input type="submit" value="구매하기">
 </div>
+</form>
+<div>
+	<input type="button" value="장바구니에서 삭제" onclick="checkDel()">
+</div>
+
 <script type="text/javascript">
 var json=null
 function listDibs(){
@@ -92,18 +98,27 @@ function listDibs(){
 				}
 				td5.appendChild(avail);
 				
-				var td6=document.createElement("td"); //찜삭제
+				var td6=document.createElement("td"); //살 개수
 				tr.appendChild(td6);
+				var itemCount=document.createElement("input");
+				itemCount.type="number";
+				itemCount.setAttribute("min", "1");
+				itemCount.setAttribute("max", json[i].stock); //최대개수는 재고수
+				itemCount.value="1";
+				td6.appendChild(itemCount);
+				
+				var td7=document.createElement("td"); //장바구니 삭제
+				tr.appendChild(td7);
 				var delDibs=document.createElement("input");
 				delDibs.type="button";
 				delDibs.value="삭제";
 				delDibs.setAttribute("name", json[i].itemid);
-				delDibs.setAttribute("onclick", "delDibs(event)");
-				td6.appendChild(delDibs);
+				delDibs.setAttribute("onclick", "delDibs(event)"); //삭제버튼 누르면 delDibs실행
+				td7.appendChild(delDibs);
 			}
 		}
 	}
-	xhr.open('get','../basketlist.do?bd=d',true); //bd=d 찜상태로 보내기
+	xhr.open('get','../basketlist.do?bd=b',true); //bd=b : 장바구니상태로 보내기
 	xhr.send();
 	
 }
@@ -124,9 +139,9 @@ function checkAll(){ //전체체크 눌렀을때
 	}
 }
 
-function delDibs(e){ //개별삭제
+function delDibs(e){
 	xhr=new XMLHttpRequest();
-	itemid=e.target.name;
+	var itemid=e.target.name;
 	xhr.onreadystatechange=function(){
 		if(xhr.readyState==4 && xhr.status==200){
 			var json=JSON.parse(xhr.responseText);
@@ -137,11 +152,11 @@ function delDibs(e){ //개별삭제
 			listDibs(); //list를 다시 생성
 		}
 	}
-	xhr.open('get','../basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','../basketdelete.do?bd=b&itemid='+itmeid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 
-function checkDel(){ //체크박스 삭제
+function checkDel(){
 	var checkbox=document.getElementsByClassName("checkbx"); //위에서 선언된 checkbox들을 가져옴
 	var itemid="";
 	for(let i=0;i<checkbox.length;i++){
@@ -161,7 +176,7 @@ function checkDel(){ //체크박스 삭제
 			listDibs(); //list를 다시 생성
 		}
 	}
-	xhr.open('get','../basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','../basketdelete.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 

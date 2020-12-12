@@ -18,14 +18,20 @@ import yang_dao.BasketDao;
 public class BasketDeleteController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int itemid=Integer.parseInt(req.getParameter("itemid"));
+		String aitemid=req.getParameter("itemid"); //초기 넘어온 파라미터값(1개 혹은 여러개);\
+		String bd=req.getParameter("bd");
 		HttpSession session=req.getSession();
 		String id=(String)session.getAttribute("id");
-		BasketDao dao=BasketDao.getInstance();
-		int n=dao.deleteDibs(id, itemid);
+		String[] sitemid=aitemid.split(","); //여러개가 넘어왔으면 콤마로 구분
+		int n=0;
+		for(int i=0;i<sitemid.length;i++) {
+			int itemid=Integer.parseInt(sitemid[i]);
+			BasketDao dao=BasketDao.getInstance();
+			n+=dao.deleteDibs(id, itemid,bd);
+		}
 		JSONObject json=new JSONObject();
 		if(n>0) {
-			json.put("code", "success");
+			json.put("code", "success"+n);
 		}else {
 			json.put("code", "fail");
 		}

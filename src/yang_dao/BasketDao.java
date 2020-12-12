@@ -34,12 +34,19 @@ public class BasketDao {
 			DBCPBean.close(con,pstmt);
 		}
 	}
-	public int deleteDibs(String id,int itemid) { //찜 삭제기능
+	public int deleteDibs(String id,int itemid,String bd) { //bd:찜인지 장바구니인지 확인
 		Connection con=null;
 		PreparedStatement pstmt=null;
-		String sql="DELETE FROM BASKET WHERE MEMID=\r\n" + 
+		String sql="";
+		if(bd.equals("d")) {
+			sql="DELETE FROM BASKET WHERE MEMID=\r\n" + 
 				"(SELECT MEMID FROM MEMBERINFO WHERE ID=?) "
 				+ "AND ITEMID=? AND COUNT=0"; //찜인상태(수량이0)의 물품을 삭제
+		}else if(bd.equals("b")) {
+			sql="DELETE FROM BASKET WHERE MEMID=\r\n" + 
+					"(SELECT MEMID FROM MEMBERINFO WHERE ID=?) "
+					+ "AND ITEMID=? AND COUNT>0"; //장바구니(수량이0이상)의 물품을 삭제
+		}
 		try {
 			con=DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
