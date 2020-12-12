@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import ohDao.iteminfoDao;
 import semiVo.IteminfoVo;
 
-@WebServlet("/list.do")
+@WebServlet("/list2.do")
 public class ListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -48,7 +48,7 @@
 					}
 				}
 			};
-			xhr.open('get','../list.do',true);
+			xhr.open('get','../list2.do',true);
 			xhr.send();
 		}
 	</script>

@@ -20,10 +20,13 @@
 		<th>가격</th>
 		<th>남은수량</th>
 		<th>판매여부</th>
-		<th>찜 삭제</th>
+		<th>삭제</th>
 		<th>장바구니 추가</th>
 	</tr>
 </table>
+<div>
+	<input type="button" value="찜삭제" onclick="checkDel()">
+</div>
 <script type="text/javascript">
 var json=null
 function listDibs(){
@@ -89,27 +92,7 @@ function listDibs(){
 				var delDibs=document.createElement("input");
 				delDibs.type="button";
 				delDibs.value="삭제";
-				delDibs.addEventListener('click', function(e) { //delDibs.onclick이 안됨 ㅠㅠ
-					xhr=new XMLHttpRequest();
-					xhr.onreadystatechange=function(){
-						if(xhr.readyState==4 && xhr.status==200){
-							var json=JSON.parse(xhr.responseText);
-							if(json.code=="success"){
-								alert("찜삭제 성공!");
-								//모든 리스트를 지웠다가 다시 보여줘야함
-								var list=document.getElementsByClassName("listtr");
-								var childs=list.childNodes; //모든 자식객체 얻어오기
-								for(let i=childs.length-1;i>=0;i--){ //자식객체를 뒤에서부터 삭제하기 (다 지우고 다시 쓰기 위함)
-									var child=childs.item(i);
-									list.removeChild(child);
-								}
-								listDibs();
-							}
-						}
-					}
-					xhr.open('get','../basketdelete.do?itemid=11',true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
-					xhr.send();
-				}, false);
+				delDibs.setAttribute("onclick", "delDibs()"); //삭제버튼 누르면 delDibs실행
 				td6.appendChild(delDibs);
 			}
 		}
@@ -135,19 +118,22 @@ function checkAll(){ //전체체크 눌렀을때
 	}
 }
 
-// function deleteDibs(){
-// 	xhr=new XMLHttpRequest();
-// 	xhr.onreadystatechange=function(){
-// 		if(xhr.readyState==4 && xhr.status==200){
-// 			var json=JSON.parse(xhr.responseText);
-// 			if(json.code=="success"){
-// 				alert("찜삭제 성공!");
-// 			}
-// 		}
-// 	}
-// 	xhr.open('get','../basketdelete.do?itemid=231',true);
-// 	xhr.send();
-// }
+function delDibs(){
+	xhr=new XMLHttpRequest();
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4 && xhr.status==200){
+			var json=JSON.parse(xhr.responseText);
+			var list=document.getElementsByClassName("listtr");
+			for(let i=list.length-1;i>=0;i--){ //listtr들을 모두 삭제(안에있는 자식들까지 모두)
+				list[i].remove();
+			}
+			listDibs(); //list를 다시 생성
+		}
+	}
+	xhr.open('get','../basketdelete.do?itemid=11',true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.send();
+}
+
 </script>
 </body>
 </html>
