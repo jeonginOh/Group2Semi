@@ -20,17 +20,17 @@ public class ItemreviewDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=DBCPBean.getConn();
-			String sql="insert into itemreview values(?,?,?,?,?,?,?,sysdate)";
+			String sql="insert into itemreview values(revieid_seq.nextval,?,?,?,?,?,?,sysdate)";
 								//리뷰pk,물품fk.,회원fk,제목,이미지,내용,별점,작성일
 								
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, 6);//(시퀀스로)
-			pstmt.setInt(2, vo.getItemid());
-			pstmt.setInt(3, vo.getMemid());
-			pstmt.setString(4, vo.getTitle());
-			pstmt.setString(5,vo.getImage());
-			pstmt.setString(6, vo.getContext());
-			pstmt.setInt(7,vo.getStar());
+		
+			pstmt.setInt(1, vo.getItemid());
+			pstmt.setInt(2, vo.getMemid());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4,vo.getImage());
+			pstmt.setString(5, vo.getContext());
+			pstmt.setInt(6,vo.getStar());
 			return pstmt.executeUpdate();
 			
 		}catch(SQLException se) {

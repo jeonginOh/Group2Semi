@@ -16,19 +16,38 @@ function getList(){
 			
 			var arr=JSON.parse(xhr.responseText);
 			var div=document.getElementById("result");
+			div.style.width="500px";
+			div.style.height="500px";
  			var title="";
 			var context="";
 			var star=""; 
+			var image="";
 			for(let i=0; i<arr.length; i++){
 			console.log("123");
 			title = arr[i].title;
 			context = arr[i].context;
 			star = arr[i].star;
-			console.log(title);
+			var imge=document.createElement("img");
+			var br=document.createElement("br");
 			var reviewlist=document.createElement("div");
+			imge.src="../fileFolder/"+arr[i].image;
+			imge.setAttribute("onmouseover","imgeover(event)");
+			imge.setAttribute("onmouseout","imgeout(event)");
+			div.addEventListener('mouseover', function(e) {
+				e.target.style.width="500px";
+			div.addEventListener('mouseout',function(e){
+				e.target.style.width="300px";
+			},false);
+			}, false);
+			console.log(image);
 			reviewlist.innerHTML="제목:"+title+ "<br>"+"내용:" + context +"<br>" 
-			+ "별점:"+ star+"<br>";
+			+ "별점:"+ star+"<br>"
+			imge.style.width="300px";
+			
+			div.appendChild(imge);
+			div.appendChild(br);
 			div.appendChild(reviewlist);
+			
 			}
 			
 		}
@@ -37,7 +56,13 @@ function getList(){
 	xhr.send();
 }
 getList();
-
+/* function imgeover(e){
+	e.target.style.width="50%";
+	 */
+/* }function imgeout(e){
+	e.target.style.width="200px";
+} */
 </script>
+<a href="writer_review.jsp?itemid=1">글쓰기</a>
 </body>
 </html>

@@ -27,6 +27,7 @@ public class Review_con_list extends HttpServlet{
 			json.put("title", v.getTitle());
 			json.put("context", v.getContext());
 			json.put("star", v.getStar());
+		
 			arr.put(json);
 		}		
 		resp.setContentType("text/xml;charset=utf-8");
