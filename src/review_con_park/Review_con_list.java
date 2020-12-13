@@ -23,12 +23,16 @@ public class Review_con_list extends HttpServlet{
 		ArrayList<ItemreviewVo> reviewlist=reviewdao.review_list(itemid);
 		for(ItemreviewVo v:reviewlist) {
 			JSONObject json=new JSONObject();
-			json.put("title", v.getTitle());			
+			json.put("image", v.getImage());
+			json.put("title", v.getTitle());
+			json.put("context", v.getContext());
+			json.put("star", v.getStar());
 			arr.put(json);
 		}		
 		resp.setContentType("text/xml;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		pw.print(arr.toString());
 	
+		System.out.println("ddddddddddddddd");
 	}
 }

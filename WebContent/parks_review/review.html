@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div id=result></div>
+<script type="text/javascript">
+function getList(){
+	var xhr=null;
+	xhr=new XMLHttpRequest;
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4 && xhr.status==200){
+			
+			var arr=JSON.parse(xhr.responseText);
+			var div=document.getElementById("result");
+ 			var title="";
+			var context="";
+			var star=""; 
+			for(let i=0; i<arr.length; i++){
+			console.log("123");
+			title = arr[i].title;
+			context = arr[i].context;
+			star = arr[i].star;
+			console.log(title);
+			var reviewlist=document.createElement("div");
+			reviewlist.innerHTML="제목:"+title+ "<br>"+"내용:" + context +"<br>" 
+			+ "별점:"+ star+"<br>";
+			div.appendChild(reviewlist);
+			}
+			
+		}
+	};
+	xhr.open('get','../reviewlist.do?itemid=1',true);
+	xhr.send();
+}
+getList();
+
+</script>
+</body>
+</html>

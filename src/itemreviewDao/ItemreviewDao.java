@@ -24,9 +24,9 @@ public class ItemreviewDao {
 								//리뷰pk,물품fk.,회원fk,제목,이미지,내용,별점,작성일
 								
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, 1);//(시퀀스로)
-			pstmt.setInt(2, 2);
-			pstmt.setInt(3, 3);
+			pstmt.setInt(1, 6);//(시퀀스로)
+			pstmt.setInt(2, vo.getItemid());
+			pstmt.setInt(3, vo.getMemid());
 			pstmt.setString(4, vo.getTitle());
 			pstmt.setString(5,vo.getImage());
 			pstmt.setString(6, vo.getContext());
@@ -56,8 +56,8 @@ public class ItemreviewDao {
 			rs=pstmt.executeQuery();
 			ArrayList<ItemreviewVo> list=new ArrayList<>();
 			while(rs.next()) {
-				ItemreviewVo vo=new ItemreviewVo(rs.getInt("revid"),rs.getInt("itemid"),rs.getInt("memid"),
-						rs.getString("title"),rs.getString("image"),rs.getString("getcontext"),rs.getInt("star"),rs.getDate("revdate"));
+				ItemreviewVo vo=new ItemreviewVo(rs.getInt("revid"),itemid,rs.getInt("memid"),
+						rs.getString("title"),rs.getString("image"),rs.getString("context"),rs.getInt("star"),rs.getDate("revdate"));
 				//title,image,context,star,revdate만 사용할 예정이지만 혹시 몰라 모두 조회하게 하였음
 				list.add(vo);
 				
@@ -97,5 +97,14 @@ public class ItemreviewDao {
 		}finally {
 			DBCPBean.close(con,pstmt,rs);
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
