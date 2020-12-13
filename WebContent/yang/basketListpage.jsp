@@ -152,7 +152,7 @@ function delDibs(e){
 			listDibs(); //list를 다시 생성
 		}
 	}
-	xhr.open('get','../basketdelete.do?bd=b&itemid='+itmeid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','../basketdelete.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 
