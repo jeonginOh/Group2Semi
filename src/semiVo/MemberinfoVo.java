@@ -32,7 +32,7 @@ public class MemberinfoVo {
      * @param regdate Date
      * @param phone String
      * @param point int
-     * @param status int <p>0=미인증회원 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
+     * @param status int <p>0  <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
      */
     public MemberinfoVo(int memid, String id, String pwd, String salt, String age, String email, String addr, Date regdate, String phone, int point, int status) {
         this.memid = memid;

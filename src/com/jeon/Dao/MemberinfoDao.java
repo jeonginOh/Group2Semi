@@ -1,6 +1,5 @@
 package com.jeon.Dao;
 
-import java.io.ObjectInputFilter.Status;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -67,7 +66,7 @@ public class MemberinfoDao {
         }
     }
 
-    //int <p>0=미인증회원or회원없음 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
+    //int <p>0 회원없음 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
     //삭제시 이름 앞에 숫자 붙인 뒤 비활성 처리
     //진짜 삭제 기능도 만들어야 함
     public void delete() {
@@ -81,20 +80,23 @@ public class MemberinfoDao {
 
     /**
      * @param map 조회할 String, String 값
-     * @return int <p>0=미인증회원or회원없음 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
+     * @return int <p>0회원없음 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
      */
     public int check(HashMap<String, String> map) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet res=null;
         String key = map.keySet().iterator().next();
+        System.out.println(key);
+        System.out.println(map.get(key));
         try {
             conn = DBCPBean.getConn();
             pstmt = conn.prepareStatement("select status from memberinfo where "+key+"=?");
             pstmt.setString(1, map.get(key));
             res=pstmt.executeQuery();
             if (res.next()) {
-                return res.getInt("Status");
+                System.out.println(res.getInt(1));
+                return res.getInt("status");
             }else return 0;
         } catch (SQLException e) {
             e.printStackTrace();

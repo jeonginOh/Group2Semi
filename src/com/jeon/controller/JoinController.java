@@ -28,7 +28,7 @@ public class JoinController extends HttpServlet{
         MemberinfoDao dao = MemberinfoDao.getInstance();
         String salt = dao.makeSalt();
         String pwd = dao.crypt(ns_pwd, salt);
-        MemberinfoVo vo = new MemberinfoVo(0, id, pwd, salt, age, email, addr, null, phone, 0, 0);
+        MemberinfoVo vo = new MemberinfoVo(0, id, pwd, salt, age, email, addr, null, phone, 0, 1);
         int memid = dao.insert(vo);
         if (memid>0) {
             req.getSession().setAttribute("memid", memid);
@@ -56,7 +56,7 @@ public class JoinController extends HttpServlet{
         String res = "false";
         if (map.size()>0) {
             int n = dao.check(map);
-            if (n<0) res = "true";
+            if (n<=0) res = "true";
         }else res = "ERROR";
         JSONObject json = new JSONObject();
         json.put("result", res);
