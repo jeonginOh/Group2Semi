@@ -20,6 +20,31 @@ window.onload=function() {
     // let phoneMsg = document.getElementById('phoneMsg');
     let inputrows = document.getElementsByClassName("inputrow");
 
+    
+    //id, email, phone
+    function checkavail(einput) {
+    console.log("aaa");
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange=function() {
+            if (xhr.readyState==4 && xhr.status==200) {
+                let text="다른 ";
+                let json = JSON.parse(xhr.responseText);
+                if (json.result=="true") text="사용가능";
+                else {
+                    if (einput.id=="id") text+="아이디";
+                    else if (einput.id=="phone") text+="전화번호";
+                    else if (einput.id=="email") text+="이메일";
+                    text = josa(text, "을")+" 사용해주세요.";
+                    YouShellNotPass=true;
+                }
+                einput.parentNode.previousSibling.previousSibling.textContent=text;
+            }
+        };
+        xhr.open('get', '../member/join.do?'+einput.id+'='+einput.value, true);
+        xhr.send();
+    }
+
+
     pwdchk.addEventListener("focusout", function(e) {
         // console.log(pwdchk.value + ":" + pwd.value);
         if(pwdchk.value==pwd.value) e.target.parentNode.previousSibling.previousSibling.textContent="비밀번호가 맞지 않습니다.";
@@ -61,7 +86,7 @@ window.onload=function() {
             }
             if (einput==pwd) {
                 // let regex = /'(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$'/;
-                let regex = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{6,15}$/;
+                let regex = /^(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{6,15}$/;
                 console.log(regex.test(einput.value));
                 if(!regex.test(einput.value)) {
                     tgt.textContent="6글자 이상 15글자 이하, 영어 대소문자, 숫자, 특수문자 포함";
@@ -71,22 +96,24 @@ window.onload=function() {
             }
             //id제약조건
             if (einput==id) {
-                let regex = /^([a-z]{1,}[0-9a-z]*)/;
+                let regex = /^(?:[a-z]{1,}[0-9a-z]*)$/;
                 if(/\s/.test(einput.value)) {
                     tgt.textContent="공백문자는 사용 불가능 합니다.";
                     YouShellNotPass=true;
-                }
-                else if (!regex.test(einput.value)) {
-                    tgt.textContent="영소문자로 시작하는 영어 소문자, 숫자로 이루어진 ID를 입력하세요.";
+                }else if (einput.value.length<=6 || !regex.test(einput.value)) {
+                    tgt.textContent="영문자로 시작하는 영어 소문자, 숫자만으로 이루어진 6자 이상의 ID를 입력하세요.";
                     YouShellNotPass=true;
+                }else {
+                    checkavail(einput);
                 }
-                //TODO : 아이디중복체크
             }
             if (einput==email) {
-                let regex = /^[a-z0-9_+.]+@[a-z0-9.]+\.\w{2,4}/;
+                let regex = /^[a-z0-9_+.]+@[a-z0-9.]+\.\w{2,4}$/;
                 if(!regex.test(einput.value)) {
                     tgt.textContent="올바르지 않은 이메일 주소입니다.";
                     YouShellNotPass=true;
+                }else {
+                    checkavail(einput);
                 }
             }
             if (einput==birthday) {
@@ -98,9 +125,10 @@ window.onload=function() {
                 }
             }
             if (einput==phone) {
-                let regex = /(\d{3})-?(\d{4})-?(\d{4})/;
+                let regex = /^(\d{3})-?(\d{4})-?(\d{4})$/;
                 if(regex.test(einput.value)) {
                     einput.value=einput.value.replace(regex, "$1$2$3");
+                    checkavail(einput);
                 }else {
                     tgt.textContent="올바르지 않은 전화번호입니다.";
                     YouShellNotPass=true;
@@ -112,7 +140,12 @@ window.onload=function() {
         return !YouShellNotPass;
     }
 }
-//word의 마지막 글자를 받아서 은/는 이/가 을/를 등의 처리가 가능하다.
+/**
+ * word의 마지막 글자를 받아서 은/는 이/가 을/를 등의 처리가 가능하다.
+ * @param word 조사를 붙일 문장/단어
+ * @param josa 은, 을, 이 등의 조사.
+ * @returns word + 는, 를, 가
+ */
 function josa(word, josa) {
     let lastword = word.charCodeAt(word.length-1);
     // console.log(word + josa + lastword)
@@ -125,3 +158,4 @@ function josa(word, josa) {
         }
     }else return word+josa;
 }
+
