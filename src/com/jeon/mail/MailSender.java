@@ -39,11 +39,11 @@ public class MailSender {
 
         // String subject = "메일 발송 테스트";
         String fromEmail = "test@testsender.com";
-        String fromUsername = "euokyun jeon";
-        // String toEmail = "euokyun@me.com"; // 콤마(,)로 여러개 나열
+        String fromUsername = "";
+        // String toEmail = ""; // 콤마(,)로 여러개 나열
 
-        final String username = "euokyun@gmail.com";
-        final String password = "qjaijhpivhwrhuil";
+        final String username = "";
+        final String password = "";
 
         // 메일에 출력할 텍스트
         StringBuffer sb = new StringBuffer();
