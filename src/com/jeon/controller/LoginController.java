@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.jeon.Dao.MemberinfoDao;
 
 import org.json.JSONObject;
-@WebServlet("/login/login.do")
+@WebServlet("/auth/login.do")
 public class LoginController extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
