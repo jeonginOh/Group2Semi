@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="content">
-        <form action="join.do" method="post">
+        <form action="join.do" method="post" onsubmit="return canpass()">
             <div class="join">
                 <div>
                     <h4><label for="id">아이디</label></h4>
@@ -28,7 +28,7 @@
                 <div>
                     <h4><label for="birthday">생년월일과 주민등록번호 뒷부분 1번째까지</label></h4>
                     <span id="birthdayMsg"></span>
-                    <div id="birthdayrow" class="inputrow"><input type="text" name="birthday" id="birthday" required></div>
+                    <div id="birthdayrow" class="inputrow"><input type="text" name="birthday" id="birthday" placeholder="9912251" required></div>
                 </div>
                 <div>
                     <h4><label for="email">이메일</label></h4>
@@ -43,7 +43,7 @@
                 <div>
                     <h4><label for="phone">전화번호</label></h4>
                     <span id="phoneMsg"></span>
-                    <div id="phonerow" class="inputrow"><input type="text" name="phone" id="phone" required></div>
+                    <div id="phonerow" class="inputrow"><input type="text" name="phone" id="phone" placeholder="01011112222" required></div>
                 </div>
             </div>
             <input type="submit" value="가입하기">

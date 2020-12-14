@@ -11,8 +11,33 @@ drop table buylist;
 drop table basket;
 drop table anstable;
 drop table asktable;
+drop table itemreview;
+drop table rev_child;
+drop table memberinfo;
+drop table logistic;
+drop table iteminfo;
+drop table itemask;
+drop table discount;
+drop table coupon;
+drop table category;
+drop table buylist;
+drop table basket;
+drop table anstable;
+drop table asktable;
+drop table itemreview;
+drop table rev_child;
+drop table memberinfo;
+drop table logistic;
+drop table iteminfo;
+drop table itemask;
+drop table discount;
+drop table coupon;
+drop table category;
+drop table buylist;
+drop table basket;
+drop table anstable;
+drop table asktable;
 
-        
 
         
 CREATE TABLE anstable
@@ -297,12 +322,13 @@ CREATE TABLE memberinfo
   id      VARCHAR2(15)   NOT NULL,
   pwd     varchar2(100)  NOT NULL,
   salt    varchar2(100)  NOT NULL,
-  age     number(7)     ,
+  age     varchar2(7)     ,
   email   varchar2(100) ,
   addr    varchar2(2000) NOT NULL,
   regdate Date           DEFAULT sysdate NOT NULL,
   phone   varchar2(12)  ,
   point   number(10)     DEFAULT 0,
+  status  number(1)      DEFAULT 0 NOT NULL,
   CONSTRAINT PK_memberinfo PRIMARY KEY (memid)
 );
 
@@ -334,6 +360,8 @@ COMMENT ON COLUMN memberinfo.regdate IS '가입일';
 COMMENT ON COLUMN memberinfo.phone IS '전화번호';
 
 COMMENT ON COLUMN memberinfo.point IS '포인트';
+
+COMMENT ON COLUMN memberinfo.status IS '사용자상태정보';
 
 CREATE TABLE rev_child
 (

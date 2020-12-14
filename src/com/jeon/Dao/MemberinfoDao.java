@@ -65,6 +65,12 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt1, pstmt2, res1, res2);
         }
     }
+    public void checkSameId(String id) {
+        Connection conn = null;
+        
+    }
+
+
     public void insert(MemberinfoVo vo) {
         Connection conn=null;
         PreparedStatement pstmt =null;
@@ -83,7 +89,7 @@ public class MemberinfoDao {
 
 
 
-    private String makeSalt() {
+    public String makeSalt() {
         Random random = new Random();
         byte[] bytes = new byte[8];
         random.nextBytes(bytes);
@@ -94,7 +100,7 @@ public class MemberinfoDao {
 		}
 		return sb.toString();
     }
-    private static String crypt(byte[] b) {// pw단방향 암호화
+    public static String crypt(byte[] b) {// pw단방향 암호화
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(b);
@@ -108,7 +114,7 @@ public class MemberinfoDao {
             return null;
         }
     }
-    private static String crypt(String pwd, byte[] salt) {
+    public static String crypt(String pwd, byte[] salt) {
         byte[] bpwd = pwd.getBytes();
         byte[] tmp = new byte[bpwd.length+salt.length];
         System.arraycopy(bpwd, 0, tmp, 0, bpwd.length);
