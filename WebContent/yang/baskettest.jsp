@@ -26,7 +26,7 @@
 				}
 			}
 		}
-		xhr.open('get','../basketinsert.do?itemid=231&bd=d',true);
+		xhr.open('get','../basketinsert.do?itemid=23&bd=d',true);
 		xhr.send();
 	}
 	function deleteDibs(){

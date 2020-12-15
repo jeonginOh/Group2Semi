@@ -7,6 +7,7 @@
 <title>yang/basketListpage</title>
 <style>
 	.item{width: 150px; height: 150px;}
+	.itemname{display:inline-block; width: 150px;}
 	#tbl{width: 1400px; border: 1px solid black;}
 	tr{text-align: center;}
 </style>
@@ -67,6 +68,7 @@ function listDibs(){
 				img.className="item";
 				var itemname=document.createElement("span");
 				itemname.innerHTML=json[i].itemname;
+				itemname.className="itemname";
 				td2.appendChild(a);
 				a.appendChild(img);
 				td2.appendChild(itemname);
