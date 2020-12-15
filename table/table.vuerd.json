@@ -3,7 +3,7 @@
     "width": 2000,
     "height": 2000,
     "scrollTop": 0,
-    "scrollLeft": 628,
+    "scrollLeft": 461,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -17,7 +17,7 @@
     },
     "database": "Oracle",
     "databaseName": "",
-    "canvasType": "SQL",
+    "canvasType": "ERD",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -2193,7 +2193,7 @@
           {
             "name": "identifier",
             "comment": "식별자",
-            "dataType": "varchar2(100)",
+            "dataType": "varchar2(1000)",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -2208,7 +2208,7 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 60,
-              "widthDataType": 83,
+              "widthDataType": 90,
               "widthDefault": 60
             },
             "id": "34addcdd-1d2a-805d-6746-26c411cefa86"
@@ -2262,9 +2262,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 673,
-          "top": 346,
-          "zIndex": 1468,
+          "left": 681,
+          "top": 304,
+          "zIndex": 1484,
           "widthName": 60,
           "widthComment": 122
         },
@@ -2666,8 +2666,8 @@
           "columnIds": [
             "de52ae9e-7b4c-0caa-3cb2-612295f105d0"
           ],
-          "x": 1070,
-          "y": 442,
+          "x": 1085,
+          "y": 400,
           "direction": "right"
         },
         "id": "5bfdbf7e-ce77-340c-2668-7b376f765feb",

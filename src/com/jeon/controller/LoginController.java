@@ -25,7 +25,7 @@ public class LoginController extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/plain;charset=UTF-8");
         HashMap<String, String> map = new HashMap<>();
-        System.out.println((String) req.getParameter("id"));
+        // System.out.println((String) req.getParameter("id"));
         map.put("id", req.getParameter("id"));
         map.put("pwd", req.getParameter("pwd"));
         MemberinfoDao dao = MemberinfoDao.getInstance();
@@ -65,7 +65,7 @@ public class LoginController extends HttpServlet{
                     //필요없음 - 쿠키가 없으니 접근할 수 없고 언젠가 알아서 지워질 것.
                 }
                 json.append("memid", memid);
-                req.getSession().setAttribute("id", memid);
+                req.getSession().setAttribute("memid", memid);
                 //이 세션에 수동로그인 했다는 흔적을 남김
                 req.getSession().setAttribute("menual", true); 
             }
