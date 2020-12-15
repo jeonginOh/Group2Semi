@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>member/findid.html</title>
+    <script type="text/javascript">
+        // window.onload=function() {}
+        function find() {
+            let id = document.getElementById('id');
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=function() {
+                if (xhr.readyState==4 && xhr.status==200) {
+                    let json = JSON.parse(xhr.responseText);
+                    
+                }
+            };
+            xhr.open('post', '', true);
+            xhr.send();
+            
+        }
+    </script>
+</head>
+<body>
+    <div id="content">
+        <h1>아이디찾기</h1>
+        <!-- <form action="" method="get"> -->
+            <div id="idrow">
+                <input type="text" name="" id="id" placeholder="아이디">
+            </div>
+        <!-- </form> -->
+        <div id="btns">
+            <input type="button" value="돌아가기" onclick="history.back()">
+            <!-- <input type="submit" value="조회하기"> -->
+            <input type="button" value="조회하기" id='find' onclick='find()'>
+        </div>
+    </div>
+</body>
+</html>

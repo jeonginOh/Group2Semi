@@ -40,6 +40,8 @@ drop table asktable;
 
 
         
+
+        
 CREATE TABLE anstable
 (
   ansid   number(10)     NOT NULL,
@@ -291,6 +293,25 @@ COMMENT ON COLUMN itemreview.star IS '별점';
 
 COMMENT ON COLUMN itemreview.revdate IS '작성일 ';
 
+CREATE TABLE loginauth
+(
+  token      varchar2(36)  NOT NULL,
+  memid      number(10)    NOT NULL,
+  identifier varchar2(100) NOT NULL,
+  per        number(1)     DEFAULT 0,
+  CONSTRAINT PK_loginauth PRIMARY KEY (token, memid)
+);
+
+COMMENT ON TABLE loginauth IS '자동로그인 관련 테이블';
+
+COMMENT ON COLUMN loginauth.token IS 'UUID';
+
+COMMENT ON COLUMN loginauth.memid IS '사용자번호';
+
+COMMENT ON COLUMN loginauth.identifier IS '식별자';
+
+COMMENT ON COLUMN loginauth.per IS '권한';
+
 CREATE TABLE logistic
 (
   logiid   number(10)     NOT NULL,
@@ -322,7 +343,7 @@ CREATE TABLE memberinfo
   id      VARCHAR2(15)   NOT NULL,
   pwd     varchar2(100)  NOT NULL,
   salt    varchar2(100)  NOT NULL,
-  age     varchar2(7)     ,
+  age     varchar2(7)   ,
   email   varchar2(100) ,
   addr    varchar2(2000) NOT NULL,
   regdate Date           DEFAULT sysdate NOT NULL,
@@ -461,5 +482,10 @@ ALTER TABLE logistic
   ADD CONSTRAINT FK_buylist_TO_logistic
     FOREIGN KEY (buyid, memid, itemid)
     REFERENCES buylist (buyid, memid, itemid);
+
+ALTER TABLE loginauth
+  ADD CONSTRAINT FK_memberinfo_TO_loginauth
+    FOREIGN KEY (memid)
+    REFERENCES memberinfo (memid);
 
       
