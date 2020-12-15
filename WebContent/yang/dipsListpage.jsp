@@ -7,6 +7,7 @@
 <title>yang/dibsListpage</title>
 <style>
 	.item{width: 150px; height: 150px;}
+	.itemname{display:inline-block; width: 150px;}
 	#tbl{width: 1400px; border: 1px solid black;}
 	tr{text-align: center;}
 </style>
@@ -61,6 +62,7 @@ function listDibs(){
 				img.className="item";
 				var itemname=document.createElement("span");
 				itemname.innerHTML=json[i].itemname;
+				itemname.className="itemname";
 				td2.appendChild(a);
 				a.appendChild(img);
 				td2.appendChild(itemname);
@@ -100,6 +102,15 @@ function listDibs(){
 				delDibs.setAttribute("name", json[i].itemid);
 				delDibs.setAttribute("onclick", "delDibs(event)");
 				td6.appendChild(delDibs);
+				
+				var td7=document.createElement("td"); //장바구니 담기
+				tr.appendChild(td7);
+				var insbasket=document.createElement("input");
+				insbasket.type="button";
+				insbasket.value="장바구니 담기";
+				insbasket.setAttribute("name", json[i].itemid);
+				insbasket.setAttribute("onclick", "insBasket(event)");
+				td7.appendChild(insbasket);
 			}
 		}
 	}
@@ -162,6 +173,27 @@ function checkDel(){ //체크박스 삭제
 		}
 	}
 	xhr.open('get','../basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.send();
+}
+
+function insBasket(e){
+	xhr=new XMLHttpRequest();
+	itemid=e.target.name;
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4 && xhr.status==200){
+			var json=JSON.parse(xhr.responseText);
+			if(json.code=="success"){
+				if(confirm("장바구니로 옮겼습니다!\n옮긴 항목을 찜목록에서 삭제하시겠습니까?")==true){
+					delDibs(e);
+				}
+			}else if(json.code=="overlap"){
+				alert("이미 장바구니에 있는 상품입니다.");
+			}else{
+				alert("오류로 인해 장바구니 옮기기 실패");
+			}
+		}
+	}
+	xhr.open('get','../basketinsert.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 

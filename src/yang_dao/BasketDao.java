@@ -15,11 +15,17 @@ public class BasketDao {
 	public static BasketDao getInstance() {
 		return instance;
 	}
-	public int insertDibs(String id,int itemid) { //찜하기 기능
+	public int insertDibs(String id,int itemid,String bd) { //찜,장바구니 넣기
 		Connection con=null;
 		PreparedStatement pstmt=null;
-		String sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,(\r\n" + 
+		String sql="";
+		if(bd.equals("d")) {
+			sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,(\r\n" + 
 				"SELECT MEMID FROM MEMBERINFO WHERE ID=?),?,0)"; //수량이 0개일때 찜
+		}else if(bd.equals("b")) {
+			sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,(\r\n" + 
+				"SELECT MEMID FROM MEMBERINFO WHERE ID=?),?,1)"; //수량이 1개일때 장바구니(수량조절할 필요 있음)
+		}
 		try {
 			con=DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);

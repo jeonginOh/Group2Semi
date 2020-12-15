@@ -2,22 +2,39 @@ package semiVo;
 
 import java.sql.Date;
 
+/**
+ * 
+ */
 public class MemberinfoVo {
     private int memid;
     private String id;
     private String pwd;
     private String salt;
-    private int age;
+    private String age;
     private String email;
     private String addr;
     private Date regdate; 
     private String phone;
     private int point;
+    private int status;
 
     public MemberinfoVo() {
     }
-
-    public MemberinfoVo(int memid, String id, String pwd, String salt, int age, String email, String addr, Date regdate, String phone, int point) {
+    /**
+     * 
+     * @param memid int
+     * @param id String
+     * @param pwd String
+     * @param salt String
+     * @param age String
+     * @param email String
+     * @param addr String
+     * @param regdate Date
+     * @param phone String
+     * @param point int
+     * @param status int <p>0  <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
+     */
+    public MemberinfoVo(int memid, String id, String pwd, String salt, String age, String email, String addr, Date regdate, String phone, int point, int status) {
         this.memid = memid;
         this.id = id;
         this.pwd = pwd;
@@ -28,6 +45,13 @@ public class MemberinfoVo {
         this.regdate = regdate;
         this.phone = phone;
         this.point = point;
+        this.status=status;
+    }
+    public void setStatus(int status) {
+        this.status=status;
+    }
+    public int getStatus() {
+        return this.status;
     }
     public void setSalt(String salt) {
         this.salt=salt;
@@ -57,11 +81,11 @@ public class MemberinfoVo {
         this.pwd = pwd;
     }
 
-    public int getAge() {
+    public String getAge() {
         return this.age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

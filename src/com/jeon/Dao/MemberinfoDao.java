@@ -30,7 +30,7 @@ public class MemberinfoDao {
      * @return 0< memid
      * <p>-2 SQL ERROR <p>-1 NO ID <p>0 ID&PWD NOT MATCH
      */
-    public int getMemId(HashMap<String, String> map) {
+    public int login(HashMap<String, String> map) {
         String id = map.get("id");
         String pwd = map.get("pwd");
         byte[] salt=null;
@@ -65,14 +65,93 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt1, pstmt2, res1, res2);
         }
     }
-    public void insert(MemberinfoVo vo) {
-        Connection conn=null;
-        PreparedStatement pstmt =null;
 
+    //int <p>0 회원없음 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
+    //삭제시 이름 앞에 숫자 붙인 뒤 비활성 처리
+    //진짜 삭제 기능도 만들어야 함
+    public void delete() {
+        //TODO:
+        
+    }
+    public void tempUser() {
+        //TODO:
+    }
+
+
+    /**
+     * @param map 조회할 String, String 값
+     * @return int <p>0회원없음 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
+     */
+    public int check(HashMap<String, String> map) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res=null;
+        String key = map.keySet().iterator().next();
+        System.out.println(key);
+        System.out.println(map.get(key));
         try {
             conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("select status from memberinfo where "+key+"=?");
+            pstmt.setString(1, map.get(key));
+            res=pstmt.executeQuery();
+            if (res.next()) {
+                System.out.println(res.getInt(1));
+                return res.getInt("status");
+            }else return 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
+
+
+    public int getMemId(String id) {
+        Connection conn=null;
+        PreparedStatement pstmt =null;
+        ResultSet res=null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("select memid from memberinfo where id=?");
+            pstmt.setString(1, id);
+            res = pstmt.executeQuery();
+            if (res.next()) return res.getInt(1);
+            else return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 
+     * @param vo
+     * @return 추가된 memid<p>0=추가되지 않음<p>-1=SQL에러
+     */
+    public int insert(MemberinfoVo vo) {
+        Connection conn=null;
+        PreparedStatement pstmt =null;
+        
+        try {
+            conn = DBCPBean.getConn();
+            String sql = "insert into memberinfo values(memberinfo_memid.nextval, ?, ?, ?, ?, ?, ?, sysdate, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vo.getId());
+            pstmt.setString(2, vo.getPwd());
+            pstmt.setString(3, vo.getSalt());
+            pstmt.setString(4, vo.getAge());
+            pstmt.setString(5, vo.getEmail());
+            pstmt.setString(6, vo.getAddr());
+            pstmt.setString(7, vo.getPhone());
+            pstmt.setInt(8, vo.getPoint());
+            pstmt.setInt(9, vo.getStatus());
+            int res = pstmt.executeUpdate();
+            if (res==1) return getMemId(vo.getId());
+            else return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         } finally {
             DBCPBean.close(conn, pstmt);
         }
@@ -83,7 +162,7 @@ public class MemberinfoDao {
 
 
 
-    private String makeSalt() {
+    public String makeSalt() {
         Random random = new Random();
         byte[] bytes = new byte[8];
         random.nextBytes(bytes);
@@ -94,7 +173,7 @@ public class MemberinfoDao {
 		}
 		return sb.toString();
     }
-    private static String crypt(byte[] b) {// pw단방향 암호화
+    public String crypt(byte[] b) {// pw단방향 암호화
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(b);
@@ -108,11 +187,15 @@ public class MemberinfoDao {
             return null;
         }
     }
-    private static String crypt(String pwd, byte[] salt) {
+    public String crypt(String pwd, byte[] salt) {
         byte[] bpwd = pwd.getBytes();
         byte[] tmp = new byte[bpwd.length+salt.length];
         System.arraycopy(bpwd, 0, tmp, 0, bpwd.length);
         System.arraycopy(salt, 0, tmp, bpwd.length, salt.length);
         return crypt(tmp);
+    }
+    public String crypt(String pwd, String salt) {
+        byte[] bsalt = salt.getBytes();
+        return crypt(pwd, bsalt);
     }
 }

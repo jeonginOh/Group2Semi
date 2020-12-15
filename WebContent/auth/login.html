@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login/login.html</title>
+    <title>auth/login.html</title>
     <script type="text/javascript">
     window.onload=function() {
         let loginbtn = document.getElementById('login');
@@ -26,7 +26,7 @@
                     em+="와 ";
                 }
                 em+="비밀번호";
-                pty=" 를 입력하세요";
+                pty="를 입력하세요";
             }
 
             if (em!="" || pty!="") {
@@ -45,8 +45,10 @@
                         }
                     }
                 }
-                xhr.open('post', "login.do?", true);
-                xhr.send();
+                xhr.open('post', "../auth/login.do", true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                let param = "id="+id.value+"&pwd="+pwd.value;
+                xhr.send(param);
             }
         }
     </script>
@@ -78,7 +80,7 @@
         <h1>쇼핑몰</h1>
         <fieldset>
             <legend>로그인</legend>
-            <div id="idrow" padding=5px;>
+            <div id="idrow">
                 <input type="text" name="" id="id" placeholder="아이디">
             </div>
             <div id="pwdrow">
@@ -88,7 +90,7 @@
             <input type="button" value="로그인" class="btn_01" id="login">
         </fieldset>
         <div id="member">
-            <a href="join.html">회원가입</a>
+            <a href="../member/agree.html">회원가입</a>
             <a href="findId.html">아이디찾기</a>
             <a href="findPwd.html">비밀번호찾기</a>
         </div>

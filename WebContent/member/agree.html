@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>agree.html</title>
+    <title>member/agree.html</title>
     <script type="text/javascript">
         window.onload=function() {
             let agree1 = document.getElementById('agree1');
@@ -43,7 +43,9 @@
                 return false;
             }
             console.log(pass);
+            // location.href="join.html";
             return true;
+
         }
     </script>
     <style type="text/css">
@@ -80,7 +82,7 @@
 <body>
     <div id="content">
         <h1>회원가입</h1>
-        <form action="join.jsp" onsubmit="return checkagree()">
+        <form action="join.html" method="POST" onsubmit="return checkagree()">
             <label for="checkall"><input type="checkbox" name="" id="checkall">이용약관, 개인정보 수집 및 이용 및 만점 채점에 동의합니다.</label>
             <div id="service">
                 <label for="agree1"><input type="checkbox" name="" id="agree1">이용약관 동의</label>
@@ -104,7 +106,7 @@
             </div>
             <div id="btnarea">
                 <div id="errMsg"></div>
-                <input type="button" value="취소" onclick="login.html">
+                <input type="button" value="취소" onclick="location.href='/auth/login.html'">
                 <input type="submit" value="확인">
             </div>
         </form>

@@ -1,0 +1,2 @@
+drop sequence memberinfo_memid;
+create sequence memberinfo_memid;

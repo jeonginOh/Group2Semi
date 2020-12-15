@@ -12,17 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.jeon.Dao.MemberinfoDao;
 
 import org.json.JSONObject;
-@WebServlet("/login/login.do")
+@WebServlet("/auth/login.do")
 public class LoginController extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/plain;charset=UTF-8");
         HashMap<String, String> map = new HashMap<>();
+        System.out.println((String) req.getParameter("id"));
         map.put("id", req.getParameter("id"));
         map.put("pwd", req.getParameter("pwd"));
         MemberinfoDao dao = MemberinfoDao.getInstance();
         JSONObject json = new JSONObject();
-        int memid = dao.getMemId(map);
+        int memid = dao.login(map);
         switch (memid) {
             case -2 : json.append("errMsg", "에러가 발생했습니다."); break;
             case -1 : json.append("errMsg", "아이디가 존재하지 않습니다."); break;
