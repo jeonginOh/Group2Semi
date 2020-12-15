@@ -20,7 +20,6 @@ public class FindIdController extends HttpServlet{
         String value = req.getParameter("value");
         MemberinfoDao dao = MemberinfoDao.getInstance();
         String result = dao.findId(target, value);
-        System.out.println(result);
         JSONObject json = new JSONObject();
         if (result==null || result.length()<6) {
             json.put("find", false);

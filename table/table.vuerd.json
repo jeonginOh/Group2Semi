@@ -2,8 +2,8 @@
   "canvas": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 206,
-    "scrollLeft": 491,
+    "scrollTop": 0,
+    "scrollLeft": 628,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -17,7 +17,7 @@
     },
     "database": "Oracle",
     "databaseName": "",
-    "canvasType": "ERD",
+    "canvasType": "SQL",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -2261,10 +2261,10 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 673,
           "top": 346,
-          "zIndex": 1467,
+          "zIndex": 1468,
           "widthName": 60,
           "widthComment": 122
         },

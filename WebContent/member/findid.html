@@ -53,9 +53,16 @@
                         if (xhr.readyState==4 && xhr.status==200) {
                             let json = JSON.parse(xhr.responseText);
                             // console.log(json.find + json.result);
+                            let resultMsg = document.createElement("p");
+                            //TODO:CSS
+                            //@jeungInOh
+                            /* resultMsg.setAttribute('id' )
+                            resultMsg.setAttribute('class' ) */
+
                             if (find=true) {
-                                result.innerHTML="ID는 "+json.result+"입니다.";
-                            }else result.innerHTML=json.result;
+                                resultMsg.textContent="ID는 "+json.result+"입니다.";
+                            }else resultMsg.textContent==json.result;
+                            result.append(resultMsg);
                         }
                     };
                     xhr.open('post', 'findid.do', true);

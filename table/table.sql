@@ -40,8 +40,6 @@ drop table asktable;
 
 
         
-
-        
 CREATE TABLE anstable
 (
   ansid   number(10)     NOT NULL,
@@ -295,14 +293,18 @@ COMMENT ON COLUMN itemreview.revdate IS '작성일 ';
 
 CREATE TABLE loginauth
 (
+  id         NUMBER(10)    NOT NULL,
   token      varchar2(36)  NOT NULL,
   memid      number(10)    NOT NULL,
   identifier varchar2(100) NOT NULL,
   per        number(1)     DEFAULT 0,
-  CONSTRAINT PK_loginauth PRIMARY KEY (token, memid)
+  created    date          DEFAULT sysdate,
+  CONSTRAINT PK_loginauth PRIMARY KEY (id, memid)
 );
 
 COMMENT ON TABLE loginauth IS '자동로그인 관련 테이블';
+
+COMMENT ON COLUMN loginauth.id IS '인덱스용';
 
 COMMENT ON COLUMN loginauth.token IS 'UUID';
 
@@ -311,6 +313,8 @@ COMMENT ON COLUMN loginauth.memid IS '사용자번호';
 COMMENT ON COLUMN loginauth.identifier IS '식별자';
 
 COMMENT ON COLUMN loginauth.per IS '권한';
+
+COMMENT ON COLUMN loginauth.created IS '생성일';
 
 CREATE TABLE logistic
 (

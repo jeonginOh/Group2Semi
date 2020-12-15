@@ -52,7 +52,7 @@ public class LoginauthDao {
 
 
     /**
-     * token을 폐기한다.
+     * token을 폐기한다.(per=-1)
      * @param token
      */
     public void expire(String token) {
@@ -80,8 +80,9 @@ public class LoginauthDao {
         ResultSet res = null;
         try {
             conn = DBCPBean.getConn();
-            pstmt = conn.prepareStatement("update loginauth set per=-1 where token=");
-            
+            pstmt = conn.prepareStatement("update loginauth set per=-1 where regdate<=sysdate-?");
+            pstmt.setInt(1, expiredate);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             
