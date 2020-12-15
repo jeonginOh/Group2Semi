@@ -105,6 +105,30 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt, res);
         }
     }
+    public String findId(String target, String value) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            //status가 1인 회원(일반회원)을 대상으로 조회
+            String sql = "select id from memberinfo where "+target+"=? and status in(0,1)";
+            System.out.println(sql);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, value);
+            res = pstmt.executeQuery();
+            if (res.next()) {
+                String id = res.getString("id");
+                System.out.println(id);
+                return id.replaceAll("(?<=.{4}).", "*");
+            }else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
 
 
     public int getMemId(String id) {
