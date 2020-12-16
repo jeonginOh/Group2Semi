@@ -35,14 +35,16 @@ public class LoginController extends HttpServlet{
         
         //자동로그인 등록
         //uuid생성, 쿠키에 signed : uuid 생성, db에 uuid 저장
-        boolean autologin = Boolean.parseBoolean(req.getParameter("autologin"));
         
         switch (memid) {
             case -2 : json.append("errMsg", "에러가 발생했습니다."); break;
             case -1 : json.append("errMsg", "아이디가 존재하지 않습니다."); break;
             case 0 : json.append("errMsg", "아이디와 비밀번호가 맞지 않습니다."); break;
             default : { 
+                boolean autologin = Boolean.parseBoolean(req.getParameter("autologin"));
                 //로그인성공 상황 : session에 memid가 없고 cookie에도 memid가 없음. 
+
+
                 String token = UUID.randomUUID().toString();
                 //자동로그인
                 if (autologin) {
@@ -73,11 +75,5 @@ public class LoginController extends HttpServlet{
         }
         resp.getWriter().print(json);
     }
-    /**
-     * 임시로그인용 주소 접속
-     */
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LoginauthDao ldao = LoginauthDao.getInstance();
-    }
+
 }

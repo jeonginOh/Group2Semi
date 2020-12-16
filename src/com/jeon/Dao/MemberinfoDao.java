@@ -37,7 +37,6 @@ public class MemberinfoDao {
         Connection conn = null;
         //get salt
         PreparedStatement pstmt1 = null;
-
         PreparedStatement pstmt2 = null;
         ResultSet res1=null;
         ResultSet res2=null;
@@ -152,6 +151,27 @@ public class MemberinfoDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
+        } finally{
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
+
+    public String getEmail(int memid) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("select email from memberinfo where memid=?");
+            pstmt.setInt(1, memid);
+            res = pstmt.executeQuery();
+            if(res.next()) return res.getString("email");
+            else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
         }
     }
 
