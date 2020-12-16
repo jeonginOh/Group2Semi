@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet{
                 if (autologin) {
                     String token = UUID.randomUUID().toString();
                     //쿠키생성
-                    Cookie cookie = new Cookie("signed", token);
+                    Cookie cookie = new Cookie("token", token);
                     cookie.setMaxAge(60*60*24*expiredate);
                     cookie.setPath("/");
                     resp.addCookie(cookie);
@@ -56,7 +56,7 @@ public class LoginController extends HttpServlet{
                     System.out.println(n);
                     
                 }else {
-                    Cookie cookie = new Cookie("signed", "");
+                    Cookie cookie = new Cookie("token", "");
                     cookie.setMaxAge(0); 
                     cookie.setPath("/");
                     resp.addCookie(cookie);
