@@ -24,7 +24,7 @@ window.onload=function() {
     
     
     /**
-     * id, email, phone
+     * id, email, phone 중복확인
      * @param {EventTarget} einput EventTarget
      */
     function checkavail(einput) {
@@ -45,7 +45,7 @@ window.onload=function() {
                 einput.parentNode.previousSibling.previousSibling.textContent=text;
             }
         };
-        xhr.open('get', '../member/join.do?'+einput.id+'='+einput.value, true);
+        xhr.open('get', '../member/join.do?type='+einput.id+'&value='+einput.value, true);
         xhr.send();
     }
 
