@@ -22,10 +22,10 @@ public class BasketListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session=req.getSession();
-		String id=(String)session.getAttribute("id");
+		int memid=(int)session.getAttribute("memid");
 		String bd=req.getParameter("bd");
 		IteminfoDao_y dao=IteminfoDao_y.getInstance();
-		ArrayList<IteminfoVo> list=dao.list(id,bd);
+		ArrayList<IteminfoVo> list=dao.list(memid,bd);
 		JSONArray arr=new JSONArray();
 		for(IteminfoVo vo:list) {
 			//System.out.println(vo.getItemname());

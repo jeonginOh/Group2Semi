@@ -23,8 +23,8 @@ public class BasketInsertController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session=req.getSession();
-		session.setAttribute("id", "test"); //session에 id를 넣어보고 테스트(지워야함)
-		String id=(String)session.getAttribute("id");
+		session.setAttribute("memid", 23); //session에 id를 넣어보고 테스트(지워야함)
+		int memid=(int)session.getAttribute("memid");
 		String bd=req.getParameter("bd");
 		int itemid=Integer.parseInt(req.getParameter("itemid"));
 		JSONObject json=new JSONObject();
@@ -32,7 +32,7 @@ public class BasketInsertController extends HttpServlet{
 		PrintWriter pw=resp.getWriter();
 		//찜,장바구니에 이미 존재하는지 확인하는 작업
 		IteminfoDao_y dao2=IteminfoDao_y.getInstance();
-		ArrayList<IteminfoVo> list=dao2.list(id,bd);
+		ArrayList<IteminfoVo> list=dao2.list(memid,bd);
 		for(IteminfoVo vo:list) {
 			if(itemid==vo.getItemid()) {
 				json.put("code", "overlap"); //이미 찜이나 장바구니에 있을경우 메시지
@@ -41,7 +41,7 @@ public class BasketInsertController extends HttpServlet{
 			}
 		}
 		BasketDao dao=BasketDao.getInstance();
-		int n=dao.insertDibs(id, itemid, bd);
+		int n=dao.insertDibs(memid, itemid, bd);
 		if(n>0) {
 			json.put("code", "success");
 		}else {

@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script> <!-- 사이트에서 아이콘 가져옴 -->
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <meta charset="UTF-8">
-<title>yang/dibsList</title>
+<title>yang/mainbasketList.jsp</title>
 <style>
 	#whole{width: 300px;}
 	.pg{position: relative; left: 80px;}
@@ -16,16 +16,17 @@
 	.item{width:100px; height: 100px; }
 	span{font-size: 0.8em;}
 </style>
+</head>
 <script type="text/javascript">
 	var pageNum=1; //모든 함수에서 쓰기때문에 전역변수로
-	function listDibs(){
+	function listBasket(){
 		//console.log(pageNum); //몇페이지인지 확인용
 		var xhr=new XMLHttpRequest();
 		var pgup=document.createElement("a");
 		if(pageNum==1){
 			pgup.style.visibility="hidden";
 		}
-		pgup.href="javascript:prevDibs()";
+		pgup.href="javascript:prevBasket()";
 		pgup.className="pg";
 		
 		var pageUp=document.createElement("i");
@@ -84,7 +85,7 @@
 				if(pageNum>=json[0].lastpage){ //마지막페이지보다 같거나 클때 아래화살표를 안보이게 하기
 					pgdwn.style.visibility="hidden";
 				}
-				pgdwn.href="javascript:nextDibs()";
+				pgdwn.href="javascript:nextBasket()";
 				pgdwn.className="pg";
 				var pageDown=document.createElement("i");
 				pageDown.className="fas fa-sort-down fa-2x";
@@ -95,31 +96,29 @@
 				wrap.append(pgdwn);
 			}
 		}
-		xhr.open('get','../mainlist.yang?bd=d&pageNum='+pageNum,true);
+		xhr.open('get','../mainlist.yang?bd=b&pageNum='+pageNum,true);
 		xhr.send();
 	}
-	listDibs();
-	function prevDibs(){ //위버튼
+	listBasket();
+	function prevBasket(){ //위버튼
 		pageNum--;
 		var wrap=document.getElementById("wrap");
 		while(wrap.firstChild){ //기존의 리스트를 전부 삭제
 			wrap.removeChild(wrap.lastChild);
 		}
-		listDibs(); //페이지넘버가 바뀌고 다시 리스트를 가져옴
+		listBasket(); //페이지넘버가 바뀌고 다시 리스트를 가져옴
 	}
-	function nextDibs(){ //아래버튼
+	function nextBasket(){ //아래버튼
 		pageNum++;
 		var wrap=document.getElementById("wrap");
 		while(wrap.firstChild){
 			wrap.removeChild(wrap.lastChild);
 		}
-		listDibs();
+		listBasket();
 	}
 </script>
-</head>
 <body>
-
-<h1>찜목록</h1>
+<h1>장바구니목록</h1>
 <div id="wrap">
 </div>
 </body>
