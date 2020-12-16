@@ -1,4 +1,4 @@
 /build/
 **/.DS_Store
 .classpath
-/src/com/jeon/mail/MailSender.java
+**/MailSender.java
