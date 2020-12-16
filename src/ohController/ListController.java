@@ -20,7 +20,7 @@ import semiVo.IteminfoVo;
 public class ListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		iteminfoDao dao = new iteminfoDao();
+		iteminfoDao dao = iteminfoDao.getInstance();
 		ArrayList<IteminfoVo> list = dao.selectAll();
 		
 		JSONArray arr = new JSONArray();

@@ -15,20 +15,23 @@ public class BasketDao {
 	public static BasketDao getInstance() {
 		return instance;
 	}
-	public int insertDibs(int memid,int itemid,String bd) { //찜,장바구니 넣기
+	public int insertDibs(int memid,int itemid,String bd,int amount) { //찜,장바구니 넣기
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String sql="";
-		if(bd.equals("d")) {
-			sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,?,?,0)"; //수량이 0개일때 찜
-		}else if(bd.equals("b")) {
-			sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,?,?,1)"; //수량이 1개일때 장바구니(수량조절할 필요 있음)
-		}
 		try {
 			con=DBCPBean.getConn();
+			if(bd.equals("d")) {
+				sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,?,?,0)"; //수량이 0개일때 찜
+			}else if(bd.equals("b")) {
+				sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,?,?,?)"; //수량이 1개일때 장바구니(수량조절할 필요 있음)
+			}
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, memid);
 			pstmt.setInt(2, itemid);
+			if(bd.equals("b")) {
+			pstmt.setInt(3, amount);
+			}
 			int n=pstmt.executeUpdate();
 			return n;
 		}catch(SQLException se) {

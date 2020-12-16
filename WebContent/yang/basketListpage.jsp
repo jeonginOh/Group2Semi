@@ -6,17 +6,19 @@
 <meta charset="UTF-8">
 <title>yang/basketListpage</title>
 <style>
-	.buyFloating { position: fixed; right: 50%; top: 200px; margin-right: -720px; text-align:center; width: 120px; }
+	.buyFloating { position: fixed; left: 1450px; top: 100px; margin-right: -720px; text-align:center; 
+					width: 300px; height:300px; border: 1px solid purple; padding-top:150px;}
 	.item{width: 150px; height: 150px;}
 	.itemname{display:inline-block; width: 150px;}
 	#tbl{width: 1400px; border: 1px solid black;}
 	tr{text-align: center;}
 	.imgnametd{width: 300px;}
+	.resultspan{display: inline-block; font: bold; font-size: 1.5em;}
 </style>
 </head>
 <body>
 <h1>장바구니 페이지</h1>
-<form method="post" action="#">
+<form method="post" action="../buyitems.yang.do">
 <table id="tbl">
 	<tr>
 		<th><input type="checkbox" id="allck" onclick="checkAll()">전체선택</th>
@@ -28,19 +30,27 @@
 		<th>삭제</th>
 	</tr>
 </table>
-</form>
 <div>
 	<input type="button" value="장바구니에서 삭제" onclick="checkDel()">
 </div>
 
 <div class="buyFloating">
 	<div>
-		<span>상품금액:</span>
+		<span class="resultspan">상품금액:</span>
+		<span id="totpriceView" class="resultspan"></span>
+		<input type="hidden" name="paramPrice" id="hdPrice"> <!-- 총 금액의 파라미터 -->
 	</div>
+	<br>
+	<div>
+		<span class="resultspan">상품할인금액:</span>
+		<span class="resultspan"></span>
+	</div>
+	<br><br>
 	<div>
 		<input type="submit" value="구매하기">
 	</div>
 </div>
+</form>
 
 <script type="text/javascript">
 var json=null
@@ -78,9 +88,15 @@ function listDibs(){
 				var itemname=document.createElement("span");
 				itemname.innerHTML=json[i].itemname;
 				itemname.className="itemname";
-				td2.appendChild(a);
+				var paramId=document.createElement("input");
+				paramId.type="hidden";
+				paramId.value=json[i].itemid;
+				paramId.setAttribute("name", "paramId"); //itemid의 파라미터값들
 				a.appendChild(img);
+				itemname.appendChild(paramId);
+				td2.appendChild(a);
 				td2.appendChild(itemname);
+				
 				
 				var td4=document.createElement("td"); //남은수량
 				tr.appendChild(td4);
@@ -117,8 +133,9 @@ function listDibs(){
 				cnt.type="text";
 				cnt.value=cntNum;
 				cnt.setAttribute("readonly", "readonly");
-				cnt.setAttribute("name", json[i].stock);
+				cnt.setAttribute("class", json[i].stock);
 				cnt.setAttribute("id", json[i].price);
+				cnt.setAttribute("name", "paramAmount"); //상품 개별의 개수가 파라미터로 넘어감
 				cnt.style.width="20px";
 				itemCountDiv.appendChild(cnt);
 				
@@ -134,7 +151,8 @@ function listDibs(){
 				td3.style.width="80px";
 				tr.appendChild(td3);
 				var price=document.createElement("span");
-				price.innerHTML=json[i].price+"원";
+				price.setAttribute("name", "totprice");
+				price.innerHTML=json[i].price;
 				td3.appendChild(price);
 				
 				var td7=document.createElement("td"); //장바구니 삭제
@@ -211,33 +229,42 @@ function checkDel(){
 	xhr.send();
 }
 
+function totPrice(){
+	var totprice=document.getElementsByName("totprice");
+	var tot=0;
+	for(let i=0;i<totprice.length;i++){
+		tot+=(totprice[i].innerText*1);
+	}
+	
+	var span=document.getElementById("totpriceView");
+	span.innerHTML=tot+"원";
+	var hd=document.getElementById("hdPrice");
+	hd.value=tot;
+}
+
 function minCount(e){
 	if((e.target.nextSibling.value*1)>1){
-		console.log(e.target.nextSibling.name*1);
 		e.target.nextSibling.value--;
 		var price=e.target.nextSibling.id;
 		var cnt=e.target.nextSibling.value;
-		console.log(price*cnt);
-		e.target.parentNode.parentNode.nextSibling.firstChild.innerHTML=price*cnt+"원";
+		e.target.parentNode.parentNode.nextSibling.firstChild.innerHTML=price*cnt;
+		totPrice();
 	}
 }
 
 function plusCount(e){
-	if((e.target.previousSibling.value*1)<(e.target.previousSibling.name*1)){
-		console.log(e.target.previousSibling.name*1);
+	if((e.target.previousSibling.value*1)<(e.target.previousSibling.className*1)){
 		e.target.previousSibling.value++;
 		var price=e.target.previousSibling.id;
 		var cnt=e.target.previousSibling.value;
-		console.log(price*cnt);
-		e.target.parentNode.parentNode.nextSibling.firstChild.innerHTML=price*cnt+"원";
+		e.target.parentNode.parentNode.nextSibling.firstChild.innerHTML=price*cnt;
+		totPrice();
 	}else{
 		console.log("ggg");
 	}
 }
 
-function totPrice(){
-	
-}
+
 </script>
 </body>
 </html>

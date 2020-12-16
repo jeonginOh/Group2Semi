@@ -27,6 +27,11 @@ public class BasketInsertController extends HttpServlet{
 		int memid=(int)session.getAttribute("memid");
 		String bd=req.getParameter("bd");
 		int itemid=Integer.parseInt(req.getParameter("itemid"));
+		String stock=req.getParameter("amount");
+		int amount=0;
+		if(stock!=null) {
+			amount=Integer.parseInt(stock);
+		}
 		JSONObject json=new JSONObject();
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
@@ -41,7 +46,7 @@ public class BasketInsertController extends HttpServlet{
 			}
 		}
 		BasketDao dao=BasketDao.getInstance();
-		int n=dao.insertDibs(memid, itemid, bd);
+		int n=dao.insertDibs(memid, itemid, bd,amount);
 		if(n>0) {
 			json.put("code", "success");
 		}else {

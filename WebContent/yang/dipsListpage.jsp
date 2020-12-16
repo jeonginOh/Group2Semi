@@ -193,7 +193,7 @@ function insBasket(e){
 			}
 		}
 	}
-	xhr.open('get','../basketinsert.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','../basketinsert.do?amount=1&bd=b&itemid='+itemid,true); //%%%%%%%%%여기 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 
