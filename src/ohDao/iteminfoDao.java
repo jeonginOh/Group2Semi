@@ -254,4 +254,41 @@ public class iteminfoDao {
 			DBCPBean.close(con,pstmt,rs);
 		}
 	}
+	
+	
+	//카테고리 리스트
+	public ArrayList<IteminfoVo> bigcatelist(int catid) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM ITEMINFO WHERE CATID LIKE '"+catid+"%'";
+		try {
+			con = DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			ArrayList<IteminfoVo> list = new ArrayList<IteminfoVo>();
+			while(rs.next()) {
+				int itemid = rs.getInt("itemid");
+				String itemname = rs.getString("itemname");
+				int price = rs.getInt("price");
+				String factory = rs.getString("factory");
+				String origin = rs.getString("origin");
+				int stock = rs.getInt("stock");
+				Date expire = rs.getDate("expire");
+				Date storedate = rs.getDate("storedate");
+				String image = rs.getString("image");
+				int avail = rs.getInt("avail");
+				
+				IteminfoVo vo = 
+					new IteminfoVo(itemid,itemname,catid,price,factory,origin,stock,expire,storedate,image,avail);
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally{
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
 }

@@ -12,7 +12,12 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/MainCss.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 </head>
-
+<%
+	String spage=request.getParameter("spage");
+	if(spage==null){
+		spage="totalcontent.jsp";
+	}
+%>
 <body>
 	<div id = "wrap">
 		<div id = header class ="main">
@@ -22,7 +27,7 @@
 			<jsp:include page="leftcontent.jsp"/>
 		</div>
 		<div id = "totalcontent" class ="main">
-			<jsp:include page="totalcontent.jsp"/>
+			<jsp:include page="<%=spage %>"/>
 		</div>
 		<div id = "rightcontent" class ="main">
 			<jsp:include page="rightcontent.jsp"/>

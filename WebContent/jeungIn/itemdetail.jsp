@@ -8,6 +8,7 @@
 		xhr = new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState==4 && xhr.status==200){
+				
 				var json = JSON.parse(xhr.responseText);
 				var div = document.getElementById("detailimg");
 				
@@ -36,7 +37,7 @@
 				}
 			}
 		};
-		xhr.open('get','<%= request.getContextPath() %>/detailitem.do?itemid=1234',true);
+		xhr.open('get','<%= request.getContextPath() %>/detailitem.do?itemid=${ param.itemid}',true);
 		xhr.send();
 	}
 </script>
