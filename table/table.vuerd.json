@@ -2261,10 +2261,10 @@
           }
         ],
         "ui": {
-          "active": false,
-          "left": 681,
-          "top": 304,
-          "zIndex": 1484,
+          "active": true,
+          "left": 698,
+          "top": 440,
+          "zIndex": 1485,
           "widthName": 60,
           "widthComment": 122
         },
@@ -2666,8 +2666,8 @@
           "columnIds": [
             "de52ae9e-7b4c-0caa-3cb2-612295f105d0"
           ],
-          "x": 1085,
-          "y": 400,
+          "x": 1102,
+          "y": 536,
           "direction": "right"
         },
         "id": "5bfdbf7e-ce77-340c-2668-7b376f765feb",

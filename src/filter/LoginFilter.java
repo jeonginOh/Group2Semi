@@ -40,7 +40,7 @@ public class LoginFilter implements Filter{
             else ((HttpServletResponse) arg1).sendRedirect(request.getContextPath()+"/login/login.jsp");
         }
 
-        //TODO : session에서 memid확인, 없으면(로그인상태 아님) cookie>signed에서 memid를 얻어와서 자동로그인 수행. 그마저도 없으면 로그인페이지로
+        //TODO : session에서 memid확인, 없으면(로그인상태 아님) cookie>token에서 memid를 얻어와서 자동로그인 수행. 그마저도 없으면 로그인페이지로
         //비밀번호찾기 페이지 등 예외처리를 해야 함
     }
 }
