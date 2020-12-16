@@ -22,7 +22,7 @@ public class MainPageListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session=req.getSession();
-		String id=(String)session.getAttribute("id");
+		int memid=(int)session.getAttribute("memid");
 		String bd=req.getParameter("bd");
 		String spageNum=req.getParameter("pageNum");
 		int pageNum=1;
@@ -32,12 +32,12 @@ public class MainPageListController extends HttpServlet{
 		int startRow=(pageNum-1)*3+1;
 		int endRow=startRow+2;
 		IteminfoDao_y dao=IteminfoDao_y.getInstance();
-		int lastpage=(int)Math.ceil(dao.getCountBasid(id)/3.0);
+		int lastpage=(int)Math.ceil(dao.getCountBasid(memid,bd)/3.0);
 		JSONObject json2=new JSONObject();
 		json2.put("lastpage", lastpage);
-		ArrayList<IteminfoVo> list=dao.list(id, bd, startRow, endRow);
+		ArrayList<IteminfoVo> list=dao.list(memid, bd, startRow, endRow);
 		JSONArray arr=new JSONArray();
-		arr.put(json2); //마지막페이지를 배열의 제일 첫번째에 넣기
+		arr.put(json2); //페이지개수를 배열의 제일 첫번째에 넣기
 		for(IteminfoVo vo:list) {
 			JSONObject json=new JSONObject();
 			json.put("itemid", vo.getItemid());

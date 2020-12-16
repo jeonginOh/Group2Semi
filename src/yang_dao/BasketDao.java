@@ -15,21 +15,19 @@ public class BasketDao {
 	public static BasketDao getInstance() {
 		return instance;
 	}
-	public int insertDibs(String id,int itemid,String bd) { //찜,장바구니 넣기
+	public int insertDibs(int memid,int itemid,String bd) { //찜,장바구니 넣기
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String sql="";
 		if(bd.equals("d")) {
-			sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,(\r\n" + 
-				"SELECT MEMID FROM MEMBERINFO WHERE ID=?),?,0)"; //수량이 0개일때 찜
+			sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,?,?,0)"; //수량이 0개일때 찜
 		}else if(bd.equals("b")) {
-			sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,(\r\n" + 
-				"SELECT MEMID FROM MEMBERINFO WHERE ID=?),?,1)"; //수량이 1개일때 장바구니(수량조절할 필요 있음)
+			sql="INSERT INTO BASKET VALUES(BAS_SEQ.NEXTVAL,?,?,1)"; //수량이 1개일때 장바구니(수량조절할 필요 있음)
 		}
 		try {
 			con=DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, id);
+			pstmt.setInt(1, memid);
 			pstmt.setInt(2, itemid);
 			int n=pstmt.executeUpdate();
 			return n;
@@ -40,23 +38,23 @@ public class BasketDao {
 			DBCPBean.close(con,pstmt);
 		}
 	}
-	public int deleteDibs(String id,int itemid,String bd) { //bd:찜인지 장바구니인지 확인
+	public int deleteDibs(int memid,int itemid,String bd) { //bd:찜인지 장바구니인지 확인
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String sql="";
 		if(bd.equals("d")) {
 			sql="DELETE FROM BASKET WHERE MEMID=\r\n" + 
-				"(SELECT MEMID FROM MEMBERINFO WHERE ID=?) "
+				"? "
 				+ "AND ITEMID=? AND COUNT=0"; //찜인상태(수량이0)의 물품을 삭제
 		}else if(bd.equals("b")) {
 			sql="DELETE FROM BASKET WHERE MEMID=\r\n" + 
-					"(SELECT MEMID FROM MEMBERINFO WHERE ID=?) "
+					"? "
 					+ "AND ITEMID=? AND COUNT>0"; //장바구니(수량이0이상)의 물품을 삭제
 		}
 		try {
 			con=DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, id);
+			pstmt.setInt(1, memid);
 			pstmt.setInt(2, itemid);
 			int n=pstmt.executeUpdate();
 			return n;

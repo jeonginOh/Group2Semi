@@ -4,9 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<style>
-		
-	</style>
+
 <title>리스트얌</title>
 	<script type="text/javascript">
 		window.onload=function(){
@@ -26,29 +24,41 @@
 						var br = document.createElement("br");
 						var br1 = document.createElement("br");
 						var br2 = document.createElement("br");
+						var br3 = document.createElement("br");
 						var div2 = document.createElement("div");
 						var img1 = document.createElement("img");
 						var itemname1 = document.createElement("span");
 						var price1 = document.createElement("span");
+						var jjim =document.createElement("a");
+						var jang =document.createElement("a");
+						
+						jjim.href="jjim.jsp?itemid="+arr[i].itemid;
+						jjim.innerHTML="찜";
+						jang.href="jang.jsp?itemid="+arr[i].itemid;
+						jang.innerHTML="장바구니";
 						div2.style.display="inline-block";
 						img1.src=img;
 						itemname1.innerHTML = itemname;
 						price1.innerHTML=price;
+						
 						div2.appendChild(img1);
 						div2.appendChild(br);
 						div2.appendChild(itemname1);
 						div2.appendChild(br1);
 						div2.appendChild(price1);
+						div2.appendChild(br2);
+						div2.appendChild(jjim);
+						div2.appendChild(jang);
 						
 						div.appendChild(div2);
 						
 						if(i%3==2){
-							div.appendChild(br2);
+							div.appendChild(br3);
 						}else{}
 					}
 				}
 			};
-			xhr.open('get','../list2.do',true);
+			xhr.open('get','../list.do',true);
 			xhr.send();
 		}
 	</script>
