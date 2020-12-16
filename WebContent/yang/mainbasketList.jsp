@@ -2,20 +2,20 @@
     pageEncoding="UTF-8"%>
 
 <style>
-	#wholeBasket{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+/*	#wholeBasket{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
 	#whole{width: 300px;}
 	.pg{position: relative; left: 80px;}
-	.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
-	.pg:visited{color:black;}
+	.pg:link{color: black;} */ /*a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
+/*	.pg:visited{color:black;}
 	.pg:active{color:black;}
 	.bkbox{display: inline-block;}
 	.bkitem{width:100px; height: 100px; }
-	.bkspan{font-size: 0.8em;}
+	.bkspan{font-size: 0.8em;}*/
 </style>
 
 <script type="text/javascript">
 	var pageNum=1; //모든 함수에서 쓰기때문에 전역변수로
-	function listBasket(){
+	function mainListBasket(){
 		//console.log(pageNum); //몇페이지인지 확인용
 		var xhr=new XMLHttpRequest();
 		var pgup=document.createElement("a");
@@ -97,14 +97,14 @@
 		xhr.open('get','<%=request.getContextPath()%>/mainlist.yang?bd=b&pageNum='+pageNum,true);
 		xhr.send();
 	}
-	listBasket();
+	mainListBasket();
 	function prevBasket(){ //위버튼
 		pageNum--;
 		var wrap=document.getElementById("basketWrap");
 		while(wrap.firstChild){ //기존의 리스트를 전부 삭제
 			wrap.removeChild(wrap.lastChild);
 		}
-		listBasket(); //페이지넘버가 바뀌고 다시 리스트를 가져옴
+		mainListBasket(); //페이지넘버가 바뀌고 다시 리스트를 가져옴
 	}
 	function nextBasket(){ //아래버튼
 		pageNum++;
@@ -112,7 +112,7 @@
 		while(wrap.firstChild){
 			wrap.removeChild(wrap.lastChild);
 		}
-		listBasket();
+		mainListBasket();
 	}
 </script>
 

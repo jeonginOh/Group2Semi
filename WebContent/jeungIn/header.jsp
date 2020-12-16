@@ -24,8 +24,8 @@
 				<li><a href="main.jsp?spage=">이벤트</a></li>
 				<li><input type="text" value ="검색어를 입력하세요"></li>
 				<li><a href="main.jsp?spage="><i class="fas fa-search"></i></a></li>
-				<li><a href="main.jsp?spage="><i class="fas fa-heart"></i></a></li>
-				<li><a href="main.jsp?spage="><i class="fas fa-shopping-cart"></i></a></li>
+				<li><a href="main.jsp?spage=/yang/dibsListpage.jsp"><i class="fas fa-heart"></i></a></li>
+				<li><a href="main.jsp?spage=/yang/basketListpage.jsp"><i class="fas fa-shopping-cart"></i></a></li>
 			</ul>
 		</div>
 	</div>

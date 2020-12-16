@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style>
-	.pgdibsitem{width: 150px; height: 150px;}
+/*	.pgdibsitem{width: 150px; height: 150px;}
 	.dibsitemname{display:inline-block; width: 150px;}
-	#tbl{width: 1400px; border: 1px solid black;}
-	.dibslisttr{text-align: center;}
+	#pgDibsTbl{width: 890px; border: 1px solid black;}
+	.dibslisttr{text-align: center;}*/
 </style>
 
 <h1>찜페이지</h1>
-<table id="tbl">
+<table id="pgDibsTbl">
 	<tr class="dibslisttr">
 		<th><input type="checkbox" id="allck" onclick="checkAll()">전체선택</th>
 		<th>상품</th>
@@ -20,16 +20,17 @@
 	</tr>
 </table>
 <div>
+	<br>
 	<input type="button" value="찜삭제" onclick="checkDel()">
 </div>
 <script type="text/javascript">
 var json=null
-function listDibs(){
+function pgListDibs(){
 	var xhr=new XMLHttpRequest();
 	xhr.onreadystatechange=function(){
 		if(xhr.readyState==4 && xhr.status==200){
 			json=JSON.parse(xhr.responseText);
-			var tbl=document.getElementById("tbl");
+			var tbl=document.getElementById("pgDibsTbl");
 			//var count=0;
 			for(let i=0;i<json.length;i++){
 				var tr=document.createElement("tr");
@@ -112,7 +113,7 @@ function listDibs(){
 	xhr.send();
 	
 }
-listDibs();
+pgListDibs();
 
 function checkAll(){ //전체체크 눌렀을때
 	var check=document.getElementById("allck");
@@ -139,7 +140,7 @@ function delDibs(e){ //개별삭제
 			for(let i=list.length-1;i>=0;i--){ //listtr들을 모두 삭제(안에있는 자식들까지 모두)
 				list[i].remove();
 			}
-			listDibs(); //list를 다시 생성
+			pgListDibs(); //list를 다시 생성
 		}
 	}
 	xhr.open('get','<%=request.getContextPath()%>/basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
@@ -163,7 +164,7 @@ function checkDel(){ //체크박스 삭제
 			for(let i=list.length-1;i>=0;i--){ //listtr들을 모두 삭제(안에있는 자식들까지 모두)
 				list[i].remove();
 			}
-			listDibs(); //list를 다시 생성
+			pgListDibs(); //list를 다시 생성
 		}
 	}
 	xhr.open('get','<%=request.getContextPath()%>/basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%

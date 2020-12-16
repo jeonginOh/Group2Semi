@@ -2,19 +2,19 @@
     pageEncoding="UTF-8"%>
 
 <style>
-	.buyFloating { position: fixed; left: 1450px; top: 100px; margin-right: -720px; text-align:center; 
-					width: 300px; height:300px; border: 1px solid purple; padding-top:150px;}
-	.bkpgitem{width: 150px; height: 150px;}
-	.itemname{display:inline-block; width: 150px;}
-	#tbl{width: 1400px; border: 1px solid black;}
-	.listtr{text-align: center;}
-	.imgnametd{width: 300px;}
-	.resultspan{display: inline-block; font: bold; font-size: 1.5em;}
+ 	/*.buyFloating { position: fixed; left: 1450px; top: 100px; margin-right: -720px; text-align:center;  
+ 					width: 300px; height:300px; border: 1px solid purple; padding-top:150px;} 
+ 	.bkpgitem{width: 150px; height: 150px;} 
+ 	.itemname{display:inline-block; width: 150px;} 
+ 	#pgBasketTbl{width: 900px; border: 1px solid black;} 
+ 	.listtr{text-align: center;} 
+ 	.imgnametd{width: 300px;} 
+ 	.resultspan{display: inline-block; font: bold; font-size: 1.5em;}*/
 </style>
 
 <h1>장바구니 페이지</h1>
 <form method="post" action="<%=request.getContextPath()%>/buyitems.yang.do">
-<table id="tbl">
+<table id="pgBasketTbl">
 	<tr class="listtr">
 		<th><input type="checkbox" id="allck" onclick="checkAll()">전체선택</th>
 		<th>상품</th>
@@ -26,6 +26,7 @@
 	</tr>
 </table>
 <div>
+	<br>
 	<input type="button" value="장바구니에서 삭제" onclick="checkDel()">
 </div>
 
@@ -49,12 +50,12 @@
 
 <script type="text/javascript">
 var json=null
-function listDibs(){
+function pgListBasket(){
 	var xhr=new XMLHttpRequest();
 	xhr.onreadystatechange=function(){
 		if(xhr.readyState==4 && xhr.status==200){
 			json=JSON.parse(xhr.responseText);
-			var tbl=document.getElementById("tbl");
+			var tbl=document.getElementById("pgBasketTbl");
 			//var count=0;
 			for(let i=0;i<json.length;i++){
 				var tr=document.createElement("tr");
@@ -78,7 +79,7 @@ function listDibs(){
 				var a=document.createElement("a");
 				var img=document.createElement("img");
 				a.href="yangsuccess.html";
-				img.src="images/"+json[i].image;
+				img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
 				img.className="bkpgitem";
 				var itemname=document.createElement("span");
 				itemname.innerHTML=json[i].itemname;
@@ -103,15 +104,15 @@ function listDibs(){
 				}
 				td4.appendChild(stock);
 				
-				var td5=document.createElement("td"); //판매여부
-				tr.appendChild(td5);
-				var avail=document.createElement("span");
-				if(json[i].avail==0){
-					avail.innerHTML="판매불가";
-				}else{
-					avail.innerHTML="판매중";
-				}
-				td5.appendChild(avail);
+// 				var td5=document.createElement("td"); //판매여부
+// 				tr.appendChild(td5);
+// 				var avail=document.createElement("span");
+// 				if(json[i].avail==0){
+// 					avail.innerHTML="판매불가";
+// 				}else{
+// 					avail.innerHTML="판매중";
+// 				}
+// 				td5.appendChild(avail);
 				
 				var td6=document.createElement("td"); //살 개수
 				tr.appendChild(td6);
@@ -166,7 +167,7 @@ function listDibs(){
 	xhr.send();
 	
 }
-listDibs();
+pgListBasket();
 
 function checkAll(){ //전체체크 눌렀을때
 	var check=document.getElementById("allck");
@@ -193,7 +194,7 @@ function delDibs(e){
 			for(let i=list.length-1;i>=0;i--){ //listtr들을 모두 삭제(안에있는 자식들까지 모두)
 				list[i].remove();
 			}
-			listDibs(); //list를 다시 생성
+			pgListBasket(); //list를 다시 생성
 		}
 	}
 	xhr.open('get','<%=request.getContextPath()%>/basketdelete.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
@@ -217,12 +218,25 @@ function checkDel(){
 			for(let i=list.length-1;i>=0;i--){ //listtr들을 모두 삭제(안에있는 자식들까지 모두)
 				list[i].remove();
 			}
-			listDibs(); //list를 다시 생성
+			pgListBasket(); //list를 다시 생성
 		}
 	}
 	xhr.open('get','<%=request.getContextPath()%>/basketdelete.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
+
+// window.onload=function() {
+// 	var totprice=document.getElementsByName("totprice");
+// 	var tot=0;
+// 	for(let i=0;i<totprice.length;i++){
+// 		tot+=(totprice[i].innerText*1);
+// 	}
+	
+// 	var span=document.getElementById("totpriceView");
+// 	span.innerHTML=tot+"원";
+// 	var hd=document.getElementById("hdPrice");
+// 	hd.value=tot;
+// }
 
 function totPrice(){
 	var totprice=document.getElementsByName("totprice");
