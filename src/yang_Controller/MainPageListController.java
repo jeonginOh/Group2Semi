@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ohDao.iteminfoDao;
 import semiVo.IteminfoVo;
-import yang_dao.IteminfoDao_y;
 
 @WebServlet("/mainlist.yang")
 public class MainPageListController extends HttpServlet{
@@ -31,7 +31,7 @@ public class MainPageListController extends HttpServlet{
 		}
 		int startRow=(pageNum-1)*3+1;
 		int endRow=startRow+2;
-		IteminfoDao_y dao=IteminfoDao_y.getInstance();
+		iteminfoDao dao=iteminfoDao.getInstance();
 		int lastpage=(int)Math.ceil(dao.getCountBasid(memid,bd)/3.0);
 		JSONObject json2=new JSONObject();
 		json2.put("lastpage", lastpage);

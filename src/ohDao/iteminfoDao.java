@@ -132,7 +132,10 @@ public class iteminfoDao {
 			DBCPBean.close(con,pstmt,rs);
 		}
 	}
-	public ArrayList<IteminfoVo> list(int memid,String bd){ //b는 장바구니,d는 찜
+	/**
+	 * @param memid= 회원번호, bd= basket,dibs(장바구니,찜)구분자
+	 */
+	public ArrayList<IteminfoVo> list(int memid,String bd){ //회원별 찜,장바구니에 담긴 물품들 검색
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -173,6 +176,7 @@ public class iteminfoDao {
 			DBCPBean.close(rs,pstmt,con);
 		}
 	}
+	//회원별 찜,장바구니에 담긴 물품들 검색+페이징처리(메인페이지에 3개씩 나오게 하기)
 	public ArrayList<IteminfoVo> list(int memid,String bd,int startRow,int endRow){
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -222,6 +226,7 @@ public class iteminfoDao {
 			DBCPBean.close(rs,pstmt,con);
 		}
 	}
+	//
 	public int getCountBasid(int memid,String bd) {
 		Connection con=null;
 		PreparedStatement pstmt=null;

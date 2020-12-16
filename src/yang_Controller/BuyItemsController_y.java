@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ohDao.iteminfoDao;
+
 @WebServlet("/buyitems.yang.do")
 public class BuyItemsController_y extends HttpServlet{
 	@Override
@@ -15,9 +17,10 @@ public class BuyItemsController_y extends HttpServlet{
 		String itemid[]=req.getParameterValues("paramId");
 		int totprice=Integer.parseInt(req.getParameter("paramPrice"));
 		String amount[]=req.getParameterValues("paramAmount");
+		iteminfoDao dao=iteminfoDao.getInstance();
 		
 		for(int i=0;i<itemid.length;i++) {
-			
+			dao.detail(Integer.parseInt(itemid[i]));
 		}
 	}
 }

@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ohDao.iteminfoDao;
 import semiVo.IteminfoVo;
-import yang_dao.IteminfoDao_y;
 
 @WebServlet("/basketlist.do")
 public class BasketListController extends HttpServlet{
@@ -24,7 +24,7 @@ public class BasketListController extends HttpServlet{
 		HttpSession session=req.getSession();
 		int memid=(int)session.getAttribute("memid");
 		String bd=req.getParameter("bd");
-		IteminfoDao_y dao=IteminfoDao_y.getInstance();
+		iteminfoDao dao=iteminfoDao.getInstance();
 		ArrayList<IteminfoVo> list=dao.list(memid,bd);
 		JSONArray arr=new JSONArray();
 		for(IteminfoVo vo:list) {
