@@ -42,9 +42,8 @@ public class LoginFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) arg1;
         HttpSession session = request.getSession();
 
-        String s_memid = (String) session.getAttribute("memid");
         //session에서 memid확인
-        if (s_memid!=null && !s_memid.isBlank()) arg2.doFilter(arg0, arg1);
+        if (session.getAttribute("memid")!=null) arg2.doFilter(arg0, arg1);
         //없으면(로그인상태 아님) 
         else{
             Cookie[] cookies = request.getCookies();

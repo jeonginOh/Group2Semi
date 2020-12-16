@@ -31,6 +31,6 @@
   </filter>
   <filter-mapping>
     <filter-name>LoginFilter</filter-name>
-    <url-pattern></url-pattern> 
+    <url-pattern>/test/*</url-pattern> 
   </filter-mapping>
 </web-app>

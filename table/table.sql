@@ -265,14 +265,14 @@ COMMENT ON COLUMN iteminfo.avail IS '판매가능여부';
 
 CREATE TABLE itemreview
 (
-  revid   number(10)     NOT NULL,
-  itemid  number(10)    ,
-  memid   number(10)    ,
-  title   varchar2(50)  ,
-  image   varchar2(200) ,
-  context varchar2(2000),
-  star    number(1)     ,
-  revdate date          ,
+  revid        number(10)     NOT NULL,
+  itemid       number(10)    ,
+  memid        number(10)    ,
+  title        varchar2(50)  ,
+  review_image varchar2(200) ,
+  context      varchar2(2000),
+  star         number(1)     ,
+  revdate      date          ,
   CONSTRAINT PK_itemreview PRIMARY KEY (revid)
 );
 
@@ -286,7 +286,7 @@ COMMENT ON COLUMN itemreview.memid IS '사용자번호';
 
 COMMENT ON COLUMN itemreview.title IS '제목';
 
-COMMENT ON COLUMN itemreview.image IS '이미지';
+COMMENT ON COLUMN itemreview.review_image IS '이미지';
 
 COMMENT ON COLUMN itemreview.context IS '내용';
 
@@ -296,12 +296,12 @@ COMMENT ON COLUMN itemreview.revdate IS '작성일 ';
 
 CREATE TABLE loginauth
 (
-  id         NUMBER(10)    NOT NULL,
-  token      varchar2(36)  NOT NULL,
-  memid      number(10)    NOT NULL,
-  identifier varchar2(500) NOT NULL,
-  per        number(1)     DEFAULT 0,
-  created    date          DEFAULT sysdate,
+  id         NUMBER(10)     NOT NULL,
+  token      varchar2(36)   NOT NULL,
+  memid      number(10)     NOT NULL,
+  identifier varchar2(1000) NOT NULL,
+  per        number(1)      DEFAULT 0,
+  created    date           DEFAULT sysdate,
   CONSTRAINT PK_loginauth PRIMARY KEY (id, memid)
 );
 
@@ -393,10 +393,10 @@ COMMENT ON COLUMN memberinfo.status IS '사용자상태정보';
 
 CREATE TABLE rev_child
 (
-  rchildid   number(10)     NOT NULL,
-  revid      number(10)    ,
-  context    varchar2(2000),
-  rchilddate date          ,
+  rchildid      number(10)     NOT NULL,
+  revid         number(10)    ,
+  context_child varchar2(2000),
+  rchilddate    date          ,
   CONSTRAINT PK_rev_child PRIMARY KEY (rchildid)
 );
 
@@ -406,7 +406,7 @@ COMMENT ON COLUMN rev_child.rchildid IS '리뷰리플번호';
 
 COMMENT ON COLUMN rev_child.revid IS '리뷰번호';
 
-COMMENT ON COLUMN rev_child.context IS '내용';
+COMMENT ON COLUMN rev_child.context_child IS '내용';
 
 COMMENT ON COLUMN rev_child.rchilddate IS '작성일 ';
 

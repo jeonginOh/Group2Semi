@@ -48,11 +48,12 @@ public class FindPwController extends HttpServlet{
             ldao.insert(new LoginauthVo(0, token, memid, identifier, 1, null));
             MailSender mail = MailSender.getInstance();
             StringBuilder sb = new StringBuilder();
-            //TODO:URL 가져오는 기능 만들어야 함. 아직 테스트할 방법 없음..
-            // String URL = "";
-            String URL = "localhost:8080"+req.getContextPath();
-            String link = "/member/findpw.do?token="+token;
+            String URL = req.getRequestURL().toString();
+            //http://http//localhost:8080/Group2Semi/member/findpw.do
             
+            //localhost:8080/Group2Semi/member/findpw.do?token=80caeee7-9d93-45ee-bbd4-9e4a4d8eca1a
+
+            String link = "?token="+token;
             SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일 E요일 HH:mm", Locale.KOREAN);
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
@@ -82,6 +83,7 @@ public class FindPwController extends HttpServlet{
         int memid = ldao.templogin(token);
         ldao.renew(new LoginauthVo(0, token, memid, identifier, -1, null));//접속기록
         req.setAttribute("memid", memid);
+        //TODO:비밀번호 변경 페이지
         req.getRequestDispatcher("비밀번호변경페이지").forward(req, resp);
     }
 }
