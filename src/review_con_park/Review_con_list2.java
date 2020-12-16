@@ -29,6 +29,7 @@ public class Review_con_list2 extends HttpServlet{
 			int endRow=startRow+9;
 			ItemreviewDao dao=ItemreviewDao.getInstance();
 			double ave=dao.avestar(itemid);
+			String itemname=dao.itemname(itemid);
 			ArrayList<String> username=dao.userName(itemid);
 			ArrayList<ItemreviewVo> list=dao.review_list2(itemid,startRow,endRow);
 			int pageCount=(int)Math.ceil(dao.getCount(itemid)/10.0);
@@ -37,6 +38,7 @@ public class Review_con_list2 extends HttpServlet{
 			if(endPageNum>pageCount) {
 				endPageNum=pageCount;
 			}
+			req.setAttribute("itemname", itemname);
 			req.setAttribute("username", username);
 			req.setAttribute("ave", ave);
 			req.setAttribute("list", list);
@@ -44,6 +46,7 @@ public class Review_con_list2 extends HttpServlet{
 			req.setAttribute("startPageNum", startPageNum);
 			req.setAttribute("endPageNum", endPageNum);
 			req.setAttribute("pageNum", pageNum);
+			req.setAttribute("itemid1", itemid);
 			req.getRequestDispatcher("/parks_review/reviewlist.jsp").forward(req, resp);
 	
 		}

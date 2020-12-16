@@ -42,11 +42,11 @@ public class Review_con_insert extends HttpServlet {
 			String context = multi.getParameter("context");
 			String file = multi.getOriginalFileName("image");
 			File f = multi.getFile("file1");
+			System.out.println(file);
 			JSONArray insertarr = new JSONArray();
 			ItemreviewVo insertvo = new ItemreviewVo(0, itemid, memid, title, file, context, star, null);
 			ItemreviewDao reviewdao = ItemreviewDao.getInstance();
 			int n = reviewdao.review_insert(insertvo);
-			
 			resp.setContentType("text/plain;charset=utf-8");
 			JSONObject jsonlist = new JSONObject();
 			if (n > 0) {

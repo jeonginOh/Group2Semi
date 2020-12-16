@@ -7,17 +7,30 @@
 <title>Insert title here</title>
 </head>
 <body>
+<script type="text/javascript">
+function cktitle(){
+	var title=document.getElementById("title");
+	if(title.value.trim()==""){
+		alert("제목을 입력해주세요");
+		return false;
+	}
+	
+}
 
+</script>
 	<form method="post" enctype="multipart/form-data"
 		action="../reviewinsert.do?itemid=1&memid=1">
 		<div id="red"
 			style="width: 500px; height: 500px; border: 2px solid red">
-			제목:<input type="text"  id="title" name="title"><br>
+			제목:<input type="text"  id="title" name="title"  required="required" onclick="if(this.value==this.defaultValue){this.value=''}" 
+		onblur="if (this.value == '') { this.value = this.defaultValue;" value="제목을입력하세요" >
+<br>
 			<textarea rows="20" cols="50" id="context" name="context" onclick="if(this.value==this.defaultValue){this.value=''}" 
 		onblur="if (this.value == '') { this.value = this.defaultValue;">내용을 입력하세요</textarea>
-			<br> <input type="file" value="사진올리기" id="image"
-				onchange="setimg(event);" name="image"><br> <input
-				type="submit" value="저장">
+			<br> <input type="file" value="image" id="image"
+				onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif"><br> <input
+				type="submit" value="저장" onclick="cktitle()">
+				
 		<input type="radio" name="star" id="star" value=1>
 		<label  >★</label>
 		<input type="radio" name="star" id="star" value=2>

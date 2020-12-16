@@ -28,6 +28,7 @@ public class Review_con_update extends HttpServlet{
 	ItemreviewDao dao=ItemreviewDao.getInstance();
 	ItemreviewVo vo=dao.review_listupdate(revid);
 	req.setAttribute("vo", vo);
+	
 	req.getRequestDispatcher("/parks_review/reviewupdateform.jsp").forward(req, resp);
 	}
 	@Override
@@ -35,16 +36,24 @@ public class Review_con_update extends HttpServlet{
 	req.setCharacterEncoding("utf-8");
 	String path = req.getSession().getServletContext().getRealPath("/fileFolder");
 	int size = 1024 * 1024 * 10;
-	System.out.println("리뷰아이디 확인");
 	try {
 		MultipartRequest multi = new MultipartRequest(req, path, size, "utf-8", new DefaultFileRenamePolicy());
 		int revid=Integer.parseInt(multi.getParameter("revid"));
 		int itemid=Integer.parseInt(multi.getParameter("itemid"));
 		int star=Integer.parseInt(multi.getParameter("star"));
-		System.out.println("리뷰아이디 확인");
 		String title = multi.getParameter("title");
 		String context = multi.getParameter("context");
 		String file = multi.getOriginalFileName("image");
+		String img=multi.getContentType("img2");
+		System.out.println(img);
+	
+		
+		System.out.println(multi.getOriginalFileName(file));
+		if(file==null) {
+			file=multi.getOriginalFileName("img1");
+			
+		}
+		System.out.println(multi.getOriginalFileName("img1"));
 		File f = multi.getFile("file1");
 		ItemreviewVo insertvo = new ItemreviewVo(revid, 0, 0, title, file, context, star, null);
 		ItemreviewDao reviewdao = ItemreviewDao.getInstance();
