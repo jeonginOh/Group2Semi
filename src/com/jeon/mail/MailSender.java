@@ -39,7 +39,7 @@ public class MailSender {
 
         // String subject = "메일 발송 테스트";
         String fromEmail = "test@testsender.com";
-        String fromUsername = "";
+        String fromUsername = "tester";
         // String toEmail = ""; // 콤마(,)로 여러개 나열
 
         final String username = "";
