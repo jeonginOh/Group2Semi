@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import semiVo.MemberinfoVo;
 @WebServlet("/member/join.do")
 public class JoinController extends HttpServlet{
+    final int status=1;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
@@ -28,7 +29,7 @@ public class JoinController extends HttpServlet{
         MemberinfoDao dao = MemberinfoDao.getInstance();
         String salt = dao.makeSalt();
         String pwd = dao.crypt(ns_pwd, salt);
-        MemberinfoVo vo = new MemberinfoVo(0, id, pwd, salt, age, email, addr, null, phone, 0, 1);
+        MemberinfoVo vo = new MemberinfoVo(0, id, pwd, salt, age, email, addr, null, phone, 0, status);
         int memid = dao.insert(vo);
         if (memid>0) {
             req.getSession().setAttribute("memid", memid);
