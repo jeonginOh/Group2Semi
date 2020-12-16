@@ -8,7 +8,7 @@ import java.sql.Date;
 //   CONSTRAINT PK_loginauth PRIMARY KEY (token, memid)
 
 /**
-     * 
+
      * @param id
      * @param token
      * @param memid

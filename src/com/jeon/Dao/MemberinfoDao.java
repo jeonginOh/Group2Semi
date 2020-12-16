@@ -77,25 +77,22 @@ public class MemberinfoDao {
         //TODO:
     }
 
-
-    /**
-     * @param map 조회할 String, String 값
-     * @return int <p>0회원없음 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
-     */
-    public int check(HashMap<String, String> map) {
+     /**
+      * 중복확인용.
+      * @param type id, phone, email
+      * @param value type's value
+      * @return status
+      */
+    public int check(String type, String value) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet res=null;
-        String key = map.keySet().iterator().next();
-        System.out.println(key);
-        System.out.println(map.get(key));
         try {
             conn = DBCPBean.getConn();
-            pstmt = conn.prepareStatement("select status from memberinfo where "+key+"=?");
-            pstmt.setString(1, map.get(key));
+            pstmt = conn.prepareStatement("select status from memberinfo where "+type+"=?");
+            pstmt.setString(1, value);
             res=pstmt.executeQuery();
             if (res.next()) {
-                System.out.println(res.getInt(1));
                 return res.getInt("status");
             }else return 0;
         } catch (SQLException e) {
@@ -105,6 +102,13 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt, res);
         }
     }
+
+    /**
+     * 등록된 이메일, 전화번호로 id를 찾는 기능
+     * @param target email || phone
+     * @param value 
+     * @return id
+     */
     public String findId(String target, String value) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -128,7 +132,12 @@ public class MemberinfoDao {
         }
     }
 
-
+    /**
+     * <p>!!!로그인에 사용하지 말 것!!!
+     * id를 통해 memid를 가져온다
+     * @param id
+     * @return memid
+     */
     public int getMemId(String id) {
         Connection conn=null;
         PreparedStatement pstmt =null;
@@ -179,11 +188,6 @@ public class MemberinfoDao {
         }
     }
 
-
-
-
-
-
     public String makeSalt() {
         Random random = new Random();
         byte[] bytes = new byte[8];
@@ -195,6 +199,7 @@ public class MemberinfoDao {
 		}
 		return sb.toString();
     }
+
     public String crypt(byte[] b) {// pw단방향 암호화
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -209,6 +214,7 @@ public class MemberinfoDao {
             return null;
         }
     }
+
     public String crypt(String pwd, byte[] salt) {
         byte[] bpwd = pwd.getBytes();
         byte[] tmp = new byte[bpwd.length+salt.length];
@@ -216,6 +222,7 @@ public class MemberinfoDao {
         System.arraycopy(salt, 0, tmp, bpwd.length, salt.length);
         return crypt(tmp);
     }
+
     public String crypt(String pwd, String salt) {
         byte[] bsalt = salt.getBytes();
         return crypt(pwd, bsalt);

@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet{
         JSONObject json = new JSONObject();
         int memid = dao.login(map);
         
-        //자동로그인 구현
+        //자동로그인 등록
         //uuid생성, 쿠키에 signed : uuid 생성, db에 uuid 저장
         boolean autologin = Boolean.parseBoolean(req.getParameter("autologin"));
         
@@ -43,19 +43,16 @@ public class LoginController extends HttpServlet{
             case 0 : json.append("errMsg", "아이디와 비밀번호가 맞지 않습니다."); break;
             default : { 
                 //로그인성공 상황 : session에 memid가 없고 cookie에도 memid가 없음. 
+                String token = UUID.randomUUID().toString();
+                //자동로그인
                 if (autologin) {
-                    String token = UUID.randomUUID().toString();
                     //쿠키생성
                     Cookie cookie = new Cookie("token", token);
                     cookie.setMaxAge(60*60*24*expiredate);
                     cookie.setPath("/");
                     resp.addCookie(cookie);
-                    //테이블생성
-                    String identifier = req.getRemoteAddr()+req.getHeader("User-Agent");
-                    int n = ldao.insert(new LoginauthVo(0, token, memid, identifier, 0, null));
-                    System.out.println(n);
-                    
                 }else {
+                    //쿠키삭제
                     Cookie cookie = new Cookie("token", "");
                     cookie.setMaxAge(0); 
                     cookie.setPath("/");
@@ -64,6 +61,10 @@ public class LoginController extends HttpServlet{
                     // ldao.expire
                     //필요없음 - 쿠키가 없으니 접근할 수 없고 언젠가 알아서 지워질 것.
                 }
+                //테이블생성
+                String identifier = req.getRemoteAddr()+req.getHeader("User-Agent");
+                int n = ldao.insert(new LoginauthVo(0, token, memid, identifier, 0, null));
+                System.out.println(n);
                 json.append("memid", memid);
                 req.getSession().setAttribute("memid", memid);
                 //이 세션에 수동로그인 했다는 흔적을 남김
@@ -71,5 +72,12 @@ public class LoginController extends HttpServlet{
             }
         }
         resp.getWriter().print(json);
+    }
+    /**
+     * 임시로그인용 주소 접속
+     */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LoginauthDao ldao = LoginauthDao.getInstance();
     }
 }
