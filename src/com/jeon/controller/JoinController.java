@@ -50,11 +50,11 @@ public class JoinController extends HttpServlet{
 
         MemberinfoDao dao = MemberinfoDao.getInstance();
 
-        String res = "false";
+        boolean res = false;
         if (map.size()>0) {
             int n = dao.check(type, value);
-            if (n<=0) res = "true";
-        }else res = "ERROR";
+            if (n<=0) res = true;
+        }
         JSONObject json = new JSONObject();
         json.put("result", res);
         resp.getWriter().print(json);

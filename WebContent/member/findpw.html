@@ -13,13 +13,15 @@
             let find = document.getElementById('find');
             
             find.addEventListener('click', findpw, false);
-            findword.addEventListener("focusout", check, false);
+            findword.addEventListener("keyup", check, false);
             findword.addEventListener("keydown", function (e) {
+            	
                 // console.log(e.keyCode);
                 if (e.keyCode==13) {
                     findpw();
                 }
             }, false);
+            
             function check() {
                 findMsg.textContent="";
                 let param = null;
@@ -42,23 +44,25 @@
                 // console.log(param);
                 if (param==null) {}
                 else {
+                    // findword.setAttribute("readonly");
                     let xhr = new XMLHttpRequest();
                     xhr.onreadystatechange=function() {
-                        if (xhr.readyState==4 && xhr.status==200) {
+                        let resultMsg = document.createElement("p");
+                        if (xhr.readyState==1) {
+                            resultMsg.textContent="확인중입니다";
+                        }else if (xhr.readyState==4 && xhr.status==200) {
                             let json = JSON.parse(xhr.responseText);
-                            // console.log(json.find + json.result);
-                            let resultMsg = document.createElement("p");
                             //TODO:CSS
                             //@jeungInOh
                             /* resultMsg.setAttribute('id' )
                             resultMsg.setAttribute('class' ) */
 
-                            if (find=true) {
+                            if (JSON.parse(json.find)) {
                                 //TODO:
-                                resultMsg.textContent="";
-                            }else resultMsg.textContent==json.result;
-                            result.append(resultMsg);
+                                resultMsg.textContent="id에 등록된 이메일로 비밀번호 재설정 링크를 보냈습니다. "+json.result+"까지 링크를 눌러주세요.";
+                            }else resultMsg.textContent=json.result;
                         }
+                        result.append(resultMsg);
                     };
                     xhr.open('post', 'findpw.do', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

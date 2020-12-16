@@ -14,7 +14,7 @@
             let find = document.getElementById('find');
             
             find.addEventListener('click', findid, false);
-            findword.addEventListener("focusout", check, false);
+            findword.addEventListener("keyup", check, false);
             findword.addEventListener("keydown", function (e) {
                 // console.log(e.keyCode);
                 if (e.keyCode==13) {
@@ -52,6 +52,9 @@
                     xhr.onreadystatechange=function() {
                         if (xhr.readyState==4 && xhr.status==200) {
                             let json = JSON.parse(xhr.responseText);
+                            console.log(json);
+                            console.log(json.result);
+                            console.log(json.find);
                             // console.log(json.find + json.result);
                             let resultMsg = document.createElement("p");
                             //TODO:CSS
@@ -59,9 +62,9 @@
                             /* resultMsg.setAttribute('id' )
                             resultMsg.setAttribute('class' ) */
 
-                            if (find=true) {
+                            if (JSON.parse(json.find)) {
                                 resultMsg.textContent="ID는 "+json.result+"입니다.";
-                            }else resultMsg.textContent==json.result;
+                            }else resultMsg.textContent=json.result;
                             result.append(resultMsg);
                         }
                     };

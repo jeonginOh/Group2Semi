@@ -34,7 +34,7 @@ window.onload=function() {
                 let text="다른 ";
                 let json = JSON.parse(xhr.responseText);
                 // console.log(json.result);
-                if (json.result=="true") text="사용가능";
+                if (JSON.parse(json.result)) text="사용가능";
                 else {
                     if (einput.id=="id") text+="아이디";
                     else if (einput.id=="phone") text+="전화번호";
@@ -50,7 +50,7 @@ window.onload=function() {
     }
 
 
-    pwdchk.addEventListener("focusout", function(e) {
+    pwdchk.addEventListener("keyup", function(e) {
         // console.log(pwdchk.value + ":" + pwd.value);
         if(pwdchk.value==pwd.value) e.target.parentNode.previousSibling.previousSibling.textContent="비밀번호가 맞지 않습니다.";
         else pwdchk.parentNode.previousSibling.previousSibling.textContent="";
