@@ -33,7 +33,7 @@ window.onload=function() {
             if (xhr.readyState==4 && xhr.status==200) {
                 let text="다른 ";
                 let json = JSON.parse(xhr.responseText);
-                console.log(json.result);
+                // console.log(json.result);
                 if (json.result=="true") text="사용가능";
                 else {
                     if (einput.id=="id") text+="아이디";
@@ -112,6 +112,7 @@ window.onload=function() {
                     checkavail(einput);
                 }
             }
+            //email 조건
             if (einput==email) {
                 let regex = /^[a-z0-9_+.]+@[a-z0-9.]+\.\w{2,4}$/;
                 if(!regex.test(einput.value)) {
@@ -121,6 +122,7 @@ window.onload=function() {
                     checkavail(einput);
                 }
             }
+            //생년월일 조건
             if (einput==birthday) {
                 //윤년도 계산 가능함.
                 let regex = /^(?:(?:(?:0[48]|[2468][048]|[13579][26])|00)0229|\d{2}(?:(?:0[13578]|1[02])(?:0[1-9]|[1-2][0-9]|3[01])|(?:0[469]|11)(?:0[1-9]|[1-2][0-9]|30)|02(?:0[1-9]|1[0-9]|2[0-8])))(?:0|1|2|3)$/;

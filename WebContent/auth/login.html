@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>auth/login.html</title>
     <script type="text/javascript">
-    window.onload=function() {
-        let loginbtn = document.getElementById('login');
-        loginbtn.addEventListener('click', login, false);
-    }
-    let xhr=null;
+        window.onload=function() {
+            let loginbtn = document.getElementById('login');
+            loginbtn.addEventListener('click', login, false);
+        }
+        let xhr=null;
         function login() {
             let id = document.getElementById("id");
             let pwd = document.getElementById('pwd');
             let errMsg = document.getElementById('errMsg');
+            let autologin = document.getElementById('autologin');
+            
             errMsg.innerHTML="";
             let em="";
             let pty="";
@@ -47,7 +49,7 @@
                 }
                 xhr.open('post', "../auth/login.do", true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                let param = "id="+id.value+"&pwd="+pwd.value;
+                let param = "id="+id.value+"&pwd="+pwd.value+"&autologin="+autologin.checked;
                 xhr.send(param);
             }
         }
@@ -87,6 +89,10 @@
                 <input type="password" name="" id="pwd" placeholder="비밀번호">
             </div>
             <div id="errMsg"></div>
+            <label for="">
+                <input type="checkbox" name="자동로그인" id="autologin">
+                자동로그인
+            </label>
             <input type="button" value="로그인" class="btn_01" id="login">
         </fieldset>
         <div id="member">
