@@ -51,7 +51,7 @@ public class FindPwController extends HttpServlet{
             //TODO:URL 가져오는 기능 만들어야 함. 아직 테스트할 방법 없음..
             // String URL = "";
             String URL = "localhost:8080"+req.getContextPath();
-            String link = "/auth/login.do?token="+token;
+            String link = "/member/findpw.do?token="+token;
             
             SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일 E요일 HH:mm", Locale.KOREAN);
             Calendar cal = Calendar.getInstance();
