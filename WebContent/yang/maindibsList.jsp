@@ -1,14 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script> <!-- 사이트에서 아이콘 가져옴 -->
-<meta charset="UTF-8">
-<title>yang/dibsList</title>
+
 <style>
 	#wholeDibs{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
-	#whole{width: 300px;}
 	.pg{position: relative; left: 80px;}
 	.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
 	.pg:visited{color:black;}
@@ -17,6 +11,7 @@
 	.dibsitem{width:100px; height: 100px; }
 	.dibsspan{font-size: 0.8em;}
 </style>
+
 <script type="text/javascript">
 	var pageNum=1; //모든 함수에서 쓰기때문에 전역변수로
 	function listDibs(){
@@ -66,7 +61,7 @@
 					}
 					
 					a.href="yangsuccess.html";
-					img.src="images/"+json[i].image;
+					img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
 					a.appendChild(img);
 					
 					
@@ -98,7 +93,7 @@
 				wrap.append(pgdwn);
 			}
 		}
-		xhr.open('get','../mainlist.yang?bd=d&pageNum='+pageNum,true);
+		xhr.open('get','<%=request.getContextPath()%>/mainlist.yang?bd=d&pageNum='+pageNum,true);
 		xhr.send();
 	}
 	listDibs();
@@ -119,16 +114,12 @@
 		listDibs();
 	}
 </script>
-</head>
-<body>
 
 <h1>찜목록</h1>
 <div id="wholeDibs">
 <div>
-	<a href="" style="font-size: 0.8em;">장바구니 보기</a>
+	<a href="<%=request.getContextPath() %>/jeungIn/main.jsp?rpage=/yang/mainbasketList.jsp" style="font-size: 0.8em;">장바구니 보기</a>
 </div>
 <div id="dibsWrap">
 </div>
 </div>
-</body>
-</html>

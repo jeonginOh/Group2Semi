@@ -1,21 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>yang/dibsListpage</title>
 <style>
-	.item{width: 150px; height: 150px;}
-	.itemname{display:inline-block; width: 150px;}
+	.pgdibsitem{width: 150px; height: 150px;}
+	.dibsitemname{display:inline-block; width: 150px;}
 	#tbl{width: 1400px; border: 1px solid black;}
-	tr{text-align: center;}
+	.dibslisttr{text-align: center;}
 </style>
-</head>
-<body>
+
 <h1>찜페이지</h1>
 <table id="tbl">
-	<tr>
+	<tr class="dibslisttr">
 		<th><input type="checkbox" id="allck" onclick="checkAll()">전체선택</th>
 		<th>상품</th>
 		<th>가격</th>
@@ -39,7 +33,7 @@ function listDibs(){
 			//var count=0;
 			for(let i=0;i<json.length;i++){
 				var tr=document.createElement("tr");
-				tr.className="listtr"; //나중에 찜삭제,수정시 tr의 자식들을 한꺼번에 지웠다가 다시 리스트 만들기 위함
+				tr.className="dibslisttr"; //나중에 찜삭제,수정시 tr의 자식들을 한꺼번에 지웠다가 다시 리스트 만들기 위함
 				tbl.appendChild(tr);
 				var td1=document.createElement("td");
 				tr.appendChild(td1);
@@ -58,11 +52,11 @@ function listDibs(){
 				var a=document.createElement("a");
 				var img=document.createElement("img");
 				a.href="yangsuccess.html";
-				img.src="images/"+json[i].image;
-				img.className="item";
+				img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
+				img.className="pgdibsitem";
 				var itemname=document.createElement("span");
 				itemname.innerHTML=json[i].itemname;
-				itemname.className="itemname";
+				itemname.className="dibsitemname";
 				td2.appendChild(a);
 				a.appendChild(img);
 				td2.appendChild(itemname);
@@ -114,7 +108,7 @@ function listDibs(){
 			}
 		}
 	}
-	xhr.open('get','../basketlist.do?bd=d',true); //bd=d 찜상태로 보내기
+	xhr.open('get','<%=request.getContextPath()%>/basketlist.do?bd=d',true); //bd=d 찜상태로 보내기
 	xhr.send();
 	
 }
@@ -141,14 +135,14 @@ function delDibs(e){ //개별삭제
 	xhr.onreadystatechange=function(){
 		if(xhr.readyState==4 && xhr.status==200){
 			var json=JSON.parse(xhr.responseText);
-			var list=document.getElementsByClassName("listtr");
+			var list=document.getElementsByClassName("dibslisttr");
 			for(let i=list.length-1;i>=0;i--){ //listtr들을 모두 삭제(안에있는 자식들까지 모두)
 				list[i].remove();
 			}
 			listDibs(); //list를 다시 생성
 		}
 	}
-	xhr.open('get','../basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','<%=request.getContextPath()%>/basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 
@@ -165,14 +159,14 @@ function checkDel(){ //체크박스 삭제
 	xhr.onreadystatechange=function(){
 		if(xhr.readyState==4 && xhr.status==200){
 			var json=JSON.parse(xhr.responseText);
-			var list=document.getElementsByClassName("listtr");
+			var list=document.getElementsByClassName("dibslisttr");
 			for(let i=list.length-1;i>=0;i--){ //listtr들을 모두 삭제(안에있는 자식들까지 모두)
 				list[i].remove();
 			}
 			listDibs(); //list를 다시 생성
 		}
 	}
-	xhr.open('get','../basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','<%=request.getContextPath()%>/basketdelete.do?bd=d&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 
@@ -193,10 +187,8 @@ function insBasket(e){
 			}
 		}
 	}
-	xhr.open('get','../basketinsert.do?amount=1&bd=b&itemid='+itemid,true); //%%%%%%%%%여기 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','<%=request.getContextPath()%>/basketinsert.do?amount=1&bd=b&itemid='+itemid,true); //%%%%%%%%%여기 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 
 </script>
-</body>
-</html>

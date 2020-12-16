@@ -1,26 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>yang/basketListpage</title>
+
 <style>
 	.buyFloating { position: fixed; left: 1450px; top: 100px; margin-right: -720px; text-align:center; 
 					width: 300px; height:300px; border: 1px solid purple; padding-top:150px;}
-	.item{width: 150px; height: 150px;}
+	.bkpgitem{width: 150px; height: 150px;}
 	.itemname{display:inline-block; width: 150px;}
 	#tbl{width: 1400px; border: 1px solid black;}
-	tr{text-align: center;}
+	.listtr{text-align: center;}
 	.imgnametd{width: 300px;}
 	.resultspan{display: inline-block; font: bold; font-size: 1.5em;}
 </style>
-</head>
-<body>
+
 <h1>장바구니 페이지</h1>
-<form method="post" action="../buyitems.yang.do">
+<form method="post" action="<%=request.getContextPath()%>/buyitems.yang.do">
 <table id="tbl">
-	<tr>
+	<tr class="listtr">
 		<th><input type="checkbox" id="allck" onclick="checkAll()">전체선택</th>
 		<th>상품</th>
 		<th>남은수량</th>
@@ -84,7 +79,7 @@ function listDibs(){
 				var img=document.createElement("img");
 				a.href="yangsuccess.html";
 				img.src="images/"+json[i].image;
-				img.className="item";
+				img.className="bkpgitem";
 				var itemname=document.createElement("span");
 				itemname.innerHTML=json[i].itemname;
 				itemname.className="itemname";
@@ -167,7 +162,7 @@ function listDibs(){
 			}
 		}
 	}
-	xhr.open('get','../basketlist.do?bd=b',true); //bd=b : 장바구니상태로 보내기
+	xhr.open('get','<%=request.getContextPath()%>/basketlist.do?bd=b',true); //bd=b : 장바구니상태로 보내기
 	xhr.send();
 	
 }
@@ -201,7 +196,7 @@ function delDibs(e){
 			listDibs(); //list를 다시 생성
 		}
 	}
-	xhr.open('get','../basketdelete.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','<%=request.getContextPath()%>/basketdelete.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 
@@ -225,7 +220,7 @@ function checkDel(){
 			listDibs(); //list를 다시 생성
 		}
 	}
-	xhr.open('get','../basketdelete.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
+	xhr.open('get','<%=request.getContextPath()%>/basketdelete.do?bd=b&itemid='+itemid,true); //%%%%%%%%%여기 숫자 바꿔야함%%%%%%%%%%%%
 	xhr.send();
 }
 
@@ -264,7 +259,4 @@ function plusCount(e){
 	}
 }
 
-
 </script>
-</body>
-</html>

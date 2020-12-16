@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ohDao.iteminfoDao;
+import semiVo.IteminfoVo;
 
 @WebServlet("/buyitems.yang.do")
 public class BuyItemsController_y extends HttpServlet{
@@ -20,7 +21,10 @@ public class BuyItemsController_y extends HttpServlet{
 		iteminfoDao dao=iteminfoDao.getInstance();
 		
 		for(int i=0;i<itemid.length;i++) {
-			dao.detail(Integer.parseInt(itemid[i]));
+			IteminfoVo vo=dao.detail(Integer.parseInt(itemid[i]));
+			String itemname=vo.getItemname();
+			int price=vo.getPrice();
+			int indprice=vo.getPrice()*Integer.parseInt(amount[i]);
 		}
 	}
 }

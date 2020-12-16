@@ -1,13 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<meta charset="UTF-8">
-<title>yang/mainbasketList.jsp</title>
+
 <style>
-	#wholeDibs{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+	#wholeBasket{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
 	#whole{width: 300px;}
 	.pg{position: relative; left: 80px;}
 	.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
@@ -17,7 +12,7 @@
 	.bkitem{width:100px; height: 100px; }
 	.bkspan{font-size: 0.8em;}
 </style>
-</head>
+
 <script type="text/javascript">
 	var pageNum=1; //모든 함수에서 쓰기때문에 전역변수로
 	function listBasket(){
@@ -67,7 +62,7 @@
 					}
 					
 					a.href="yangsuccess.html";
-					img.src="images/"+json[i].image;
+					img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
 					a.appendChild(img);
 					
 					
@@ -99,7 +94,7 @@
 				wrap.append(pgdwn);
 			}
 		}
-		xhr.open('get','../mainlist.yang?bd=b&pageNum='+pageNum,true);
+		xhr.open('get','<%=request.getContextPath()%>/mainlist.yang?bd=b&pageNum='+pageNum,true);
 		xhr.send();
 	}
 	listBasket();
@@ -120,14 +115,12 @@
 		listBasket();
 	}
 </script>
-<body>
+
 <h1>장바구니목록</h1>
 <div id="wholeBasket">
 <div>
-	<a href="" style="font-size: 0.8em;">장바구니 보기</a>
+	<a href="<%=request.getContextPath() %>/jeungIn/main.jsp?rpage=/yang/maindibsList.jsp" style="font-size: 0.8em;">찜목록 보기</a>
 </div>
 <div id="basketWrap">
 </div>
 </div>
-</body>
-</html>

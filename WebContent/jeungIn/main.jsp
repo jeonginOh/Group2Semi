@@ -17,6 +17,10 @@
 	if(spage==null){
 		spage="totalcontent.jsp";
 	}
+	String rpage=request.getParameter("rpage");
+	if(rpage==null){
+		rpage="/yang/maindibsList.jsp";
+	}
 %>
 <body>
 	<div id = "wrap">
@@ -30,7 +34,7 @@
 			<jsp:include page="<%=spage %>"/>
 		</div>
 		<div id = "rightcontent" class ="main">
-			<jsp:include page="rightcontent.jsp"/>
+			<jsp:include page="<%=rpage %>"/>
 		</div>
 		<div id = "footer" class ="main">
 			<jsp:include page="footer.jsp"/>
