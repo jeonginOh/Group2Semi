@@ -7,14 +7,15 @@
 <meta charset="UTF-8">
 <title>yang/mainbasketList.jsp</title>
 <style>
+	#wholeDibs{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
 	#whole{width: 300px;}
 	.pg{position: relative; left: 80px;}
 	.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
 	.pg:visited{color:black;}
 	.pg:active{color:black;}
-	.box{display: inline-block;}
-	.item{width:100px; height: 100px; }
-	span{font-size: 0.8em;}
+	.bkbox{display: inline-block;}
+	.bkitem{width:100px; height: 100px; }
+	.bkspan{font-size: 0.8em;}
 </style>
 </head>
 <script type="text/javascript">
@@ -37,24 +38,26 @@
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState==4 && xhr.status==200){
 				var json=JSON.parse(xhr.responseText);
-				var wrap=document.getElementById("wrap");
+				var wrap=document.getElementById("basketWrap");
 				//var count=0;
 				for(let i=1;i<json.length;i++){ //배열의 첫번째에는 페이지개수가 나오기때문에 그것을 빼고 빼옴
 					var div=document.createElement("div");
 					//div.className="box";
 					var div1=document.createElement("div");
 					var div2=document.createElement("div");
-					div1.className="box";
-					div2.className="box";
+					div1.className="bkbox";
+					div2.className="bkbox";
 					div2.style.textAlign="center";
 					var a=document.createElement("a");
 					var img=document.createElement("img");
-					img.className="item";
+					img.className="bkitem";
 					var itemname=document.createElement("span");
 					var br1=document.createElement("br");
 					var br2=document.createElement("br");
 					var br3=document.createElement("br");
 					var avail=document.createElement("span");
+					itemname.className="bksspan";
+					avail.className="bksspan";
 					itemname.style.lineHeight="50px";
 					itemname.innerHTML=json[i].itemname;
 					if(json[i].avail==0){
@@ -102,7 +105,7 @@
 	listBasket();
 	function prevBasket(){ //위버튼
 		pageNum--;
-		var wrap=document.getElementById("wrap");
+		var wrap=document.getElementById("basketWrap");
 		while(wrap.firstChild){ //기존의 리스트를 전부 삭제
 			wrap.removeChild(wrap.lastChild);
 		}
@@ -110,7 +113,7 @@
 	}
 	function nextBasket(){ //아래버튼
 		pageNum++;
-		var wrap=document.getElementById("wrap");
+		var wrap=document.getElementById("basketWrap");
 		while(wrap.firstChild){
 			wrap.removeChild(wrap.lastChild);
 		}
@@ -119,7 +122,12 @@
 </script>
 <body>
 <h1>장바구니목록</h1>
-<div id="wrap">
+<div id="wholeBasket">
+<div>
+	<a href="" style="font-size: 0.8em;">장바구니 보기</a>
+</div>
+<div id="basketWrap">
+</div>
 </div>
 </body>
 </html>

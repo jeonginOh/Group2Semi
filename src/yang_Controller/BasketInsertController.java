@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ohDao.iteminfoDao;
 import semiVo.IteminfoVo;
 import yang_dao.BasketDao;
-import yang_dao.IteminfoDao_y;
 
 @WebServlet("/basketinsert.do")
 public class BasketInsertController extends HttpServlet{
@@ -27,11 +27,16 @@ public class BasketInsertController extends HttpServlet{
 		int memid=(int)session.getAttribute("memid");
 		String bd=req.getParameter("bd");
 		int itemid=Integer.parseInt(req.getParameter("itemid"));
+		String stock=req.getParameter("amount");
+		int amount=0;
+		if(stock!=null) {
+			amount=Integer.parseInt(stock);
+		}
 		JSONObject json=new JSONObject();
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		//찜,장바구니에 이미 존재하는지 확인하는 작업
-		IteminfoDao_y dao2=IteminfoDao_y.getInstance();
+		iteminfoDao dao2=iteminfoDao.getInstance();
 		ArrayList<IteminfoVo> list=dao2.list(memid,bd);
 		for(IteminfoVo vo:list) {
 			if(itemid==vo.getItemid()) {
@@ -41,7 +46,7 @@ public class BasketInsertController extends HttpServlet{
 			}
 		}
 		BasketDao dao=BasketDao.getInstance();
-		int n=dao.insertDibs(memid, itemid, bd);
+		int n=dao.insertDibs(memid, itemid, bd,amount);
 		if(n>0) {
 			json.put("code", "success");
 		}else {

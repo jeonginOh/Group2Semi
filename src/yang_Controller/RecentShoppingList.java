@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 import ohDao.iteminfoDao;
 import semiVo.IteminfoVo;
-import yang_dao.IteminfoDao_y;
 
 @WebServlet("/recentShop.yang.do")
 public class RecentShoppingList extends HttpServlet{
@@ -33,7 +32,7 @@ public class RecentShoppingList extends HttpServlet{
 					continue;
 				}else{
 					int itemid=Integer.parseInt(cookie.getValue());
-					IteminfoDao_y dao=IteminfoDao_y.getInstance();
+					iteminfoDao dao=iteminfoDao.getInstance();
 					IteminfoVo vo=dao.detail(itemid);
 					JSONObject json=new JSONObject();
 					json.put("itemname",vo.getItemname());

@@ -21,7 +21,7 @@ public class detailController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String itemid = req.getParameter("itemid");
-		iteminfoDao dao = new iteminfoDao();
+		iteminfoDao dao = iteminfoDao.getInstance();
 		IteminfoVo vo = dao.detail(Integer.parseInt(itemid));
 		
 		Cookie cookie=new Cookie("itemid", itemid);

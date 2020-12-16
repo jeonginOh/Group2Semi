@@ -2,6 +2,9 @@ package ohController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -16,13 +19,14 @@ import org.json.JSONObject;
 import ohDao.iteminfoDao;
 import semiVo.IteminfoVo;
 
-@WebServlet("/list.do")
-public class ListController extends HttpServlet{
+@WebServlet("/cateList.do")
+public class categoryListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		iteminfoDao dao = iteminfoDao.getInstance();
-		ArrayList<IteminfoVo> list = dao.selectAll();
+		String catid = req.getParameter("catid");
 		
+		iteminfoDao dao = iteminfoDao.getInstance();
+		ArrayList<IteminfoVo> list = dao.bigcatelist(Integer.parseInt(catid));
 		JSONArray arr = new JSONArray();
 		for(IteminfoVo vo:list) {
 			JSONObject json = new JSONObject();

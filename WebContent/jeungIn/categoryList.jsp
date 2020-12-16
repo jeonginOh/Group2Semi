@@ -57,7 +57,7 @@
 					}
 				}
 			};
-			xhr.open('get','<%= request.getContextPath() %>/list.do',true);
+			xhr.open('get','<%= request.getContextPath() %>/cateList.do?catid=${ param.catid}',true);
 			xhr.send();
 		}
 	</script>
