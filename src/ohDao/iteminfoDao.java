@@ -92,4 +92,38 @@ public class iteminfoDao {
 			DBCPBean.close(con,pstmt,rs);
 		}
 	}
+	
+	public IteminfoVo detail(int itemid) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM ITEMINFO WHERE "+itemid+" = ?";
+		IteminfoVo vo = null;
+		try {
+			con = DBCPBean.getConn();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,itemid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String itemname = rs.getString("itemname");
+				int catid = rs.getInt("catid");
+				int price = rs.getInt("price");
+				String factory = rs.getString("factory");
+				String origin = rs.getString("origin");
+				int stock = rs.getInt("stock");
+				Date expire = rs.getDate("expire");
+				Date storedate = rs.getDate("storedate");
+				String image = rs.getString("image");
+				int avail = rs.getInt("avail");
+				
+				vo = new IteminfoVo(itemid,itemname,catid,price,factory,origin,stock,expire,storedate,image,avail);
+			}
+			return vo;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
 }
