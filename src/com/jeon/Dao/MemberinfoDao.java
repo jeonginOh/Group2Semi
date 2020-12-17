@@ -80,7 +80,7 @@ public class MemberinfoDao {
       * 중복확인용.
       * @param type id, phone, email
       * @param value type's value
-      * @return status
+      * @return status <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
       */
     public int check(String type, String value) {
         Connection conn = null;
@@ -167,6 +167,31 @@ public class MemberinfoDao {
             res = pstmt.executeQuery();
             if(res.next()) return res.getString("email");
             else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
+
+    /**
+     * 일단 다 뽑음
+     * @param memid
+     * @return MemberinfoVo
+     */
+    public MemberinfoVo getVo(int memid) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("select * from memberinfo where memid=?");
+            pstmt.setInt(1, memid);
+            res = pstmt.executeQuery();
+            if(res.next()) {
+                return new MemberinfoVo(memid, res.getString("id"), null, null, res.getString("age"), res.getString("email"), res.getString("addr"), res.getDate("regdate"), res.getString("phone"), res.getInt("point"), res.getInt("status"));
+            }else return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
