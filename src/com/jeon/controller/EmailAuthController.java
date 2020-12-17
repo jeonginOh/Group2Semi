@@ -13,7 +13,7 @@ import com.jeon.mail.MailSender;
 
 import org.json.JSONObject;
 @WebServlet("/member/joincheck.do")
-public class MailAuthController extends HttpServlet{
+public class EmailAuthController extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
@@ -22,8 +22,8 @@ public class MailAuthController extends HttpServlet{
         byte[] bytes = new byte[2];
         random.nextBytes(bytes);
         StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < bytes.length; i++) {
-			sb.append(String.format("%02x",bytes[i]));
+        for (int i = 0; i < bytes.length; i++) {
+            sb.append(String.format("%02x",bytes[i]));
         }
         StringBuilder html = new StringBuilder();
         html.append("    <style type='text/css'>");

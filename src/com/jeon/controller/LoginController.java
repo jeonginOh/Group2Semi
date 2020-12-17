@@ -17,6 +17,7 @@ import com.jeon.Dao.MemberinfoDao;
 import org.json.JSONObject;
 
 import semiVo.LoginauthVo;
+import semiVo.MemberinfoVo;
 @WebServlet("/auth/login.do")
 public class LoginController extends HttpServlet{
     final int expiredate=7;
@@ -75,5 +76,14 @@ public class LoginController extends HttpServlet{
         }
         resp.getWriter().print(json);
     }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/plain;charset=UTF-8");
+        JSONObject json = new JSONObject();
+        MemberinfoDao dao = MemberinfoDao.getInstance();
+        LoginauthDao ldao = LoginauthDao.getInstance();
 
+        MemberinfoVo vo = new MemberinfoVo(0, null, null, null, null, null, null, null, null, 0, 3);
+        //TODO: 비회원을 등록하고 memid를 session에 넣는다.
+    }
 }

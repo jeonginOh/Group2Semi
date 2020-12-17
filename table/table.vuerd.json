@@ -72,7 +72,7 @@
               "autoIncrement": false,
               "primaryKey": false,
               "unique": true,
-              "notNull": true
+              "notNull": false
             },
             "ui": {
               "active": false,
@@ -95,7 +95,7 @@
               "autoIncrement": false,
               "primaryKey": false,
               "unique": false,
-              "notNull": true
+              "notNull": false
             },
             "ui": {
               "active": false,
@@ -118,7 +118,7 @@
               "autoIncrement": false,
               "primaryKey": false,
               "unique": false,
-              "notNull": true
+              "notNull": false
             },
             "ui": {
               "active": false,
@@ -187,7 +187,7 @@
               "autoIncrement": false,
               "primaryKey": false,
               "unique": false,
-              "notNull": true
+              "notNull": false
             },
             "ui": {
               "active": false,
@@ -210,7 +210,7 @@
               "autoIncrement": false,
               "primaryKey": false,
               "unique": false,
-              "notNull": true
+              "notNull": false
             },
             "ui": {
               "active": false,
@@ -274,12 +274,12 @@
             "name": "status",
             "comment": "사용자상태정보",
             "dataType": "number(1)",
-            "default": "0",
+            "default": "1",
             "option": {
               "autoIncrement": false,
               "primaryKey": false,
               "unique": false,
-              "notNull": true
+              "notNull": false
             },
             "ui": {
               "active": false,
@@ -295,10 +295,10 @@
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 927,
           "top": 30,
-          "zIndex": 1383,
+          "zIndex": 1539,
           "widthName": 71,
           "widthComment": 60
         },

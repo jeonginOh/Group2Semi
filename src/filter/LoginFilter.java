@@ -56,6 +56,8 @@ public class LoginFilter implements Filter{
                         LoginauthDao ldao = LoginauthDao.getInstance();
                         int memid = ldao.autologin(token, identifier);
                         if(memid==0) {//다시 로그인
+                            //이전 작업이 있을 때 session에 넣고, login페이지로 넘어가고, 
+                            //login페이지에서 getheader referel?로 원래 경로를 가져온 다음 목적 페이지에서 session을 비운다.
                             response.sendRedirect(request.getContextPath()+"/auth/login.html");
                         }else if(memid==-1) {
                             //쿠키유출

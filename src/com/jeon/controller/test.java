@@ -15,14 +15,13 @@ import javax.servlet.http.HttpSession;
 public class test extends HttpServlet{
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        //String memid = (String) session.getAttribute("memid");
-        resp.getWriter().print(session.getAttribute("memid")+"\n");
-        resp.getWriter().print(session.getAttribute("menual")+"\n");
-        Cookie[] cookies = req.getCookies();
-        for (Cookie cookie : cookies) {
-            resp.getWriter().print(cookie.getName()+"\n");
-            resp.getWriter().print(cookie.getValue()+"\n");
-        }
+        System.out.println(req.getParameter("text"));
+        System.out.println(req.getAttribute("text"));
+        System.out.println(req.getAttribute("aaa"));
+        req.setAttribute("bbb", "controller에서 가져온 Attr");
+        System.out.println("test.do: "+req.getHeader("referer"));
+        System.out.println("test.do: "+req.getRequestURL().toString());
+        req.getRequestDispatcher("test.jsp").forward(req, resp);
+        // resp.sendRedirect(req.getHeader("referer"));
     }
 }

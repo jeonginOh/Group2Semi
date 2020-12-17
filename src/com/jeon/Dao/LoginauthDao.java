@@ -90,7 +90,7 @@ public class LoginauthDao {
             pstmt.setInt(1, memid);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             //new login
         } finally {
             DBCPBean.close(conn, pstmt);
@@ -111,7 +111,7 @@ public class LoginauthDao {
             pstmt.setString(2, identifier);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             //new login
         } finally {
             DBCPBean.close(conn, pstmt);
@@ -186,8 +186,7 @@ public class LoginauthDao {
     public void getlastlogin() {}
 
     //======================================================================
-    //여기서부터 임시로그인용 메소드
-    // public int t_insert(LoginauthVo vo) {} 공유해서 사용한다.
+    //여기서부터 token을 사용한 임시로그인용 메소드
 
     public int templogin(String token) {
         Connection conn = null;
