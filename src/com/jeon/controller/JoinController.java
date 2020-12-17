@@ -43,7 +43,6 @@ public class JoinController extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/plain;charset=utf-8");
-        HashMap<String, String> map = new HashMap<>();
         
         String type = req.getParameter("type");
         String value = req.getParameter("value");
@@ -51,10 +50,8 @@ public class JoinController extends HttpServlet{
         MemberinfoDao dao = MemberinfoDao.getInstance();
 
         boolean res = false;
-        if (map.size()>0) {
-            int n = dao.check(type, value);
-            if (n<=0) res = true;
-        }
+        int n = dao.check(type, value);
+        if (n<=0) res = true;
         JSONObject json = new JSONObject();
         json.put("result", res);
         resp.getWriter().print(json);

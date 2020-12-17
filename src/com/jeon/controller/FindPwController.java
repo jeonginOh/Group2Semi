@@ -63,7 +63,7 @@ public class FindPwController extends HttpServlet{
             sb.append("<h1>비밀번호 변경용 링크</h1>");
             sb.append("<p>"+expire+"까지 유효합니다.</p>");
             sb.append("<a href='http://"+ URL+link +"'>변경하기</a>");
-            mail.send("비밀번호찾기", email, sb.toString());
+            mail.send("비밀번호찾기", email, sb);
             json.append("find", true);
             json.append("result", expire);
         }
