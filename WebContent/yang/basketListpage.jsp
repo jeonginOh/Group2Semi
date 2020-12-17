@@ -19,7 +19,6 @@
 		<th><input type="checkbox" id="allck" onclick="checkAll()">전체선택</th>
 		<th>상품</th>
 		<th>남은수량</th>
-		<th>판매여부</th>
 		<th>개수</th>
 		<th>가격</th>
 		<th>삭제</th>
@@ -237,6 +236,11 @@ function checkDel(){
 // 	var hd=document.getElementById("hdPrice");
 // 	hd.value=tot;
 // }
+
+window.onload=function(){
+	totPrice();
+	}
+
 
 function totPrice(){
 	var totprice=document.getElementsByName("totprice");
