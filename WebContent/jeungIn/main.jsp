@@ -22,7 +22,7 @@
 		rpage="rightcontent.jsp";
 	}
 	if(rpage==null){
-		rpage="/yang/maindibsList.jsp";
+		rpage="/yang/mainbdList.jsp";
 	}
 %>
 <body>
