@@ -26,6 +26,48 @@
 <br>
 <div>
 	<h3>주문자 정보</h3>
-	
+	<table>
+		<tr>
+			<th>아이디</th>
+			<td>
+				${mem.id }
+			</td>
+		</tr>
+		<tr>
+			<th>휴대폰</th>
+			<td>
+				${mem.phone }
+			</td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td>
+				${mem.email }
+			</td>
+		</tr>
+	</table>
 </div>
+<br>
+<div>
+	<h3>배송지 정보</h3>
+	<div>
+		${mem.addr }
+		<br>
+		<input type="button" value="배송지변경">
+	</div>
+</div>
+<br>
+<c:if test="${mem.status==1 }">
+<div>
+	<h3>쿠폰 적용</h3>
+	<div>
+		<c:when test="${empty coup.coupid }">
+			<span>쿠폰이 없습니다.</span>
+		</c:when>
+		<c:otherwise>
+			${coup.context }
+		</c:otherwise>
+	</div>
+</div>
+</c:if>
 </div>
