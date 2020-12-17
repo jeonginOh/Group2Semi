@@ -103,7 +103,7 @@ public class iteminfoDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM ITEMINFO WHERE "+itemid+" = ?";
+		String sql = "SELECT * FROM ITEMINFO WHERE ITEMID=?";
 		IteminfoVo vo = null;
 		try {
 			con = DBCPBean.getConn();

@@ -18,9 +18,6 @@
 		spage="totalcontent.jsp";
 	}
 	String rpage=request.getParameter("rpage");
-	if(spage=="/yang/basketListpage.jsp"){
-		rpage="rightcontent.jsp";
-	}
 	if(rpage==null){
 		rpage="/yang/mainbdList.jsp";
 	}
