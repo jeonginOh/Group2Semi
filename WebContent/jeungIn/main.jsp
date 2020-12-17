@@ -14,13 +14,16 @@
 </head>
 <%
 	String spage=request.getParameter("spage");
+	String rpage=request.getParameter("rpage");
 	if(spage==null){
 		spage="totalcontent.jsp";
 	}
-	String rpage=request.getParameter("rpage");
-	if(rpage==null){
+	if(session.getAttribute("memid")==null){
+		rpage="/yang/recentShop.jsp";
+	}else{
 		rpage="/yang/mainbdList.jsp";
 	}
+	
 %>
 <body>
 	<div id = "wrap">
