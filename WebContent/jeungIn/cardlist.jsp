@@ -45,6 +45,7 @@
 						cardtext.className="card-text";
 						cardtext.innerHTML=price;
 						var btn = document.createElement("a");
+						//아래 경로부분 바꿈%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 						btn.href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+json.arr[i].itemid;
 						btn.className="btn btn-primary";
 						btn.innerHTML="More";
