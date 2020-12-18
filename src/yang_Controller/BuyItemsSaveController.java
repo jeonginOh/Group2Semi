@@ -51,7 +51,9 @@ public class BuyItemsSaveController extends HttpServlet{ //구매한목록,배�
 		if(n>0 && n2>0) { //성공했으면 장바구니에서도 제거
 			BasketDao bdao=BasketDao.getInstance();
 			bdao.buyDelBasket(memid);
-			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp"); //영수증페이지로
+			//resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp"); //영수증페이지로
+			req.setAttribute("code", "오류로 인해 결제실패. 관리자에게 문의해주세요.");
+			req.getRequestDispatcher(req.getContextPath()+"/jeungIn/main.jsp?spage=buyPage_y.jsp").forward(req, resp);
 		}else {
 			req.setAttribute("code", "오류로 인해 결제실패. 관리자에게 문의해주세요.");
 			req.getRequestDispatcher(req.getContextPath()+"/jeungIn/main.jsp?spage=buyPage_y.jsp").forward(req, resp);

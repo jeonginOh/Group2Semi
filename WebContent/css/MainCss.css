@@ -279,3 +279,14 @@
 		.dibsbox{display: inline-block;}
 		.dibsitem{width:100px; height: 100px; }
 		.dibsspan{font-size: 0.8em;}
+		
+		/*최근본 목록*/
+		#recWhole{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+		.pg{position: relative; left: 80px;}
+		.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
+		.pg:visited{color:black;}
+		.pg:active{color:black;}
+		.recbox{display: inline-block;}
+		.recitem{width:100px; height: 100px; }
+		.recspan{font-size: 0.8em;}
+		
