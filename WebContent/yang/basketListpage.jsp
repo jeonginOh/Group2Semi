@@ -42,7 +42,7 @@
 	</div>
 	<br><br>
 	<div>
-		<input type="submit" value="구매하기">
+		<input type="submit" value="구매하기" onclick="return isNull()">
 	</div>
 </div>
 </form>
@@ -224,18 +224,13 @@ function checkDel(){
 	xhr.send();
 }
 
-// window.onload=function() {
-// 	var totprice=document.getElementsByName("totprice");
-// 	var tot=0;
-// 	for(let i=0;i<totprice.length;i++){
-// 		tot+=(totprice[i].innerText*1);
-// 	}
-	
-// 	var span=document.getElementById("totpriceView");
-// 	span.innerHTML=tot+"원";
-// 	var hd=document.getElementById("hdPrice");
-// 	hd.value=tot;
-// }
+function isNull(){
+	var checkprice=document.getElementById("hdPrice").value;
+	if(checkprice<=0){
+		alert("구매할 목록이 없습니다");
+		return false;
+	}
+}
 
 window.onload=function(){
 	totPrice();

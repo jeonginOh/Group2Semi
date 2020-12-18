@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import semiVo.BuylistVo;
 import semiVo.LogisticVo;
+import yang_dao.BasketDao;
 import yang_dao.BuyListDao;
 import yang_dao.LogisticDao;
 
 @WebServlet("/buyItemsSave.yang.do")
-public class BuyItemsSaveController extends HttpServlet{
+public class BuyItemsSaveController extends HttpServlet{ //구매한목록,배송정보테이블에 추가
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String item[]=req.getParameterValues("item");
@@ -47,10 +48,13 @@ public class BuyItemsSaveController extends HttpServlet{
 				break;
 			}
 		}
-		if(n>0 && n2>0) {
-			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp");
+		if(n>0 && n2>0) { //성공했으면 장바구니에서도 제거
+			BasketDao bdao=BasketDao.getInstance();
+			bdao.buyDelBasket(memid);
+			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp"); //영수증페이지로
 		}else {
-			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp?spage=/yang/yangfail.html");
+			req.setAttribute("code", "오류로 인해 결제실패. 관리자에게 문의해주세요.");
+			req.getRequestDispatcher(req.getContextPath()+"/jeungIn/main.jsp?spage=buyPage_y.jsp").forward(req, resp);
 		}
 	}
 }

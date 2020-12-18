@@ -82,3 +82,10 @@
 	<input type="hidden" name="memid" value="${mem.memid }">
 	<input type="hidden" name="addr" value="${mem.addr }">
 </form>
+
+<script type="text/javascript">
+var msg='${code}';
+if(msg!=""){
+	alert(msg);
+}
+</script>

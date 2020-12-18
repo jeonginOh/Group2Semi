@@ -19,7 +19,7 @@ import semiVo.MemberinfoVo;
 import yang_dao.CouponDao;
 
 @WebServlet("/buyitems.yang.do")
-public class BuyItemsController_y extends HttpServlet{
+public class BuyItemsController_y extends HttpServlet{ //정보들 가져와서 구매페이지로 넘기는 컨트롤러
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String itemid[]=req.getParameterValues("paramId");
