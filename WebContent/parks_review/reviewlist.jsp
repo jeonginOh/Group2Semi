@@ -47,37 +47,49 @@
 	<a
 		href="${pageContext.request.contextPath }/parks_review/reviewlist1.jsp">물품리스트</a>
 	<div id="box">
-		<table style="table-layout: fixed;" border="1" bordercolor="red" width="1400" align="center" >
+		<table style="table-layout: fixed;" border="1" bordercolor="red"
+			width="1400" align="center">
 			<tr>
-				<th style="width:7%;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" >제목</th>
-				<th style="width:7%;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">내용</th>
-				<th style="width:7%;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" >물품명</th>
-				<th style="width:10%;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">작성일</th>
-				<th style="width:10%;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">작성자</th>
-				<th style="width:400px;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">사진</th>
-				<th style="width:100px;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">유저평점</th>
+				<th
+					style="width: 7%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">제목</th>
+				<th
+					style="width: 7%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">내용</th>
+				<th
+					style="width: 7%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">물품명</th>
+				<th
+					style="width: 10%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">작성일</th>
+				<th
+					style="width: 10%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">작성자</th>
+				<th
+					style="width: 400px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">사진</th>
+				<th
+					style="width: 100px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">유저평점</th>
 			</tr>
 
 			<c:forEach var="vo" items="${list }" varStatus="status">
 				<tr>
-					<td style="width:12%;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">
-					<a href="${cp}//reviewdetail?revid=${vo.revid}&itemid=${vo.itemid }&memid=${vo.memid } ">${vo.title }</a></td>
+					<td
+						style="width: 12%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+						<a
+						href="${cp}/reviewdetail?revid=${vo.revid}&itemid=${vo.itemid } ">${vo.title }</a>
+					</td>
 
-					<td style="width:7%;  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${vo.context }</td>
+					<td
+						style="width: 7%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${vo.context }</td>
 					<td>${itemname }</td>
 					<td>${vo.revdate }</td>
 					<td>${username[status.index] }</td>
 					<td><c:choose>
-						<c:when test="${ vo.image==null }">
+							<c:when test="${ vo.image==null }">
 						등록된 사진이 없습니다.
 						</c:when>
-						<c:when test="${vo.image!=null }">
-						<img src="fileFolder/${vo.image }" style="width: 200px;"
-						onclick="imgup(event); imgout(event);" id="img1">
-						</c:when>	
+							<c:when test="${vo.image!=null }">
+								<img src="fileFolder/${vo.image }" style="width: 200px;"
+									onclick="imgup(event); imgout(event);" id="img1">
+							</c:when>
 						</c:choose></td>
-					
-	
+
+
 					<td><c:choose>
 							<c:when test="${vo.star>4.6 }">
 								<br>

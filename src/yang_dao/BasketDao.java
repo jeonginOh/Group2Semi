@@ -68,4 +68,20 @@ public class BasketDao {
 			DBCPBean.close(con,pstmt);
 		}
 	}
+	public int buyDelBasket(int memid) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		String sql="DELETE FROM BASKET WHERE MEMID=? AND COUNT>0";
+		try {
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, memid);
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(pstmt,con);
+		}
+	}
 }

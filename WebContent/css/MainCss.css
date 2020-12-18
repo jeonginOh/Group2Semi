@@ -242,3 +242,51 @@
 		  border-top-left-radius:5px;
 		  border-top-right-radius:5px;
 		}
+		
+		/*장바구니 페이지 css*/
+	 	.buyFloating { position: fixed; left: 1450px; top: 250px; margin-right: -720px; text-align:center;  
+					width: 300px; height:300px; border: 1px solid purple; padding-top:150px;} 
+ 		.bkpgitem{width: 150px; height: 150px;} 
+	 	.itemname{display:inline-block; width: 150px;} 
+	 	#pgBasketTbl{width: 890px; border: 1px solid black;} 
+	 	.listtr{text-align: center;} 
+	 	.imgnametd{width: 300px;} 
+	 	.resultspan{display: inline-block; font: bold; font-size: 1.5em;}
+	 	
+	 	/*찜 페이지 css*/
+ 		.pgdibsitem{width: 150px; height: 150px;}
+		.dibsitemname{display:inline-block; width: 150px;}
+		#pgDibsTbl{width: 890px; border: 1px solid black;}
+		.dibslisttr{text-align: center;}
+		
+		/*오른쪽 장바구니 목록*/
+		#wholeBasket{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+		#whole{width: 300px;}
+		.pg{position: relative; left: 80px;}
+		.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
+		.pg:visited{color:black;}
+		.pg:active{color:black;}
+		.bkbox{display: inline-block;}
+		.bkitem{width:100px; height: 100px; }
+		.bkspan{font-size: 0.8em;}
+		
+		/*오른쪽 찜 목록*/
+		#wholeDibs{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+		.pg{position: relative; left: 80px;}
+		.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
+		.pg:visited{color:black;}
+		.pg:active{color:black;}
+		.dibsbox{display: inline-block;}
+		.dibsitem{width:100px; height: 100px; }
+		.dibsspan{font-size: 0.8em;}
+		
+		/*최근본 목록*/
+		#recWhole{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+		.pg{position: relative; left: 80px;}
+		.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
+		.pg:visited{color:black;}
+		.pg:active{color:black;}
+		.recbox{display: inline-block;}
+		.recitem{width:100px; height: 100px; }
+		.recspan{font-size: 0.8em;}
+		

@@ -8,9 +8,14 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.jeon.Dao.LoginauthDao;
+
+import semiVo.LoginauthVo;
 // @WebFilter(
 //     urlPatterns = {
 //         "/member/*",
@@ -31,17 +36,44 @@ public class LoginFilter implements Filter{
 
     @Override
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException, ServletException {
-        // HttpServletRequest request = (HttpServletRequest) arg0;
-        // HttpSession session = request.getSession();
-        // if (session!=null) {
-        //     String id =(String) session.getAttribute("id");
-        //     if (id!=null && !id.isBlank()) arg2.doFilter(arg0, arg1);
-        //     // else arg0.getRequestDispatcher("/login/login.jsp").forward(arg0, arg1);
-        //     else ((HttpServletResponse) arg1).sendRedirect(request.getContextPath()+"/login/login.jsp");
-        // }
+        arg0.setCharacterEncoding("UTF-8");
+        final int expiredate = 7;
+        HttpServletRequest request = (HttpServletRequest) arg0;
+        HttpServletResponse response = (HttpServletResponse) arg1;
+        HttpSession session = request.getSession();
 
-        //TODO : session에서 memid확인, 없으면(로그인상태 아님) cookie>token에서 memid를 얻어와서 자동로그인 수행. 그마저도 없으면 로그인페이지로
-        //
-        //비밀번호찾기 페이지 등 예외처리를 해야 함
+        //session에서 memid확인
+        if (session.getAttribute("memid")!=null) arg2.doFilter(arg0, arg1);
+        //없으면(로그인상태 아님) 
+        else{
+            Cookie[] cookies = request.getCookies();
+            if (cookies!=null) {
+                //cookie>token에서 memid를 얻어와서 자동로그인 수행
+                for (Cookie cookie : cookies) {
+                    if(cookie.getName().equals("token")) {
+                        String token = cookie.getValue();
+                        String identifier = request.getRemoteAddr()+request.getHeader("User-Agent");
+                        LoginauthDao ldao = LoginauthDao.getInstance();
+                        int memid = ldao.autologin(token, identifier);
+                        if(memid==0) {//다시 로그인
+                            //이전 작업이 있을 때 session에 넣고, login페이지로 넘어가고, 
+                            //login페이지에서 getheader referel?로 원래 경로를 가져온 다음 목적 페이지에서 session을 비운다.
+                            response.sendRedirect(request.getContextPath()+"/auth/login.html");
+                        }else if(memid==-1) {
+                            //쿠키유출
+                            //사용자에게 경고해야함
+                            response.sendRedirect(request.getContextPath()+"/auth/loginError.html");
+                        }else {
+                            //테이블, 쿠키 갱신
+                            cookie.setValue(ldao.renew(new LoginauthVo(0, token, memid, identifier, 0, null)));
+                            cookie.setMaxAge(60*60*24*expiredate);
+                            cookie.setPath("/");
+                            response.addCookie(cookie);
+                        }
+                    }
+                }
+            }
+        }
+        arg2.doFilter(arg0, arg1);
     }
 }

@@ -19,7 +19,7 @@ function cktitle(){
 
 </script>
 	<form method="post" enctype="multipart/form-data"
-		action="../reviewinsert.do?itemid=1&memid=1">
+		action="../reviewinsert.do?itemid=2&memid=1" onsubmit="return cktitle()">
 		<div id="red"
 			style="width: 500px; height: 500px; border: 2px solid red">
 			제목:<input type="text"  id="title" name="title"  required="required" onclick="if(this.value==this.defaultValue){this.value=''}" 
@@ -29,7 +29,7 @@ function cktitle(){
 		onblur="if (this.value == '') { this.value = this.defaultValue;">내용을 입력하세요</textarea>
 			<br> <input type="file" value="image" id="image"
 				onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif"><br> <input
-				type="submit" value="저장" onclick="cktitle()">
+				type="submit" value="저장" >
 				
 		<input type="radio" name="star" id="star" value=1>
 		<label  >★</label>
@@ -118,18 +118,6 @@ function cktitle(){
 				img.style.height = "100px";
 			};
 			reader.readAsDataURL(event.target.files[0]);
-		}
-		function starclick(e){
-		var star1=document.getElementById("star1");
-		str.src="../fileFolder/star2.jpg";
-		var star2=document.getElementById("star2");
-		str.src="../fileFolder/star2.jpg";
-		var star3=document.getElementById("star3");
-		str.src="../fileFolder/star2.jpg";
-		var star4=document.getElementById("star4");
-		str.src="../fileFolder/star2.jpg";
-		var star5=document.getElementById("star5");
-		str.src="../fileFolder/star2.jpg";
 		}
 	</script>
 </body>

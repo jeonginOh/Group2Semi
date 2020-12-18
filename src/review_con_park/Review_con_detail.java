@@ -19,11 +19,10 @@ public class Review_con_detail extends HttpServlet {
 		String spageNum=req.getParameter("pageNum");
 		int revid=Integer.parseInt(req.getParameter("revid"));
 		int itemid=Integer.parseInt(req.getParameter("itemid"));
-		int memid=Integer.parseInt(req.getParameter("memid"));
 		ItemreviewDao dao=ItemreviewDao.getInstance();
 		
 		ItemreviewVo vo=dao.review_listupdate(revid);
-		String username=dao.memId(memid);
+		String username=dao.memId(revid);
 		String itemname=dao.itemname(itemid);
 		req.setAttribute("itemname", itemname);
 		req.setAttribute("username", username);

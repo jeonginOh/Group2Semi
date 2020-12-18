@@ -44,19 +44,15 @@ public class Review_con_update extends HttpServlet{
 		String title = multi.getParameter("title");
 		String context = multi.getParameter("context");
 		String file = multi.getOriginalFileName("image");
-		String img=multi.getContentType("img2");
-		System.out.println(img);
-	
-		
-		System.out.println(multi.getOriginalFileName(file));
+		String file1= multi.getParameter("image1");
+		System.out.println(file);
+		System.out.println(file1);
 		if(file==null) {
-			file=multi.getOriginalFileName("img1");
-			
+			file=file1;
+			System.out.println(file);
 		}
-		System.out.println(multi.getOriginalFileName("img1"));
-		File f = multi.getFile("file1");
-		ItemreviewVo insertvo = new ItemreviewVo(revid, 0, 0, title, file, context, star, null);
 		ItemreviewDao reviewdao = ItemreviewDao.getInstance();
+		ItemreviewVo insertvo = new ItemreviewVo(revid, 0, 0, title, file, context, star, null);
 		int n = reviewdao.review_update(insertvo);
 		resp.setContentType("text/plain;charset=utf-8");
 		if (n > 0) {

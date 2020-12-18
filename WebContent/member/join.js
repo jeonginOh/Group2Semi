@@ -11,84 +11,155 @@ window.onload=function() {
     let email = document.getElementById('email');
     let addr = document.getElementById('addr');
     let phone = document.getElementById('phone');
+    let emailauth = document.getElementById('emailauth');
+    
 
     // let idMsg = document.getElementById('idMsg');
     // let pwdMsg = document.getElementById('pwdMsg');
     // let pwdchkMsg = document.getElementById('pwdchkMsg');
     // let birthdayMsg = document.getElementById('birthdayMsg');
-    // let emailMsg = document.getElementById('emailMsg');
+    let emailMsg = document.getElementById('emailMsg');
     // let addrMsg = document.getElementById('addrMsg');
     // let phoneMsg = document.getElementById('phoneMsg');
     let inputrows = document.getElementsByClassName("inputrow");
 
+
+    //이메일주소인증용 초기설정
+    let mailcancel = document.getElementById('mailcancel');
+    let usemail = document.getElementById('usemail');
+    let emailcode = document.getElementById('emailcode');
+    let emailcodebtns = document.getElementById('emailcodebtns');
     
+    emailauth.style.display="none";
+    emailcodebtns.style.display="none";
+    emailcode.style.display="none";
+    let emailauthready=false;
+    // let mailsent=false;
     
-    /**
-     * id, email, phone 중복확인
-     * @param {EventTarget} einput EventTarget
-     */
-    function checkavail(einput) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange=function() {
-            if (xhr.readyState==4 && xhr.status==200) {
-                let text="다른 ";
-                let json = JSON.parse(xhr.responseText);
-                // console.log(json.result);
-                if (json.result=="true") text="사용가능";
-                else {
-                    if (einput.id=="id") text+="아이디";
-                    else if (einput.id=="phone") text+="전화번호";
-                    else if (einput.id=="email") text+="이메일";
-                    text = josa(text, "을")+" 사용해주세요.";
-                    YouShallNotPass=true;
+    let mailauthcode = "";
+    let mailverified=false;
+    
+    emailauth.addEventListener("click", function(e) {
+        emailauth.style.display="none"
+        if (emailauthready && !mailverified) {
+            email.setAttribute('readonly', true);
+            // mailsent=true;
+            emailcodebtns.style.display="";
+            emailcode.style.display="";
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=function() {
+                if (xhr.readyState==4 && xhr.status==200) {
+                    let json = JSON.parse(xhr.responseText);
+                    mailauthcode=json.mailauthcode;
                 }
-                einput.parentNode.previousSibling.previousSibling.textContent=text;
-            }
-        };
-        xhr.open('get', '../member/join.do?type='+einput.id+'&value='+einput.value, true);
-        xhr.send();
-    }
-
-
-    pwdchk.addEventListener("focusout", function(e) {
-        // console.log(pwdchk.value + ":" + pwd.value);
-        if(pwdchk.value==pwd.value) e.target.parentNode.previousSibling.previousSibling.textContent="비밀번호가 맞지 않습니다.";
-        else pwdchk.parentNode.previousSibling.previousSibling.textContent="";
+            };
+            xhr.open('get', 'joincheck.do?email='+email.value, true);
+            // let param = "email="+email.value;
+            xhr.send();
+        }
     }, false);
 
-    
+    mailcancel.addEventListener('click', function(e) {
+        email.value="";
+        email.removeAttribute('readonly');
+        emailMsg.textContent="";
+        // emailauth.style.display="none"
+        emailcode.style.display="none";
+        emailcode.removeAttribute('readonly');
+        emailcodebtns.style.display="none";
+        mailauthcode="";
+        mailverified=false;
+        emailauthready=false;
+    }, false);
 
-    // console.log(phone.parentNode.parentNode.firstElementChild.firstElementChild.textContent);
-    //     // .previousSibling.previousSibling.firstChild);
-    // console.log(inputrows.length);
-    //비어있는지 확인
+    usemail.addEventListener('click', function(e) {
+        if (emailcode.value==mailauthcode) {
+            mailverified=true;
+            emailcode.setAttribute('readonly', true);
+            alert("인증되었습니다.");
+        }
+    }, false);
+
+    pwdchk.addEventListener("keyup", function(e) {
+        let tgt = pwdchk.parentNode.previousSibling.previousSibling;
+        if(pwdchk.value==pwd.value) {
+            tgt.textContent="비밀번호가 맞지 않습니다.";
+            YouShallNotPass=true;
+        }
+        else tgt.textContent="";
+    }, false);
+
+    //비어있는지 확인하는 용도의 이벤트 생성
     for(let i=0; i<inputrows.length; i++) {
         // console.log(inputrows[i].firstChild);
         inputrows[i].firstChild.addEventListener("focusout", function(e) {
             checkinputevent(e.target);
         }, false);
     }
-    // function checkinput(e) {
-    //     // console.log(e);
-    //     // console.log(e.target);
-    //     checkinputevent(e.target);
-    // }
+
+    /**
+     * id, email, phone 중복확인
+     * @param {EventTarget} einput EventTarget
+     */
+    function checkavail(einput) {
+        // let tmp=false;
+        let tgt = einput.parentNode.previousSibling.previousSibling;
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange=function() {
+            if (xhr.readyState==4 && xhr.status==200) {
+                let json = JSON.parse(xhr.responseText);
+                // console.log(json.result);
+                if (JSON.parse(json.result)) {
+                    if (einput.id=="email" && !emailauthready) {
+                        emailauth.style.display=""; //이전값이 남아있어서 생기는 문제?
+                        emailauthready=true;
+                    }
+                    tgt.textContent="사용가능"; 
+                    tmp=true;
+                }else if (!JSON.parse(json.result)){
+                    let text="다른 ";
+                    if (einput.id=="id") text+="아이디";
+                    else if (einput.id=="phone") text+="전화번호";
+                    else if (einput.id=="email") {
+                        text+="이메일";
+                        emailauth.style.display="none";
+                        emailauthready=false;
+                        email.removeAttribute("readonly");
+                    }
+                    text = josa(text, "을")+" 사용해주세요.";
+                    YouShallNotPass=true;
+                    tgt.textContent=text;
+                }else {
+                    console.log("error");
+                    if (einput.id=="email") {
+                        emailauth.style.display="none";
+                        emailauthready=false;
+                        email.removeAttribute("readonly");
+                    }
+                }
+            }
+        };
+        xhr.open('get', '../member/join.do?type='+einput.id+'&value='+einput.value, true);
+        xhr.send();
+        // return tmp;
+    }
+
     function checkinputevent(einput) {
         YouShallNotPass=false;
-        einput.parentNode.previousSibling.previousSibling.textContent="";
+        let tgt = einput.parentNode.previousSibling.previousSibling;
+        tgt.textContent="";
         if (einput.value==null || einput.value.trim()=="") {
             // console.log(einput.value);
             let word = josa(einput.parentNode.parentNode.firstElementChild.firstElementChild.textContent, "을");
-            einput.parentNode.previousSibling.previousSibling.textContent=word+" 입력해주세요.";
+            tgt.textContent=word+" 입력해주세요.";
             YouShallNotPass=true;
         }else {
-            let tgt = einput.parentNode.previousSibling.previousSibling;
             //pwd와 pwdchk 동일한지 확인
-            if (einput==pwdchk) {
-                // console.log(einput.value==pwd.value);
-                if(einput.value!=pwd.value) tgt.textContent="비밀번호가 맞지 않습니다.";
-                YouShallNotPass=true;
-            }
+            // if (einput==pwdchk) {
+            //     // console.log(einput.value==pwd.value);
+            //     if(einput.value!=pwd.value) tgt.textContent="비밀번호가 맞지 않습니다.";
+            //     YouShallNotPass=true;
+            // }
             if (einput==pwd) {
                 // let regex = /'(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$'/;
                 let regex = /^(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{6,15}$/;
@@ -144,7 +215,13 @@ window.onload=function() {
         }
     }
     function canpass() {
-        return !YouShallNotPass;
+        if (mailverified && !YouShallNotPass) return true;
+        else {
+            if (!YouShallNotPass) alert("이메일 인증을 진행하세요.");
+            else if (!YouShallNotPass) alert("아이디와 전화번호를 다시 확인해주세요.");
+            else alert("아이디, 전화번호, 이메일을 다시 확인해주세요.");
+            return false;
+        }
     }
 }
 /**

@@ -14,9 +14,16 @@
 </head>
 <%
 	String spage=request.getParameter("spage");
+	String rpage=request.getParameter("rpage");
 	if(spage==null){
 		spage="totalcontent.jsp";
 	}
+	if(session.getAttribute("memid")==null){
+		rpage="/yang/recentShop.jsp";
+	}else{
+		rpage="/yang/mainbdList.jsp";
+	}
+	
 %>
 <body>
 	<div id = "wrap">
@@ -30,7 +37,7 @@
 			<jsp:include page="<%=spage %>"/>
 		</div>
 		<div id = "rightcontent" class ="main">
-			<jsp:include page="/yang/mainbasketList.jsp"/>
+			<jsp:include page="<%=rpage %>"/>
 		</div>
 		<div id = "footer" class ="main">
 			<jsp:include page="footer.jsp"/>

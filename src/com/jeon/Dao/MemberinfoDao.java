@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Random;
-
 import db.DBCPBean;
 import semiVo.MemberinfoVo;
 
@@ -16,18 +15,13 @@ import semiVo.MemberinfoVo;
  * 싱글톤 패턴
  */
 public class MemberinfoDao {
-    private MemberinfoDao() {
-    }
-
+    private MemberinfoDao() {}
     private static MemberinfoDao instance = new MemberinfoDao();
-
-    public static MemberinfoDao getInstance() {
-        return instance;
-    }
+    public static MemberinfoDao getInstance() {return instance;}
     /**
      * memid가 존재하는지 확인한다.(0 이상)
      * @param map id, pwd
-     * @return 0< memid
+     * @return memid
      * <p>-2 SQL ERROR <p>-1 NO ID <p>0 ID&PWD NOT MATCH
      */
     public int login(HashMap<String, String> map) {
@@ -37,7 +31,6 @@ public class MemberinfoDao {
         Connection conn = null;
         //get salt
         PreparedStatement pstmt1 = null;
-
         PreparedStatement pstmt2 = null;
         ResultSet res1=null;
         ResultSet res2=null;
@@ -50,7 +43,7 @@ public class MemberinfoDao {
             if (res1.next()) {
                 salt = res1.getString("salt").getBytes();
                 String cryptedpwd = crypt(pwd, salt);
-                pstmt2 = conn.prepareStatement("select memid from memberinfo where id=? and pwd=?");
+                pstmt2 = conn.prepareStatement("select memid from memberinfo where id=? and pwd=? and status>0");
                 pstmt2.setString(1, id);
                 pstmt2.setString(2, cryptedpwd);
                 res2 = pstmt2.executeQuery();
@@ -65,23 +58,73 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt1, pstmt2, res1, res2);
         }
     }
+    
+    /**
+     * status를 가져온다.
+     * @param memid
+     * @return
+     */
+    public int getStatus(int memid) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("select status from memberinfo where memid=?");
+            pstmt.setInt(1, memid);
+            res = pstmt.executeQuery();
+            if(res.next()) {
+                return res.getInt("status");
+            }else return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
+
+    public boolean isMember(int memid) {
+        return getStatus(memid)==1;
+    }
+    
+    public boolean isDeleted(int memid) {
+        return getStatus(memid)==-1;
+    }
+
 
     //int <p>0 회원없음 <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
-    //삭제시 이름 앞에 숫자 붙인 뒤 비활성 처리
-    //진짜 삭제 기능도 만들어야 함
-    public void delete() {
-        //TODO:
-        
-    }
-    public void tempUser() {
-        //TODO:
+    /**
+     * 삭제시 이름 앞에 숫자 붙인 뒤 비활성 처리<p>실제로 테이블에서 삭제되지는 않음<p>자동로그인도 폐기함
+     * @param memid
+     * @return true or false
+     */
+    public boolean delete(int memid) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("update memberinfo set status=-1 where memid=?");
+            pstmt.setInt(1, memid);
+            if (pstmt.executeUpdate()>0) {
+                LoginauthDao.getInstance().expire(memid);
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
+        }
     }
 
      /**
-      * 중복확인용.
+      * 중복확인용 메소드
       * @param type id, phone, email
       * @param value type's value
-      * @return status
+      * @return status <p>1=일반회원 <p>2=관리자 <p>-1=탈퇴회원
       */
     public int check(String type, String value) {
         Connection conn = null;
@@ -105,18 +148,18 @@ public class MemberinfoDao {
 
     /**
      * 등록된 이메일, 전화번호로 id를 찾는 기능
-     * @param target email || phone
+     * @param type email || phone
      * @param value 
      * @return id
      */
-    public String findId(String target, String value) {
+    public String findId(String type, String value) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet res = null;
         try {
             conn = DBCPBean.getConn();
             //status가 1인 회원(일반회원)을 대상으로 조회
-            String sql = "select id from memberinfo where "+target+"=? and status in(0,1)";
+            String sql = "select id from memberinfo where "+type+"=? and status in(0,1)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, value);
             res = pstmt.executeQuery();
@@ -131,7 +174,7 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt, res);
         }
     }
-
+    
     /**
      * <p>!!!로그인에 사용하지 말 것!!!
      * id를 통해 memid를 가져온다
@@ -152,6 +195,76 @@ public class MemberinfoDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
+        } finally{
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
+
+    /**
+     * memid로 id를 가져옴
+     * @param memid
+     * @return {@code String} id
+     */
+    public String getid(int memid) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("select id from memberinfo where memid=?");
+            pstmt.setInt(1, memid);
+            res = pstmt.executeQuery();
+            if(res.next()) return res.getString("id");
+            else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
+
+    public String getEmail(int memid) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("select email from memberinfo where memid=?");
+            pstmt.setInt(1, memid);
+            res = pstmt.executeQuery();
+            if(res.next()) return res.getString("email");
+            else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
+
+    /**
+     * 일단 다 뽑음
+     * @param memid
+     * @return MemberinfoVo
+     */
+    public MemberinfoVo getVo(int memid) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("select * from memberinfo where memid=?");
+            pstmt.setInt(1, memid);
+            res = pstmt.executeQuery();
+            if(res.next()) {
+                return new MemberinfoVo(memid, res.getString("id"), null, null, res.getString("age"), res.getString("email"), res.getString("addr"), res.getDate("regdate"), res.getString("phone"), res.getInt("point"), res.getInt("status"));
+            }else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
         }
     }
 
@@ -163,7 +276,6 @@ public class MemberinfoDao {
     public int insert(MemberinfoVo vo) {
         Connection conn=null;
         PreparedStatement pstmt =null;
-        
         try {
             conn = DBCPBean.getConn();
             String sql = "insert into memberinfo values(memberinfo_memid.nextval, ?, ?, ?, ?, ?, ?, sysdate, ?, ?, ?)";
@@ -177,8 +289,7 @@ public class MemberinfoDao {
             pstmt.setString(7, vo.getPhone());
             pstmt.setInt(8, vo.getPoint());
             pstmt.setInt(9, vo.getStatus());
-            int res = pstmt.executeUpdate();
-            if (res==1) return getMemId(vo.getId());
+            if (pstmt.executeUpdate()==1) return getMemId(vo.getId());
             else return 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,7 +298,39 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt);
         }
     }
+/**---------------------------------------------------------------------
+ * 임시유저 관련 메소드
+----------------------------------------------------------------------*/
+    
+public int t_insert(MemberinfoVo vo) {
+    Connection conn=null;
+    PreparedStatement pstmt =null;
+    try {
+        conn = DBCPBean.getConn();
+        String sql = "insert into memberinfo values(memberinfo_memid.nextval, memberinfo_memid.currval, memberinfo_memid.currval, memberinfo_memid.currval, ?, ?, ?, sysdate, ?, ?, ?)";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(2, vo.getPwd());
+        pstmt.setString(3, vo.getSalt());
+        pstmt.setString(4, vo.getAge());
+        pstmt.setString(5, vo.getEmail());
+        pstmt.setString(6, vo.getAddr());
+        pstmt.setString(7, vo.getPhone());
+        pstmt.setInt(8, vo.getPoint());
+        pstmt.setInt(9, vo.getStatus());
+        if (pstmt.executeUpdate()==1) return getMemId(vo.getId());
+        else return 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return -1;
+    } finally {
+        DBCPBean.close(conn, pstmt);
+    }
+}
 
+
+/**---------------------------------------------------------------------
+ * 암호화 관련 메소드
+----------------------------------------------------------------------*/
     public String makeSalt() {
         Random random = new Random();
         byte[] bytes = new byte[8];
@@ -200,7 +343,7 @@ public class MemberinfoDao {
 		return sb.toString();
     }
 
-    public String crypt(byte[] b) {// pw단방향 암호화
+    private String crypt(byte[] b) {// pw단방향 암호화
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(b);

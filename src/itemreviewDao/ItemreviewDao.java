@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import db.DBCPBean;
 import oracle.jdbc.driver.DBConversion;
 import semiVo.ItemreviewVo;
+import semiVo.Rev_childVo;
 
 public class ItemreviewDao {
 	private static ItemreviewDao instance = new ItemreviewDao();
@@ -46,13 +47,18 @@ public class ItemreviewDao {
 	public int review_delete(int revid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2=null;
 		try {
 			con = DBCPBean.getConn();
+			String sql2="delete from rev_child where revid=?";
 			String sql = "delete from itemreview where revid=?";
+			pstmt2=con.prepareStatement(sql2);
+			pstmt2.setInt(1, revid);
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, revid);
+			pstmt2.executeUpdate();
 			return pstmt.executeUpdate();
-
+	
 		} catch (SQLException se) {
 			se.printStackTrace();
 			return -1;
@@ -78,7 +84,7 @@ public class ItemreviewDao {
 
 			if (rs.next()) {
 				ItemreviewVo vo = new ItemreviewVo(rs.getInt("revid"), rs.getInt("itemid"), rs.getInt("memid"),
-						rs.getString("title"), rs.getString("image"), rs.getString("context"), rs.getInt("star"),
+						rs.getString("title"), rs.getString("review_image"), rs.getString("context"), rs.getInt("star"),
 						rs.getDate("revdate"));
 				// title,image,context,star,revdate만 사용할 예정이지만 혹시 몰라 모두 조회하게 하였음
 				return vo;
@@ -112,7 +118,7 @@ public class ItemreviewDao {
 			while (rs.next()) {
 
 				ItemreviewVo vo = new ItemreviewVo(rs.getInt("revid"), itemid, rs.getInt("memid"),
-						rs.getString("title"), rs.getString("image"), rs.getString("context"), rs.getInt("star"),
+						rs.getString("title"), rs.getString("review_image"), rs.getString("context"), rs.getInt("star"),
 						rs.getDate("revdate"));
 				list.add(vo);
 			}
@@ -148,7 +154,7 @@ public class ItemreviewDao {
 	public int review_update(ItemreviewVo vo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String sql = "update itemreview set title=?, context=?, image=?, star=? where revid=?";
+		String sql = "update itemreview set title=?, context=?, review_image=?, star=? where revid=?";
 		try {
 			con = DBCPBean.getConn();
 			pstmt = con.prepareStatement(sql);
@@ -213,15 +219,15 @@ public class ItemreviewDao {
 		}
 	}
 
-	public String memId(int memid) {
+	public String memId(int revid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select id from memberinfo NATURAL join itemreview where memid=? order by revid desc";
+		String sql = "select id from memberinfo NATURAL join itemreview where revid=?";
 		try {
 			con = DBCPBean.getConn();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, memid);
+			pstmt.setInt(1, revid);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -260,5 +266,43 @@ public class ItemreviewDao {
 		} finally {
 			DBCPBean.close(con, pstmt, rs);
 		}
+	}
+	public int reviewchild(Rev_childVo vo) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+			con=DBCPBean.getConn();
+			String sql="insert into rev_child values(?,?,?,sysdate)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, vo.getRchildid());
+			pstmt.setInt(2, vo.getRevid());
+			pstmt.setString(3, vo.getcontext_child());
+		return pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}
+	}
+	public int getMaxNum() {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=DBCPBean.getConn();
+			String sql="select NVL(max(revid),0) maxnum from rev_child";
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			rs.next();
+			int maxnum=rs.getInt(1);
+			return maxnum;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+		
 	}
 }

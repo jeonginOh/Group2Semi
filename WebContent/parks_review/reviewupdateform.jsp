@@ -17,19 +17,23 @@
 			<textarea rows="20" cols="50" id="context" name="context"
 					 >${vo.context }</textarea>
 			<br> <input type="file" value="사진올리기" id="image"
-				onchange="setimg(event);" name="image" accept=".jpg, .png, .gif" required="required"><br> <input
+				onchange="setimg(event);" name="image" accept=".jpg, .png, .gif" ><br> <input
 				type="submit" value="저장"><br>
-				<label >현재 등록된 사진</label>
+				<label >현재 등록된 사진</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<label>변경될사진</label><div id="red1">
 				<br>
 				<c:choose>
 						<c:when test="${ vo.image==null }">
 						등록된 사진이 없습니다.
+					
 						</c:when>
 						<c:when test="${vo.image!=null }">
 						<img src="fileFolder/${vo.image }" style="width: 200px;"
 						onclick="imgup(event); imgout(event);" id="img1" name="img1">
-						</c:when>	
-						</c:choose>			
+						<input type="hidden" value="${vo.image }" id="image1" name="image1">
+						</c:when>
+						</c:choose>
+					</div>	
 				<input type="hidden" name="revid" value=${vo.revid }>
 				<input type="hidden" name="itemid" value=${vo.itemid }>
 			<div id="image_set"></div>
@@ -45,5 +49,40 @@
 		<label  >★★★★★</label>
 		</div>
 	</form>
+	<script type="text/javascript">
+	function setimg(event) {
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			var img = document.createElement("img");
+
+			var imgeset = document.getElementById("red1");
+			img.setAttribute("src", event.target.result);
+			imgset.innerHTML="";
+
+			imgeset.appendChild(img);
+			img.style.width = "200px";
+			img.style.height = "150px";
+		};
+		reader.readAsDataURL(event.target.files[0]);
+	}
+	function setimg(event) {
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			var img = document.createElement("img");
+			var imgeset = document.getElementById("red1");
+			img.setAttribute("src", event.target.result);
+			imgeset.removeChild(imgeset.lastChild);
+			alert("사진은 한장만 추가 가능");
+			imgeset.appendChild(img);
+			img.style.width = "200px";
+			img.style.height = "150px";
+			
+		};
+		reader.readAsDataURL(event.target.files[0]);
+	}
+	
+	</script>
+	
+	
 </body>
 </html>

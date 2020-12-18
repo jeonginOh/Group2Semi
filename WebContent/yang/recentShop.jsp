@@ -1,21 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>yang/recentShop</title>
+
 <style>
-	#whole{width: 300px;}
+/*	#recWhole{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
 	.pg{position: relative; left: 80px;}
-	.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
+	.pg:link{color: black;} 
 	.pg:visited{color:black;}
 	.pg:active{color:black;}
-	.box{display: inline-block;}
-	.item{width:100px; height: 100px; }
-	span{font-size: 0.8em;}
+	.recbox{display: inline-block;}
+	.recitem{width:100px; height: 100px; }
+	.recspan{font-size: 0.8em;}*/
 </style>
-</head>
+
 <script type="text/javascript">
 	var pageNum=1; //모든 함수에서 쓰기때문에 전역변수로
 	function recentShop(){
@@ -43,17 +39,19 @@
 					//div.className="box";
 					var div1=document.createElement("div");
 					var div2=document.createElement("div");
-					div1.className="box";
-					div2.className="box";
+					div1.className="recbox";
+					div2.className="recbox";
 					div2.style.textAlign="center";
 					var a=document.createElement("a");
 					var img=document.createElement("img");
-					img.className="item";
+					img.className="recitem";
 					var itemname=document.createElement("span");
 					var br1=document.createElement("br");
 					var br2=document.createElement("br");
 					var br3=document.createElement("br");
 					var avail=document.createElement("span");
+					itemname.className="recspan";
+					avail.className="recspan";
 					itemname.style.lineHeight="50px";
 					itemname.innerHTML=json[i].itemname;
 					if(json[i].avail==0){
@@ -63,7 +61,7 @@
 					}
 					
 					a.href="yangsuccess.html";
-					img.src="images/"+json[i].image;
+					img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
 					a.appendChild(img);
 					
 					
@@ -95,7 +93,7 @@
 				wrap.append(pgdwn);
 			}
 		}
-		xhr.open('get','../recentShop.yang.do',true);
+		xhr.open('get','<%=request.getContextPath()%>/recentShop.yang.do',true);
 		xhr.send();
 	}
 	recentShop();
@@ -116,9 +114,9 @@
 		recentShop();
 	}
 </script>
-<body>
+
 <h1>오늘 본 상품</h1>
+<div id="recWhole">
 <div id="wrap">
 </div>
-</body>
-</html>
+</div>
