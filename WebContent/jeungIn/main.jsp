@@ -30,7 +30,7 @@
 			<jsp:include page="<%=spage %>"/>
 		</div>
 		<div id = "rightcontent" class ="main">
-			<jsp:include page="rightcontent.jsp"/>
+			<jsp:include page="/yang/mainbasketList.jsp"/>
 		</div>
 		<div id = "footer" class ="main">
 			<jsp:include page="footer.jsp"/>

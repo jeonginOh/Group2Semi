@@ -20,10 +20,28 @@ import semiVo.IteminfoVo;
 public class ListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		iteminfoDao dao = iteminfoDao.getInstance();
-		ArrayList<IteminfoVo> list = dao.selectAll();
 		
-		JSONArray arr = new JSONArray();
+		String spageNum = req.getParameter("pageNum");
+		int pageNum=1;
+		if(spageNum!=null) {
+			pageNum=Integer.parseInt(spageNum);
+		}
+		int startRow=(pageNum-1)*10+1;
+		int endRow=startRow+9;
+		
+		iteminfoDao dao = iteminfoDao.getInstance();
+		ArrayList<IteminfoVo> list = dao.itemList(startRow, endRow);
+		int pageCount=(int)Math.ceil(dao.getItemidCount()/10.0);
+		int startPageNum=(pageNum-1)/10*10+1;
+		int endPageNum=startPageNum+9;
+		if(endPageNum>pageCount) {
+			endPageNum=pageCount;
+		}
+		JSONObject pageJson = new JSONObject();
+		pageJson.put("startPageNum", startPageNum);
+		pageJson.put("endPageNum", endPageNum);
+		
+		JSONArray arr = new JSONArray(); //JSONObeject를 하나 더 만들어서 여기에 startpagenum ,endpagenum,
 		for(IteminfoVo vo:list) {
 			JSONObject json = new JSONObject();
 			json.put("itemid",vo.getItemid());
@@ -40,8 +58,10 @@ public class ListController extends HttpServlet{
 			
 			arr.put(json);
 		}
+		pageJson.put("arr", arr);
+		
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
-		pw.print(arr.toString());
+		pw.print(pageJson.toString());
 	}
 }

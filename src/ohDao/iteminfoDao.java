@@ -19,8 +19,8 @@ public class iteminfoDao {
 	}
 	
 	/**
-	 * 전체 목록 출력
-	 * @return 어레이리스트(아이템인포)
+	 * �쟾泥� 紐⑸줉 異쒕젰
+	 * @return �뼱�젅�씠由ъ뒪�듃(�븘�씠�뀥�씤�룷)
 	 */
 	public ArrayList<IteminfoVo> selectAll() {
 		Connection con = null;
@@ -58,9 +58,9 @@ public class iteminfoDao {
 		}
 	}
 	/**
-	 * 조건부 검색
-	 * @param menu = 검색조건, word = 검색어
-	 * @return 어레이리스트(아이템인포)
+	 * 議곌굔遺� 寃��깋
+	 * @param menu = 寃��깋議곌굔, word = 寃��깋�뼱
+	 * @return �뼱�젅�씠由ъ뒪�듃(�븘�씠�뀥�씤�룷)
 	 */
 	public ArrayList<IteminfoVo> select(String menu,String word) {
 		Connection con = null;
@@ -133,9 +133,9 @@ public class iteminfoDao {
 		}
 	}
 	/**
-	 * @param memid= 회원번호, bd= basket,dibs(장바구니,찜)구분자
+	 * @param memid= �쉶�썝踰덊샇, bd= basket,dibs(�옣諛붽뎄�땲,李�)援щ텇�옄
 	 */
-	public ArrayList<IteminfoVo> list(int memid,String bd){ //회원별 찜,장바구니에 담긴 물품들 검색
+	public ArrayList<IteminfoVo> list(int memid,String bd){ //�쉶�썝蹂� 李�,�옣諛붽뎄�땲�뿉 �떞湲� 臾쇳뭹�뱾 寃��깋
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -176,7 +176,7 @@ public class iteminfoDao {
 			DBCPBean.close(rs,pstmt,con);
 		}
 	}
-	//회원별 찜,장바구니에 담긴 물품들 검색+페이징처리(메인페이지에 3개씩 나오게 하기)
+	//�쉶�썝蹂� 李�,�옣諛붽뎄�땲�뿉 �떞湲� 臾쇳뭹�뱾 寃��깋+�럹�씠吏뺤쿂由�(硫붿씤�럹�씠吏��뿉 3媛쒖뵫 �굹�삤寃� �븯湲�)
 	public ArrayList<IteminfoVo> list(int memid,String bd,int startRow,int endRow){
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -256,7 +256,7 @@ public class iteminfoDao {
 	}
 	
 	
-	//카테고리 리스트
+	//移댄뀒怨좊━ 由ъ뒪�듃
 	public ArrayList<IteminfoVo> bigcatelist(int catid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -291,4 +291,91 @@ public class iteminfoDao {
 			DBCPBean.close(con,pstmt,rs);
 		}
 	}
+	
+	public int getMaxItemid() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con=DBCPBean.getConn();
+			String sql = "SELECT NVL(MAX(ITEMID),0) MAXNUM FROM ITEMINFO";
+			pstmt = con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			rs.next();
+			int maxnum=rs.getInt(1);
+			return maxnum;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
+	
+	public int getItemidCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con=DBCPBean.getConn();
+			String sql ="SELECT NVL(COUNT(ITEMID),0) CNT FROM ITEMINFO";
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			rs.next();
+			int cnt = rs.getInt(1);
+			return cnt;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
+	
+	public ArrayList<IteminfoVo> itemList(int startRow,int endRow){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs= null;
+		String sql = "SELECT * FROM "+
+					"("+
+						"SELECT BB.*,ROWNUM RNUM FROM "+
+						"("+
+							"SELECT * FROM ITEMINFO "+
+							"ORDER BY ITEMID DESC "+
+						")"+
+					"BB)"+
+						"WHERE RNUM>=? AND RNUM<=?";
+		try {
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs=pstmt.executeQuery();
+			ArrayList<IteminfoVo> list=new ArrayList<IteminfoVo>();
+			while(rs.next()) {
+				int itemid = rs.getInt("itemid");
+				String itemname = rs.getString("itemname");
+				int catid = rs.getInt("catid");
+				int price = rs.getInt("price");
+				String factory = rs.getString("factory");
+				String origin = rs.getString("origin");
+				int stock = rs.getInt("stock");
+				Date expire = rs.getDate("expire");
+				Date storedate = rs.getDate("storedate");
+				String image = rs.getString("image");
+				int avail = rs.getInt("avail");
+				
+				IteminfoVo vo = 
+					new IteminfoVo(itemid,itemname,catid,price,factory,origin,stock,expire,storedate,image,avail);
+				list.add(vo);	
+			}
+			return list;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
 }
+
