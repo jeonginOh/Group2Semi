@@ -45,7 +45,7 @@
 						cardtext.className="card-text";
 						cardtext.innerHTML=price;
 						var btn = document.createElement("a");
-						btn.href="itemdetail.jsp?itemid="+json.arr[i].itemid;
+						btn.href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+json.arr[i].itemid;
 						btn.className="btn btn-primary";
 						btn.innerHTML="More";
 						
