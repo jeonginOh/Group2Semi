@@ -5,7 +5,7 @@
 <h1>구매페이지</h1>
 <br><br>
 <form method="post" action="<%=request.getContextPath() %>/buyItemsSave.yang.do">
-<div id="buywrap">
+<div id="buywrap" style="width: 950px;">
 <div>
 	<h3>구매목록정보</h3>
 	<div>
@@ -24,6 +24,13 @@
 			<input type="hidden" name="amount" value="${amountlist[status.index] }">
 			</c:forEach>
 		</table>
+	</div>
+</div>
+<div style="position: absolute; right: 650px; top: 350px; 
+border: 2px solid black; width: 200px; height: 200px; text-align: center;">
+	<h2>총 결제금액</h2>
+	<div>
+		<span style="font-size: 1.2em; line-height: 150px;">${totprice }원</span>
 	</div>
 </div>
 <br>

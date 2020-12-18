@@ -377,5 +377,26 @@ public class iteminfoDao {
 			DBCPBean.close(con,pstmt,rs);
 		}
 	}
+	public int finishBuy(int itemid,int amount) { //구매했을때 재고를 줄이고,재고가 0인것은 판매종료로
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		PreparedStatement pstmt2=null;
+		String sql="UPDATE ITEMINFO SET STOCK=STOCK-"+amount+" WHERE ITEMID=? AND AVAIL=1";
+		String sql2="UPDATE ITEMINFO SET AVAIL=0 WHERE STOCK<=0";
+		try{
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, itemid);
+			pstmt2=con.prepareStatement(sql2);
+			int n=pstmt.executeUpdate();
+			pstmt2.executeUpdate();
+			return n;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,pstmt2);
+		}
+	}
 }
 
