@@ -105,9 +105,14 @@ function pgListBasket(){
 				avail.type="hidden";
 				avail.className="avail";
 				avail.value=json[i].avail;
+				var stockavail=document.createElement("input");
+				stockavail.type="hidden";
+				stockavail.className="stockavail";
+				stockavail.value=json[i].stock;
 				
 				td4.appendChild(stock);
 				td4.appendChild(avail);
+				td4.appendChild(stockavail);
 
 				
 				var td6=document.createElement("td"); //살 개수
@@ -228,8 +233,9 @@ function isNull(){ //구매목록 체크, 구매목록중에 재고가 전부 �
 		return false;
 	}
 	var checkavail=document.getElementsByClassName("avail");
+	var checkstock=document.getElementsByClassName("stockavail");
 	for(let i=0; i<checkavail.length; i++){
-		if(checkavail[i].value==0){
+		if(checkavail[i].value==0 || checkstock[i].value<=0){
 			alert("재고가 없는 상품이 있습니다.");
 			return false;
 		}

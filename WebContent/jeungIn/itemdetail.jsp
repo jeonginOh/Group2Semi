@@ -99,10 +99,6 @@
 		</dl>
 	</div>
 	<div class = "detailamount">
-		<dl class ="list">
-			<dt class = "tit">구매수량</dt>
-			<dd><input type="number" id="age" min="1" max="150"></dd>
-		</dl>
 		<dl class = "list">
 			<dt class ="tit">남은 재고</dt>
 			<dd id = "detailstock">|</dd>
