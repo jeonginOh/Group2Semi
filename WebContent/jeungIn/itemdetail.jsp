@@ -43,7 +43,7 @@
 		xhr.send();
 	}
 	
-	function insertDibs(){
+	function insertBasket(){
 		var itemid=document.getElementById("itemid").value;
 		var stock=document.getElementById("detailstock").value;
 		var avail=document.getElementById("detailavail").value;
@@ -106,7 +106,7 @@
 	</div>
 	<input type="hidden" id="detailavail">
 	<div class = "purchase">
-		<button type = "button" onclick="insertDibs()">
+		<button type = "button" onclick="insertBasket()">
 			<img src = "<%=request.getContextPath() %>/images/구매버튼.png" style="width:100px;height:100px">
 		</button>
 	</div>
