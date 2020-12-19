@@ -8,13 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ohDao.iteminfoDao;
 import semiVo.BuylistVo;
 import semiVo.LogisticVo;
+import yang_dao.BasketDao;
 import yang_dao.BuyListDao;
 import yang_dao.LogisticDao;
 
 @WebServlet("/buyItemsSave.yang.do")
-public class BuyItemsSaveController extends HttpServlet{
+public class BuyItemsSaveController extends HttpServlet{ //구매한목록,배송정보테이블에 추가
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String item[]=req.getParameterValues("item");
@@ -23,8 +25,10 @@ public class BuyItemsSaveController extends HttpServlet{
 		String addr=req.getParameter("addr");
 		BuyListDao dao=BuyListDao.getInstance();
 		LogisticDao logidao=LogisticDao.getInstance();
-		int n=0;
-		int n2=0;
+		iteminfoDao itemdao=iteminfoDao.getInstance();
+		int n1=0; // iteminfo에서 구매수량만큼 빼기
+		int n2=0; // buylist에 추가하기
+		int n3=0; // logistic에 추가하기
 		for(int i=0;i<item.length;i++) {
 			BuylistVo vo=new BuylistVo(0,
 					memid,
@@ -34,23 +38,26 @@ public class BuyItemsSaveController extends HttpServlet{
 			LogisticVo logivo=new LogisticVo(0, memid, 0,
 					Integer.parseInt(item[i]),
 					addr,null);
-			n=dao.insert(vo);
-			if(n>0) {
-				n2=logidao.insert(logivo);
+			n1=itemdao.finishBuy(Integer.parseInt(item[i]), Integer.parseInt(amount[i]));
+			n2=dao.insert(vo);
+			if(n1>0 && n2>0) {
+				n3=logidao.insert(logivo);
 				if(n2<=0) {
-					n=0; n2=0;
+					n1=0; n2=0; n3=0;
 					break;
 				}
 			}else {
-				n=0;
-				n2=0;
+				n1=0; n2=0; n3=0;
 				break;
 			}
 		}
-		if(n>0 && n2>0) {
-			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp");
+		if(n1>0 && n2>0 && n3>0) { //성공했으면 장바구니에서도 제거,아이템인포에서 개수만큼 차감
+			BasketDao bdao=BasketDao.getInstance();
+			bdao.buyDelBasket(memid);
+			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp"); //영수증페이지로
 		}else {
-			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp?spage=/yang/yangfail.html");
+			req.setAttribute("code", "오류로 인해 결제실패. 관리자에게 문의해주세요.");
+			req.getRequestDispatcher("/jeungIn/main.jsp?spage=/yang/buyPage_y.jsp").forward(req, resp);
 		}
 	}
 }

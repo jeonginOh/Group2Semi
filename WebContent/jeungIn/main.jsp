@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,9 +37,11 @@
 		<div id = "totalcontent" class ="main">
 			<jsp:include page="<%=spage %>"/>
 		</div>
+		<c:if test="${param.spage!='/yang/basketListpage.jsp' }">
 		<div id = "rightcontent" class ="main">
 			<jsp:include page="<%=rpage %>"/>
 		</div>
+		</c:if>
 		<div id = "footer" class ="main">
 			<jsp:include page="footer.jsp"/>
 		</div>

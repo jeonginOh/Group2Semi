@@ -77,17 +77,28 @@ function pgListDibs(){
 				}else{
 					stock.innerHTML="남은수량: "+json[i].stock;
 				}
+				var avail1=document.createElement("input"); //재고가 있는지없는지 밸류값넘기기위해
+				avail1.type="hidden";
+				avail1.className="stock";
+				avail1.value=json[i].stock;
 				td4.appendChild(stock);
+				td4.appendChild(avail1);
 				
 				var td5=document.createElement("td"); //판매여부
 				tr.appendChild(td5);
 				var avail=document.createElement("span");
+				avail.className="avail";
 				if(json[i].avail==0){
 					avail.innerHTML="판매불가";
 				}else{
 					avail.innerHTML="판매중";
 				}
+				var avail2=document.createElement("input"); //판매가능인지 아닌지 밸류값넘기기위해
+				avail2.type="hidden";
+				avail2.className="avail";
+				avail2.value=json[i].avail;
 				td5.appendChild(avail);
+				td5.appendChild(avail2);
 				
 				var td6=document.createElement("td"); //찜삭제
 				tr.appendChild(td6);
@@ -172,6 +183,14 @@ function checkDel(){ //체크박스 삭제
 }
 
 function insBasket(e){
+	let stock=document.getElementsByClassName("stock");
+	let avail=document.getElementsByClassName("avail");
+	for(let i=0;i<stock.length;i++){
+		if(stock[i].value<=0 || avail[i].value==0){ //수량,상태체크후 판매불가시 장바구니에 못담게함
+			alert("수량이없거나 판매불가상태입니다.");
+			return;
+		}
+	}
 	xhr=new XMLHttpRequest();
 	itemid=e.target.name;
 	xhr.onreadystatechange=function(){

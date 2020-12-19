@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap 4</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <style>
-      .card p { margin:20px 0px; }
+      .card p { margin:20px 0px;}
+      #paging{text-align:center;}
     </style>
     <script type="text/javascript">
 		window.onload=function(){
@@ -19,13 +20,14 @@
 			xhr = new XMLHttpRequest();
 			xhr.onreadystatechange=function(){
 				if(xhr.readyState==4 && xhr.status==200){
-					var arr = JSON.parse(xhr.responseText);
+					var json = JSON.parse(xhr.responseText);
 					var row = document.getElementsByClassName("row");
+					var paging = document.getElementById("paging");
 					
-					for(var i=0;i<arr.length;i++){
-						var img = arr[i].image;
-						var itemname = arr[i].itemname;
-						var price = arr[i].price;
+					for(var i=0;i<json.arr.length;i++){
+						var img = json.arr[i].image;
+						var itemname = json.arr[i].itemname;
+						var price = json.arr[i].price;
 						
 						var col3=document.createElement("div");
 						col3.className="col-3";
@@ -43,7 +45,8 @@
 						cardtext.className="card-text";
 						cardtext.innerHTML=price;
 						var btn = document.createElement("a");
-						btn.href="itemdetail.jsp?itemid="+arr[i].itemid;
+						//아래 경로부분 바꿈%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+						btn.href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+json.arr[i].itemid;
 						btn.className="btn btn-primary";
 						btn.innerHTML="More";
 						
@@ -55,9 +58,28 @@
 						cardbody.appendChild(cardtext);
 						cardbody.appendChild(btn);
 					}
+					if(json.startPageNum>10){l
+						var prev = document.creatElement("a");
+						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
+						prev.href="<%=request.getContextPath() %>/jeungIn/cardlist.jsp?pageNum="+json.startPageNum;
+						prev.innerHTML="이전";
+						paging.appendChild(prev);
+					}
+					for(var i = json.startPageNum;i<=json.endPageNum;i++){
+						var pageN = document.createElement("a");
+						<%-- pageN.href="<%= request.getContextPath() %>/list.do?pageNum="+i; --%>
+						pageN.href="<%= request.getContextPath() %>/jeungIn/cardlist.jsp?pageNum="+i;
+						pageN.innerHTML=i;
+						paging.appendChild(pageN);
+					}
+					
 				}
 			};
-			xhr.open('get','<%= request.getContextPath() %>/list.do',true);
+			var pageNum = '${ param.pageNum }';
+			if(!pageNum) {
+				pageNum = 1;
+			}
+			xhr.open('get','<%= request.getContextPath() %>/list.do?pageNum='+pageNum ,true);
 			xhr.send();
 		}
 	</script>
@@ -65,17 +87,9 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-3">
-          <div class="card">
-            <img src="<%=request.getContextPath() %>/images/귤.png" alt=""/>
-            <div class="card-body">
-              <h5 class="card-title">Lorem</h5>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam egestas sed sem ut malesuada.</p>
-              <a href="#" class="btn btn-primary">More</a>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
+    
+    <div id="paging"></div>
   </body>
 </html>

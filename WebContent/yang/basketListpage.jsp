@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <style>
- 	/*.buyFloating { position: fixed; left: 1450px; top: 100px; margin-right: -720px; text-align:center;  
+ 	/*.buyFloating { position: fixed; left: 1400px; top: 100px; margin-right: -720px; text-align:center;  
  					width: 300px; height:300px; border: 1px solid purple; padding-top:150px;} 
  	.bkpgitem{width: 150px; height: 150px;} 
  	.itemname{display:inline-block; width: 150px;} 
@@ -42,7 +42,7 @@
 	</div>
 	<br><br>
 	<div>
-		<input type="submit" value="구매하기">
+		<input type="submit" value="구매하기" onclick="return isNull()">
 	</div>
 </div>
 </form>
@@ -93,7 +93,7 @@ function pgListBasket(){
 				td2.appendChild(itemname);
 				
 				
-				var td4=document.createElement("td"); //남은수량
+				var td4=document.createElement("td"); //남은수량,판매여부(히든으로)
 				tr.appendChild(td4);
 				var stock=document.createElement("span");
 				if(json[i].stock==0){
@@ -101,17 +101,19 @@ function pgListBasket(){
 				}else{
 					stock.innerHTML="남은수량: "+json[i].stock;
 				}
-				td4.appendChild(stock);
+				var avail=document.createElement("input");
+				avail.type="hidden";
+				avail.className="avail";
+				avail.value=json[i].avail;
+				var stockavail=document.createElement("input");
+				stockavail.type="hidden";
+				stockavail.className="stockavail";
+				stockavail.value=json[i].stock;
 				
-// 				var td5=document.createElement("td"); //판매여부
-// 				tr.appendChild(td5);
-// 				var avail=document.createElement("span");
-// 				if(json[i].avail==0){
-// 					avail.innerHTML="판매불가";
-// 				}else{
-// 					avail.innerHTML="판매중";
-// 				}
-// 				td5.appendChild(avail);
+				td4.appendChild(stock);
+				td4.appendChild(avail);
+				td4.appendChild(stockavail);
+
 				
 				var td6=document.createElement("td"); //살 개수
 				tr.appendChild(td6);
@@ -224,18 +226,21 @@ function checkDel(){
 	xhr.send();
 }
 
-// window.onload=function() {
-// 	var totprice=document.getElementsByName("totprice");
-// 	var tot=0;
-// 	for(let i=0;i<totprice.length;i++){
-// 		tot+=(totprice[i].innerText*1);
-// 	}
-	
-// 	var span=document.getElementById("totpriceView");
-// 	span.innerHTML=tot+"원";
-// 	var hd=document.getElementById("hdPrice");
-// 	hd.value=tot;
-// }
+function isNull(){ //구매목록 체크, 구매목록중에 재고가 전부 있는지 체크
+	var checkprice=document.getElementById("hdPrice").value;
+	if(checkprice<=0){
+		alert("구매할 목록이 없습니다");
+		return false;
+	}
+	var checkavail=document.getElementsByClassName("avail");
+	var checkstock=document.getElementsByClassName("stockavail");
+	for(let i=0; i<checkavail.length; i++){
+		if(checkavail[i].value==0 || checkstock[i].value<=0){
+			alert("재고가 없는 상품이 있습니다.");
+			return false;
+		}
+	}
+}
 
 window.onload=function(){
 	totPrice();

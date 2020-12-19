@@ -5,10 +5,9 @@
 <style>
 	.bigcate .smallcate {list-style:none;display:none;position:absolute;left:60px;top:0px;}
 	.bigcate li:hover>ul{display:block;}
-	.bigcate {list-style:none;margin:0px;padding:0px;position:relative;}
-	
-</style>
+	.bigcate {list-style:none;margin:0px;padding:0px;position:relative;}/*마진:바깥 여백, 패딩:안쪽여백*/
 
+</style>
     <ul class = "bigcate">
     	<li>
     		<a href="#"><i class="fas fa-carrot"></i>채소</a>

@@ -2,14 +2,14 @@
     pageEncoding="UTF-8"%>
 
 <style>
-	#recWhole{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+/*	#recWhole{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
 	.pg{position: relative; left: 80px;}
-	.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
+	.pg:link{color: black;} 
 	.pg:visited{color:black;}
 	.pg:active{color:black;}
 	.recbox{display: inline-block;}
 	.recitem{width:100px; height: 100px; }
-	.recspan{font-size: 0.8em;}
+	.recspan{font-size: 0.8em;}*/
 </style>
 
 <script type="text/javascript">
