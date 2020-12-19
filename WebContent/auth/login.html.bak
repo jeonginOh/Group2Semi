@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>auth/login.html</title>
+    <script src="login.js"></script>
+    <style type="text/css">
+        
+        #content{
+            text-align: center;
+            width:400px;
+        }
+        fieldset{
+            padding:5px;
+        }
+        fieldset div input{
+            /* border:0px; */
+            width:100%;
+            margin:5px;
+        }
+        #login{
+            height:50px;
+        }
+        h1{text-align: center;}
+        legend{
+            text-align: center;
+        }
+        .btn{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h1>쇼핑몰</h1>
+        <fieldset>
+            <legend>로그인</legend>
+            <div id="idrow">
+                <input type="text" name="" id="id" placeholder="아이디">
+            </div>
+            <div id="pwdrow">
+                <input type="password" name="" id="pwd" placeholder="비밀번호">
+            </div>
+            <div id="errMsg"></div>
+            <label for="">
+                <input type="checkbox" name="자동로그인" id="autologin">
+                자동로그인
+            </label>
+            <input type="button" value="로그인" id="login">
+        </fieldset>
+        <input type="button" value="임시회원으로 진행하기" id='tempuser' class='btn'>
+        <div id="member">
+            <a href="../member/agree.html">회원가입</a>
+            <a href="../member/findid.html">아이디찾기</a>
+            <a href="../member/findpw.html">비밀번호찾기</a>
+        </div>
+    </div>
+</body>
+</html>

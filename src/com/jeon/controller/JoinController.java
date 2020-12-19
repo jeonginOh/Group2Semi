@@ -33,6 +33,7 @@ public class JoinController extends HttpServlet{
         int memid = dao.insert(vo);
         if (memid>0) {
             req.getSession().setAttribute("memid", memid);
+            req.getSession().setAttribute("menual", true);
             resp.sendRedirect("/");
         }
         else {

@@ -43,6 +43,8 @@ drop table loginauth;
 
 
         
+
+        
 CREATE TABLE anstable
 (
   ansid   number(10)     NOT NULL,
@@ -347,16 +349,16 @@ COMMENT ON COLUMN logistic.logiinfo IS '배송정보';
 CREATE TABLE memberinfo
 (
   memid   number(10)     NOT NULL,
-  id      VARCHAR2(15)   NOT NULL,
-  pwd     varchar2(100)  NOT NULL,
-  salt    varchar2(100)  NOT NULL,
+  id      VARCHAR2(15)  ,
+  pwd     varchar2(100) ,
+  salt    varchar2(100) ,
   age     varchar2(7)   ,
   email   varchar2(100) ,
-  addr    varchar2(2000) NOT NULL,
-  regdate Date           DEFAULT sysdate NOT NULL,
+  addr    varchar2(2000),
+  regdate Date           DEFAULT sysdate,
   phone   varchar2(12)  ,
   point   number(10)     DEFAULT 0,
-  status  number(1)      DEFAULT 0 NOT NULL,
+  status  number(1)      DEFAULT 1,
   CONSTRAINT PK_memberinfo PRIMARY KEY (memid)
 );
 

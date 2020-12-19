@@ -61,7 +61,7 @@
 						avail.innerHTML="판매중";
 					}
 					
-					a.href="yangsuccess.html";
+					a.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=itemdetail.jsp?itemid="+json[i].itemid;
 					img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
 					a.appendChild(img);
 					
@@ -183,7 +183,7 @@
 						avail.innerHTML="판매중";
 					}
 					
-					a.href="yangsuccess.html";
+					a.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=itemdetail.jsp?itemid="+json[i].itemid;
 					img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
 					a.appendChild(img);
 					

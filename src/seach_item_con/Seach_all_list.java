@@ -24,21 +24,16 @@ public class Seach_all_list extends HttpServlet{
 		String search=req.getParameter("search");
 		String field=req.getParameter("field");
 		String spageNum=req.getParameter("pageNum");
-		if(search==null) {
-			
-		}
-
 		int pageNum=1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
+		System.out.println(search+","+field+","+pageNum);
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
 		SearchDao dao=SearchDao.getinstance();
-		ArrayList<IteminfoVo> list=dao.alllist2(startRow,endRow,field,search);
-		if(list.isEmpty()) {
-			
-		}
+		ArrayList<IteminfoVo> list=dao.select_list(startRow,endRow,field,search);
+
 		JSONArray jarr=new JSONArray();
 		for(IteminfoVo vo : list) {
 			JSONObject json=new JSONObject();

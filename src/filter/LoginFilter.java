@@ -28,6 +28,46 @@ import semiVo.LoginauthVo;
 //         )
 //     }
 // )
+    /**
+     * referer를 통한 파라미터 전달법
+     * 흐름 : 요청->(인터럽트 발생--| 필터->로그인.jsp->Controller |--)->목적지.jsp
+     * 1. GET방식이어야 한다.
+     * 2. controller에서 req.getHeader("referer")를 하게 되면 
+     *    http://localhost:8080/Group2Semi/test/test.jsp?text=qwer
+     *    이런 식으로 결과가 나온다.
+     * 3. login.html의 ajax에서 location.href를 수정하면?
+     * 이거못써먹음 포기
+     */
+    /**
+     * 방법2
+     * 로그인페이지(jsp or controller?에서 모든 파라미터를 세션에 저장한다.
+     * 	Map<String, String[]> map= request.getParameterMap();
+        for(String key : map.keySet()) {
+            System.out.println("key: "+ key);
+            for(String value : map.get(key)) {
+                System.out.println("value: "+ value);
+            }
+        }
+     * 그 후 필터에서 로그인페이지가 아닌 곳에서는 session을 request로 변환하고 전달하는 session attr을 제거한다.
+     * 흐름 : 요청->(로그인필터(param->session + 요청방식) 
+     * -->(로그인.jsp-
+     * 
+     * 
+     * >Controller) |--->세션확인필터(session 제거, req attr)) 
+     * -> 목적지.jsp/controller
+     * req.getMethod()->방식 알아오기
+     * req.getParameter
+     * req.getAttr... 
+     */
+
+     /**
+      * 방법 3
+      * 방법 2에서 로그인페이지에서 로그인 성공하면 새로운 controller를 통해서 forward
+      * 요청->로그인필터->전달용컨트롤러->요청목적지
+      변경
+        방식 : req.getMethod()
+        목적지 : req.getRequestURL()
+      */
 public class LoginFilter implements Filter{
     @Override
     public void init(FilterConfig arg0) throws ServletException {}
@@ -42,38 +82,57 @@ public class LoginFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) arg1;
         HttpSession session = request.getSession();
 
+        request.setAttribute("ref", request.getRequestURI());
+        request.setAttribute("method", request.getMethod());
         //session에서 memid확인
-        if (session.getAttribute("memid")!=null) arg2.doFilter(arg0, arg1);
+        if (session.getAttribute("memid")!=null) {
+            //수동 로그인일 경우 진행
+            if (session.getAttribute("menual")!=null && (boolean) session.getAttribute("menual")) arg2.doFilter(arg0, arg1);
+            //임시회원일 경우
+            else if (session.getAttribute("tempuser")!=null && (boolean) session.getAttribute("tempuser")) {
+
+            }else {//자동 로그인일 경우
+                //url에 따라서 로그인 페이지 요청
+                // if
+                arg2.doFilter(arg0, arg1);
+            }
+        }
         //없으면(로그인상태 아님) 
         else{
+        	System.out.println("loginfilter");
             Cookie[] cookies = request.getCookies();
             if (cookies!=null) {
                 //cookie>token에서 memid를 얻어와서 자동로그인 수행
+            	boolean found=false;
                 for (Cookie cookie : cookies) {
                     if(cookie.getName().equals("token")) {
+                    	found=true;
+                    	System.out.println("token found");
                         String token = cookie.getValue();
                         String identifier = request.getRemoteAddr()+request.getHeader("User-Agent");
                         LoginauthDao ldao = LoginauthDao.getInstance();
                         int memid = ldao.autologin(token, identifier);
-                        if(memid==0) {//다시 로그인
-                            //이전 작업이 있을 때 session에 넣고, login페이지로 넘어가고, 
-                            //login페이지에서 getheader referel?로 원래 경로를 가져온 다음 목적 페이지에서 session을 비운다.
-                            response.sendRedirect(request.getContextPath()+"/auth/login.html");
-                        }else if(memid==-1) {
-                            //쿠키유출
-                            //사용자에게 경고해야함
-                            response.sendRedirect(request.getContextPath()+"/auth/loginError.html");
-                        }else {
-                            //테이블, 쿠키 갱신
+                        System.out.println("memid"+memid);
+                        if (memid>0) {
+                            //테이블, 쿠키 갱신. 로그인 진행
                             cookie.setValue(ldao.renew(new LoginauthVo(0, token, memid, identifier, 0, null)));
                             cookie.setMaxAge(60*60*24*expiredate);
                             cookie.setPath("/");
                             response.addCookie(cookie);
+                            arg2.doFilter(arg0, arg1);
+                        }else if(memid==0) {//다시 로그인해야함
+                            // response.sendRedirect(request.getContextPath()+"/auth/login.html");
+                        }else if(memid==-1) {
+                            //쿠키유출
+                            //사용자에게 경고해야함
+                    		//일단 다시 로그인
+                            // response.sendRedirect(request.getContextPath()+"/auth/loginError.html");
                         }
+                        request.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
                     }
                 }
-            }
+                if (!found) request.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
+            }else request.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
         }
-        arg2.doFilter(arg0, arg1);
     }
 }

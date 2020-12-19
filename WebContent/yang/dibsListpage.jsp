@@ -52,7 +52,7 @@ function pgListDibs(){
 				tr.appendChild(td2);
 				var a=document.createElement("a");
 				var img=document.createElement("img");
-				a.href="yangsuccess.html";
+				a.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=itemdetail.jsp?itemid="+json[i].itemid;
 				img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
 				img.className="pgdibsitem";
 				var itemname=document.createElement("span");

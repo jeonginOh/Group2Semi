@@ -1,4 +1,0 @@
-drop sequence memberinfo_memid;
-create sequence memberinfo_memid;
-drop sequence loginauth_seq;
-create sequence loginauth_seq;
