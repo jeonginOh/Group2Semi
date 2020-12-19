@@ -32,7 +32,7 @@
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState==4 && xhr.status==200){
 				var json=JSON.parse(xhr.responseText);
-				var wrap=document.getElementById("wrap");
+				var wrap=document.getElementById("rwrap");
 				//var count=0;
 				for(let i=1;i<json.length;i++){ //배열의 첫번째에는 페이지개수가 나오기때문에 그것을 빼고 빼옴
 					var div=document.createElement("div");
@@ -78,7 +78,7 @@
 					
 				}
 				var pgdwn=document.createElement("a");
-				console.log(pageNum);
+				console.log(json[0].lastpage);
 				if(pageNum>=json[0].lastpage){ //마지막페이지보다 같거나 클때 아래화살표를 안보이게 하기
 					pgdwn.style.visibility="hidden";
 				}
@@ -93,13 +93,13 @@
 				wrap.append(pgdwn);
 			}
 		}
-		xhr.open('get','<%=request.getContextPath()%>/recentShop.yang.do',true);
+		xhr.open('get','<%=request.getContextPath()%>/recentShop.yang.do?pageNum='+pageNum,true);
 		xhr.send();
 	}
 	recentShop();
 	function prevRecent(){ //위버튼
 		pageNum--;
-		var wrap=document.getElementById("wrap");
+		var wrap=document.getElementById("rwrap");
 		while(wrap.firstChild){ //기존의 리스트를 전부 삭제
 			wrap.removeChild(wrap.lastChild);
 		}
@@ -107,7 +107,7 @@
 	}
 	function nextRecent(){ //아래버튼
 		pageNum++;
-		var wrap=document.getElementById("wrap");
+		var wrap=document.getElementById("rwrap");
 		while(wrap.firstChild){
 			wrap.removeChild(wrap.lastChild);
 		}
@@ -117,6 +117,6 @@
 
 <h1>오늘 본 상품</h1>
 <div id="recWhole">
-<div id="wrap">
+<div id="rwrap">
 </div>
 </div>
