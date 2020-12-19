@@ -24,8 +24,25 @@ public class categoryListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String catid = req.getParameter("catid");
-		
 		iteminfoDao dao = iteminfoDao.getInstance();
+		String spageNum = req.getParameter("pageNum");
+		int pageNum=1;
+		if(spageNum!=null) {
+			pageNum=Integer.parseInt(spageNum);
+		}
+		int startRow=(pageNum-1)*10+1;
+		int endRow=startRow+9;
+		int pageCount=(int)Math.ceil(dao.getItemidCount()/10.0);
+		int startPageNum=(pageNum-1)/10*10+1;
+		int endPageNum=startPageNum+9;
+		if(endPageNum>pageCount) {
+			endPageNum=pageCount;
+		}
+		
+		JSONObject pageJson = new JSONObject();
+		pageJson.put("startPageNum", startPageNum);
+		pageJson.put("endPageNum", endPageNum);
+		
 		ArrayList<IteminfoVo> list = dao.bigcatelist(Integer.parseInt(catid));
 		JSONArray arr = new JSONArray();
 		for(IteminfoVo vo:list) {
@@ -44,8 +61,10 @@ public class categoryListController extends HttpServlet{
 			
 			arr.put(json);
 		}
+		pageJson.put("arr", arr);
+		
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
-		pw.print(arr.toString());
+		pw.print(pageJson.toString());
 	}
 }

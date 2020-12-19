@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 	<div id = "headerTop">
 		<div id = "toptop">
 			<ul>
@@ -9,7 +10,7 @@
 				<li> | </li>
 				<li><a href="main.jsp?spage="><i class="fas fa-headset"></i></a></li>
 			</ul>
-			<img src = "<%=request.getContextPath() %>/images/mainimage.png" id="mainimg">
+			<a href="main.jsp"><img src = "<%=request.getContextPath() %>/images/mainimage.png" id="mainimg"></a>
 	  	</div>
 	  	<div id = top2>
 		  	<ul>

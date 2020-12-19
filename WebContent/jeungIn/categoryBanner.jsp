@@ -1,18 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-<style>
-	.bigcate .smallcate {list-style:none;display:none;position:absolute;left:60px;top:0px;}
-	.bigcate li:hover>ul{display:block;}
-	.bigcate {list-style:none;margin:0px;padding:0px;position:relative;}/*마진:바깥 여백, 패딩:안쪽여백*/
-
-</style>
     <ul class = "bigcate">
     	<li>
-    		<a href="#"><i class="fas fa-carrot"></i>채소</a>
-    		<ul class ="smallcate">
-    			<li><a href="#">콩나물/버섯류</a></li>
+    		<a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?catid=123"><i class="fas fa-carrot"></i>채소</a>
+    		<ul class ="smallcate" id="ul_vegi">
+    			<li><a href="">콩나물/버섯류</a></li>
     			<li><a href="#">시금치/부추/나물</a></li>
     			<li><a href="#">양파/마늘/생각/파</a></li>
     			<li><a href="#">기본채소</a></li>
