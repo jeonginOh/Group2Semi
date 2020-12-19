@@ -123,11 +123,7 @@
 			xhr.setRequestHeader('Content-Type',
 					'application/x-www-form-urlencoded');
 			var context = document.getElementById("context").value;
-			var param = "&context=" + context + "&revid=" + $
-			{
-				vo.revid
-			}
-			;
+			var param = "&context=" + context + "&revid=" + ${vo.revid};
 			console.log(param);
 			xhr.send(param);
 		}
