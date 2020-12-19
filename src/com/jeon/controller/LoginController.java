@@ -29,6 +29,8 @@ public class LoginController extends HttpServlet{
         // System.out.println((String) req.getParameter("id"));
         map.put("id", req.getParameter("id"));
         map.put("pwd", req.getParameter("pwd"));
+        System.out.println("LOGIN:ID="+req.getParameter("id"));
+        System.out.println("LOGIN:PWD="+req.getParameter("pwd"));
         MemberinfoDao dao = MemberinfoDao.getInstance();
         LoginauthDao ldao = LoginauthDao.getInstance();
         JSONObject json = new JSONObject();
@@ -36,43 +38,43 @@ public class LoginController extends HttpServlet{
         
         //자동로그인 등록
         //uuid생성, 쿠키에 signed : uuid 생성, db에 uuid 저장
-        
-        switch (memid) {
-            case -2 : json.append("errMsg", "에러가 발생했습니다."); break;
-            case -1 : json.append("errMsg", "아이디가 존재하지 않습니다."); break;
-            case 0 : json.append("errMsg", "아이디와 비밀번호가 맞지 않습니다."); break;
-            default : { 
-                boolean autologin = Boolean.parseBoolean(req.getParameter("autologin"));
-                //로그인성공 상황 : session에 memid가 없고 cookie에도 memid가 없음. 
-
-
-                String token = UUID.randomUUID().toString();
-                //자동로그인
-                if (autologin) {
-                    //쿠키생성
-                    Cookie cookie = new Cookie("token", token);
-                    cookie.setMaxAge(60*60*24*expiredate);
-                    cookie.setPath("/");
-                    resp.addCookie(cookie);
-                }else {
-                    //쿠키삭제
-                    Cookie cookie = new Cookie("token", "");
-                    cookie.setMaxAge(0); 
-                    cookie.setPath("/");
-                    resp.addCookie(cookie);
-                    //테이블삭제 - 사실 삭제는 아니고 사용불가처리
-                    // ldao.expire
-                    //필요없음 - 쿠키가 없으니 접근할 수 없고 언젠가 알아서 지워질 것.
-                }
-                //테이블생성
-                String identifier = req.getRemoteAddr()+req.getHeader("User-Agent");
-                int n = ldao.insert(new LoginauthVo(0, token, memid, identifier, 0, null));
-                System.out.println(n);
-                json.append("memid", memid);
-                req.getSession().setAttribute("memid", memid);
-                //이 세션에 수동로그인 했다는 흔적을 남김
-                req.getSession().setAttribute("menual", true); 
+        if (memid<=0) {
+            System.out.println("error"+ memid);
+            json.append("error", true);
+            json.append("errMsg", memid);
+        }else { 
+            System.out.println("noerror");
+            boolean autologin = Boolean.parseBoolean(req.getParameter("autologin"));
+            //로그인성공 상황 : session에 memid가 없고 cookie에도 memid가 없음. 
+            String token = UUID.randomUUID().toString();
+            //자동로그인
+            if (autologin) {
+                //쿠키생성
+                Cookie cookie = new Cookie("token", token);
+                cookie.setMaxAge(60*60*24*expiredate);
+                cookie.setPath("/");
+                resp.addCookie(cookie);
+            }else {
+                //쿠키삭제
+                Cookie cookie = new Cookie("token", "");
+                cookie.setMaxAge(0); 
+                cookie.setPath("/");
+                resp.addCookie(cookie);
+                //테이블삭제 - 사실 삭제는 아니고 사용불가처리
+                // ldao.expire
+                //필요없음 - 쿠키가 없으니 접근할 수 없고 언젠가 알아서 지워질 것.
             }
+            //테이블생성
+            String identifier = req.getRemoteAddr()+req.getHeader("User-Agent");
+            int n = ldao.insert(new LoginauthVo(0, token, memid, identifier, 0, null));
+            System.out.println(n);
+            json.append("error", false);
+            json.append("value", memid);
+            req.setAttribute("method", req.getMethod());
+            req.setAttribute("ref", req.getRequestURI());
+            req.getSession().setAttribute("memid", memid);
+            //이 세션에 수동로그인 했다는 흔적을 남김
+            req.getSession().setAttribute("menual", true);
         }
         resp.getWriter().print(json);
     }

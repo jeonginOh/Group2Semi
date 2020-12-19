@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 import db.DBCPBean;
@@ -176,7 +178,6 @@ public class MemberinfoDao {
     }
     
     /**
-     * <p>!!!로그인에 사용하지 말 것!!!
      * id를 통해 memid를 가져온다
      * @param id
      * @return memid
@@ -301,23 +302,42 @@ public class MemberinfoDao {
 /**---------------------------------------------------------------------
  * 임시유저 관련 메소드
 ----------------------------------------------------------------------*/
-    
-public int t_insert(MemberinfoVo vo) {
+/**
+ * 1일 주기로 리셋되는 시퀀스
+ * 
+ * @return daily_seq.nextval
+ */
+private int getDaily_seq() {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet res = null;
+    try {
+        conn = DBCPBean.getConn();
+        pstmt = conn.prepareStatement("select daily_seq.nextval from dual");
+        res = pstmt.executeQuery();
+        return res.getInt(1);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return 0;
+    } finally {
+        DBCPBean.close(conn, pstmt, res);
+    }
+}
+/**
+ * 임시회원을 만들고 memid를 리턴한다. 임시회원은 memid, id와 regdate, status만 존재한다.
+ * @param vo
+ * @return memid
+ */
+public int newTempUser() {
     Connection conn=null;
     PreparedStatement pstmt =null;
     try {
         conn = DBCPBean.getConn();
-        String sql = "insert into memberinfo values(memberinfo_memid.nextval, memberinfo_memid.currval, memberinfo_memid.currval, memberinfo_memid.currval, ?, ?, ?, sysdate, ?, ?, ?)";
+        String sql = "insert into memberinfo values memberinfo_memid.nextval, ? null, null, null, null, null, sysdate, null, 0, 3)";
         pstmt = conn.prepareStatement(sql);
-        pstmt.setString(2, vo.getPwd());
-        pstmt.setString(3, vo.getSalt());
-        pstmt.setString(4, vo.getAge());
-        pstmt.setString(5, vo.getEmail());
-        pstmt.setString(6, vo.getAddr());
-        pstmt.setString(7, vo.getPhone());
-        pstmt.setInt(8, vo.getPoint());
-        pstmt.setInt(9, vo.getStatus());
-        if (pstmt.executeUpdate()==1) return getMemId(vo.getId());
+        String id = new SimpleDateFormat("YYMMdd").format(new Date())+getDaily_seq();
+        pstmt.setString(1, id);
+        if (pstmt.executeUpdate()==1) return getMemId(id);
         else return 0;
     } catch (SQLException e) {
         e.printStackTrace();

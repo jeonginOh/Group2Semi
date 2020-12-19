@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 public class test extends HttpServlet{
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(req.getMethod());
         System.out.println(req.getParameter("text"));
         System.out.println(req.getAttribute("text"));
         System.out.println(req.getAttribute("aaa"));
