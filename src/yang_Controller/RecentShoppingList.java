@@ -41,6 +41,7 @@ public class RecentShoppingList extends HttpServlet{
 				iteminfoDao dao=iteminfoDao.getInstance();
 				IteminfoVo vo=dao.detail(itemid);
 				JSONObject json=new JSONObject();
+				json.put("itemid", vo.getItemid());
 				json.put("itemname",vo.getItemname());
 				json.put("image",vo.getImage());
 				json.put("avail", vo.getAvail());
