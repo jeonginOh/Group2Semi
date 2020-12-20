@@ -23,9 +23,9 @@ public class Seach_all_list extends HttpServlet{
 		req.setCharacterEncoding("utf-8");	
 		String search=req.getParameter("search");
 		String field=req.getParameter("field");
-		String spageNum=req.getParameter("pageNum");
+		String spageNum=req.getParameter("pagenum");
 		int pageNum=1;
-		if(spageNum!=null) {
+		if(!spageNum.equals("undefined")) {
 			pageNum=Integer.parseInt(spageNum);
 		}
 		System.out.println("페이지넘버"+spageNum);

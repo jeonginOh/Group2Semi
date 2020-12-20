@@ -29,9 +29,10 @@
 
 	<script type="text/javascript">
 		var xhr = null;
+var startnum=1;
 		function getList(startnum) {
-		 var kk=startnum;
-		 console.log(kk);
+		 
+		 
 			xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				
@@ -70,7 +71,7 @@
 						console.log(img1);
 						console.log(itemid);
 						all_list="<a href='#'><img src='<%=request.getContextPath()%>/fileFolder/"+itemimg+"'></a><br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
-						+"<br>제조사: "+factory+"<br>제조일:"+regdate;
+						+"<br>제조사: "+factory+"<br>제조일:"+regdate+"i의 값:"+startnum;
 					
 						div.className="search_item";
 					/* 	a.appendChild(img1);
@@ -81,34 +82,30 @@
 						commlist.appendChild(a);
 
 					}
-					
- 					if (paging.startPageNum >10) {
- 						let div1=document.createElement("div");
-						div1.innerHTML="<h1><a href='javascript : getList("+paging.startPageNum-1 +")'>"+이전+"</a></h1>";
-							div1.className="numbox";						
+					deletepagenum();
+ 					if (startnum >10) {
+ 						var stdiv=document.createElement("div");
+						stdiv.innerHTML="<a href='javascript:getList("+(paging.startPageNum-1) +")'>이전</a>";
+							stdiv.className="numbox";						
 						
-						pagelist.appendChild(div1);
-						console.log(i);
-						console.log("스타트넘버");
+						pagelist.appendChild(stdiv);
+
 					
 					}
-					for (let i = paging.startPageNum; i <= paging.endPageNum; i++) {
-						let div1=document.createElement("div");
-						div1.innerHTML="<a href='javascript : getList("+i+")'>"+i+"</a>";
+					for (var i = paging.startPageNum; i <= paging.endPageNum; i++) {
+						var div1=document.createElement("div");
+						div1.innerHTML="<a href='javascript:getList("+i+")'>"+i+"</a>";
 							div1.className="numbox";						
-						
 						pagelist.appendChild(div1);
 						console.log(i);
-						console.log("스타트넘버");
+						console.log(" 페이징스타트넘버확인"+paging.startPageNum);
 					}
 					if (paging.endPageNum < paging.pageCount) {
-						div1.innerHTML="<a href='javascript:getList("+paging.endPageNum+1 +");'>"+다음+"</a>";
-						div1.className="numbox";					
+						var endiv=document.createElement("div");
+						endiv.innerHTML="<a href='javascript:getList("+(paging.endPageNum+1)+")'>다음</a>";
+						endiv.className="numbox";					
 						console.log("엔드페이지"+paging.endPageNum);
-						
-					pagelist.appendChild(div1);
-					console.log(i);
-					console.log("스타트넘버");
+					pagelist.appendChild(endiv);
 					}
 
 				}
@@ -126,8 +123,6 @@
 			xhr.setRequestHeader('Content-Type',
 					'application/x-www-form-urlencoded');
 			var param = "field=" + field + "&search=" + search + "&pagenum="+startnum;
-			console.log(param);
-			
 			xhr.send(param);
 		}
 		function deletelist(){
@@ -135,6 +130,12 @@
 	        while(commlist.firstChild){ //기존의 리스트를 전부 삭제
 	            commlist.removeChild(commlist.lastChild);
 	        }
+		}
+		function deletepagenum(){
+			var pagelist=document.getElementById("pagelist");
+			while(pagelist.firstChild){
+				pagelist.removeChild(pagelist.lastChild);
+			}
 		}
 
 		
