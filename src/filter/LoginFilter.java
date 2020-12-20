@@ -82,8 +82,9 @@ public class LoginFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) arg1;
         HttpSession session = request.getSession();
 
-        request.setAttribute("ref", request.getRequestURI());
+        request.setAttribute("ref", request.getHeader("referer"));
         request.setAttribute("method", request.getMethod());
+        request.setAttribute("url", request.getRequestURI());
         //session에서 memid확인
         if (session.getAttribute("memid")!=null) {
             //수동 로그인일 경우 진행

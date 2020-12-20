@@ -45,7 +45,7 @@
 		</c:choose>
 	</h1>
 	<a
-		href="${pageContext.request.contextPath }/parks_review/reviewlist1.jsp">물품리스트</a>
+		href="${pageContext.request.contextPath }/parks_review/reviewindex.jsp">물품리스트</a>
 	<div id="box">
 		<table style="table-layout: fixed;" border="1" bordercolor="red"
 			width="1400" align="center">

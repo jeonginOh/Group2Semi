@@ -24,7 +24,7 @@ public class SearchDao {
 		try {
 			
 			con=DBCPBean.getConn();
-			sql="select * from(  \r\n" + 
+			sql="select * from(  \r\n" + 	
 					"					select aa.*,rownum rnum from \r\n" + 
 					"					(select * from iteminfo where "+field+" like '%"+search+"%' order by itemid desc)\r\n" + 
 					"					  aa   \r\n" + 

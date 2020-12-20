@@ -2,8 +2,8 @@
   "canvas": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 0,
-    "scrollLeft": 752,
+    "scrollTop": 279,
+    "scrollLeft": 368,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -17,7 +17,7 @@
     },
     "database": "Oracle",
     "databaseName": "",
-    "canvasType": "SQL",
+    "canvasType": "ERD",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -295,7 +295,7 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 927,
           "top": 30,
           "zIndex": 1539,
@@ -872,7 +872,7 @@
           "active": false,
           "left": 840,
           "top": 945,
-          "zIndex": 1500,
+          "zIndex": 1542,
           "widthName": 60,
           "widthComment": 60
         },
@@ -1522,7 +1522,7 @@
           "active": false,
           "left": 249,
           "top": 108,
-          "zIndex": 1498,
+          "zIndex": 1545,
           "widthName": 64,
           "widthComment": 60
         },
@@ -1803,9 +1803,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 707,
-          "top": 702,
-          "zIndex": 1370,
+          "left": 559,
+          "top": 638,
+          "zIndex": 1540,
           "widthName": 60,
           "widthComment": 60
         },
@@ -1956,9 +1956,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1574,
-          "top": 236,
-          "zIndex": 1334,
+          "left": 1576,
+          "top": 264,
+          "zIndex": 1543,
           "widthName": 60,
           "widthComment": 60
         },
@@ -2524,9 +2524,9 @@
           "columnIds": [
             "4fb92dce-c26c-c712-102c-140523f74360"
           ],
-          "x": 911.5,
-          "y": 914.5,
-          "direction": "bottom"
+          "x": 968,
+          "y": 797.375,
+          "direction": "right"
         },
         "id": "5fc2ad8a-b448-6eac-87ee-0e6b8e87c27d",
         "relationshipType": "OneN"
@@ -2547,9 +2547,9 @@
           "columnIds": [
             "4982f714-66b3-c250-3239-8a8099cafc90"
           ],
-          "x": 911.5,
-          "y": 702,
-          "direction": "top"
+          "x": 968,
+          "y": 691.125,
+          "direction": "right"
         },
         "id": "1d9fde50-1327-3f6a-e83f-b6f9fe1c7b83",
         "relationshipType": "OneN"
@@ -2561,8 +2561,8 @@
           "columnIds": [
             "11343ef4-35a2-a84a-7e5a-7a01eb8f59ab"
           ],
-          "x": 1780.5,
-          "y": 236,
+          "x": 1782.5,
+          "y": 264,
           "direction": "top"
         },
         "end": {
