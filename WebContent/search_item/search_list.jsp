@@ -6,6 +6,7 @@
 <head>
 <style type="text/css">
 .search_item{display: inline-block; padding-left: 40px;}
+.numbox{display: inline-block; padding-left: 10px;}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -28,9 +29,9 @@
 
 	<script type="text/javascript">
 		var xhr = null;
-		/* var startnum=1; */
-		function getList() {
-			
+		function getList(startnum) {
+		 var kk=startnum;
+		 console.log(kk);
 			xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				
@@ -82,14 +83,32 @@
 					}
 					
  					if (paging.startPageNum >10) {
-
+ 						let div1=document.createElement("div");
+						div1.innerHTML="<h1><a href='javascript : getList("+paging.startPageNum-1 +")'>"+이전+"</a></h1>";
+							div1.className="numbox";						
+						
+						pagelist.appendChild(div1);
+						console.log(i);
+						console.log("스타트넘버");
 					
 					}
 					for (let i = paging.startPageNum; i <= paging.endPageNum; i++) {
-					/*  <a href=javascript : getList(i)> i </a> */
+						let div1=document.createElement("div");
+						div1.innerHTML="<a href='javascript : getList("+i+")'>"+i+"</a>";
+							div1.className="numbox";						
+						
+						pagelist.appendChild(div1);
+						console.log(i);
+						console.log("스타트넘버");
 					}
 					if (paging.endPageNum < paging.pageCount) {
+						div1.innerHTML="<a href='javascript:getList("+paging.endPageNum+1 +");'>"+다음+"</a>";
+						div1.className="numbox";					
+						console.log("엔드페이지"+paging.endPageNum);
 						
+					pagelist.appendChild(div1);
+					console.log(i);
+					console.log("스타트넘버");
 					}
 
 				}
@@ -106,8 +125,9 @@
 			
 			xhr.setRequestHeader('Content-Type',
 					'application/x-www-form-urlencoded');
-			var param = "field=" + field + "&search=" + search + "&pagenum=1";
+			var param = "field=" + field + "&search=" + search + "&pagenum="+startnum;
 			console.log(param);
+			
 			xhr.send(param);
 		}
 		function deletelist(){
