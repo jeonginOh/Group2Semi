@@ -48,9 +48,11 @@ public class TestFilter implements Filter {
             }
         }
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            sb.append("\ncookie: "+cookie.getName());
-            sb.append("\tvalue: "+cookie.getValue());
+        if (cookies!=null) {
+	        for (Cookie cookie : cookies) {
+	            sb.append("\ncookie: "+cookie.getName());
+	            sb.append("\tvalue: "+cookie.getValue());
+	        }
         }
         Enumeration<String> attrs = request.getAttributeNames();
         while(attrs.hasMoreElements()) {
@@ -65,7 +67,6 @@ public class TestFilter implements Filter {
             sb.append("\nsession Attribute : "+attr);
             sb.append("\tvalue: "+session.getAttribute(attr));
         }
-
         System.out.println(sb.toString());
         arg2.doFilter(arg0, arg1);
     }

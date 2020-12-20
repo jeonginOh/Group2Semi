@@ -70,8 +70,10 @@ public class LoginController extends HttpServlet{
             System.out.println(n);
             json.append("error", false);
             json.append("value", memid);
-            req.setAttribute("method", req.getMethod());
-            req.setAttribute("ref", req.getRequestURI());
+            // req.setAttribute("method", req.getMethod());
+            // req.setAttribute("loc", req.getRequestURI());
+            // req.setAttribute("ref", req.getHeader("referer"));
+
             req.getSession().setAttribute("memid", memid);
             //이 세션에 수동로그인 했다는 흔적을 남김
             req.getSession().setAttribute("menual", true);

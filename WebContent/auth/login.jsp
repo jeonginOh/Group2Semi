@@ -60,20 +60,38 @@
     </div>
    	<script type="text/javascript">
 	<%
+	// Map<String, String[]> map= request.getParameterMap();
+    // StringBuilder sb = new StringBuilder();
+	// for(String key : map.keySet()) {
+	// 	System.out.println("key: "+ key);
+	// 	sb.append(key+"=");
+	// 	for(String value : map.get(key)) {
+	// 		System.out.println("value: "+ value);
+	// 		sb.append(value+"&");
+	// 	}
+	// }
+	
+	// if (request.getAttribute("method")!=null) sb.append("method="+(String) request.getAttribute("method")+"&"); 
+	// if (request.getAttribute("ref")!=null) sb.append("ref="+(String) request.getAttribute("ref"));
+	
 	Map<String, String[]> map= request.getParameterMap();
-    StringBuilder sb = new StringBuilder();
+    String keys[] = new String[map.keySet().size()];
 	for(String key : map.keySet()) {
 		System.out.println("key: "+ key);
-		sb.append(key+"=");
+		
 		for(String value : map.get(key)) {
 			System.out.println("value: "+ value);
-			sb.append(value+"&");
+			// sb.append(value+"&");
 		}
 	}
 	
-	if (request.getAttribute("method")!=null) sb.append("method="+(String) request.getAttribute("method")+"&"); 
-	if (request.getAttribute("ref")!=null) sb.append("ref="+(String) request.getAttribute("ref")); 
-	
+	String method=null;
+	String ref=null;
+	String loc=null;
+
+	if (request.getAttribute("method")!=null) method = (String) request.getAttribute("method"); 
+	if (request.getAttribute("loc")!=null) loc= (String) request.getAttribute("loc"); 
+	if (request.getAttribute("ref")!=null) ref= (String) request.getAttribute("ref"); 
 	%>
 	window.onload=function() {
 	    let loginbtn = document.getElementById('login');
@@ -116,8 +134,9 @@
 							else if (json.errMsg="0") {err = "아이디와 비밀번호가 맞지 않습니다.";}
 							errMsg.innerText=err;
 	                    }else {
-	                    	console.log("aaaaa");
-							passparam();
+	                    	console.log('<%=ref%>');
+							//passparam();
+							location.href='<%=ref%>';
 						}
 	                }
 	            }
@@ -128,21 +147,28 @@
 	        }
 		}
 		<%-- console.log('<%=sb.toString() %>'); --%>
-		function passparam() {
+		<%-- function passparam() {
 			let xhr = new XMLHttpRequest();
 			xhr.onreadystatechange=function() {
 				if (xhr.readyState==4 && xhr.status==200) {
 					//let json = JSON.parse(xhr.responseText);
-					location.reload();
+					// location.reload();
+					let form = document.createElement("form");
+					form.setAttribute("action", )
+
+
+
+
+
+
 				}
 			};
-
 			xhr.open('post', '../countinue', true);
 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			let param = '<%=sb.toString() %>';
 			console.log(param);
 			xhr.send(param);
-		}
+		} --%>
 		function templogin() {
 			
 		}
