@@ -49,16 +49,21 @@
 					if(json.startPageNum>10){l
 						var prev = document.creatElement("a");
 						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
-						prev.href="<%=request.getContextPath() %>/jeungIn/cardlist.jsp?pageNum="+json.startPageNum;
+						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.startPageNum;
 						prev.innerHTML="이전";
 						paging.appendChild(prev);
 					}
 					for(var i = json.startPageNum;i<=json.endPageNum;i++){
 						var pageN = document.createElement("a");
 						<%-- pageN.href="<%= request.getContextPath() %>/list.do?pageNum="+i; --%>
-						pageN.href="<%= request.getContextPath() %>/jeungIn/cardlist.jsp?pageNum="+i;
+						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+i;
 						pageN.innerHTML=i;
 						paging.appendChild(pageN);
+					}if(json.endPageNum<json.pageCount){
+						var next = document.createElement("a");
+						next.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.endPagenum+1;
+						next.innerHTML="다음";
+						paging.appendChild(next);
 					}
 					
 				}

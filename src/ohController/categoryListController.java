@@ -43,7 +43,7 @@ public class categoryListController extends HttpServlet{
 		pageJson.put("startPageNum", startPageNum);
 		pageJson.put("endPageNum", endPageNum);
 		
-		ArrayList<IteminfoVo> list = dao.bigcatelist(Integer.parseInt(catid));
+		ArrayList<IteminfoVo> list = dao.bigcatelist(startRow,endRow,Integer.parseInt(catid));
 		JSONArray arr = new JSONArray();
 		for(IteminfoVo vo:list) {
 			JSONObject json = new JSONObject();
