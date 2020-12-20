@@ -28,16 +28,16 @@ public class Seach_all_list extends HttpServlet{
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
+		System.out.println("페이지넘버"+spageNum);
 		System.out.println(search+","+field+","+pageNum);
 		int startRow=(pageNum-1)*10+1;
-		int endRow=startRow+50;
+		int endRow=startRow+23;
 		SearchDao dao=SearchDao.getinstance();
 		ArrayList<IteminfoVo> list=dao.select_list(startRow,endRow,field,search);
 
 		JSONArray jarr=new JSONArray();
 		for(IteminfoVo vo : list) {
 			JSONObject json=new JSONObject();
-			System.out.println("아이템네임");
 			json.put("itemid",vo.getItemid());
 			json.put("itemname", vo.getItemname());
 			json.put("catid", vo.getCatid());
@@ -50,7 +50,7 @@ public class Seach_all_list extends HttpServlet{
 		}
 		int pageCount=(int)Math.ceil(dao.getCount(field,search)/10.0);
 		int startPageNum=(pageNum-1)/10*10+1;
-		int endPageNum=startPageNum+50;
+		int endPageNum=startPageNum+9;
 		if(endPageNum>pageCount) {
 			endPageNum=pageCount;
 		}
