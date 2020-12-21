@@ -53,6 +53,7 @@ var startnum=1;
 							commlist.innerHTML="";
 							return;
 						}
+							 
 					for (var i = 0; i < paging.itemlist.length; i++) {
 						var a=document.createElement("a");
 						var div = document.createElement("div");
@@ -71,7 +72,7 @@ var startnum=1;
 						console.log(img1);
 						console.log(itemid);
 						all_list="<a href='#'><img src='<%=request.getContextPath()%>/fileFolder/"+itemimg+"'></a><br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
-						+"<br>제조사: "+factory+"<br>제조일:"+regdate+"i의 값:"+startnum;
+						+"<br>제조사: "+factory+"<br>제조일:"+regdate;
 					
 						div.className="search_item";
 					/* 	a.appendChild(img1);
@@ -83,6 +84,8 @@ var startnum=1;
 
 					}
 					deletepagenum();
+				/* 짜고나서 이해 안됨->deletepagenum()메소드가 1~10에서 다음을 누르면 1~10을 지우는 방식??
+						마지막페이지가 약간 잘못 출력되는것을 확인... */
  					if (startnum >10) {
  						var stdiv=document.createElement("div");
 						stdiv.innerHTML="<a href='javascript:getList("+(paging.startPageNum-1) +")'>이전</a>";
@@ -94,7 +97,12 @@ var startnum=1;
 					}
 					for (var i = paging.startPageNum; i <= paging.endPageNum; i++) {
 						var div1=document.createElement("div");
-						div1.innerHTML="<a href='javascript:getList("+i+")'>"+i+"</a>";
+						console.log(paging.endPageNum+"마지막페이지테스트");
+						if(i==startnum){
+						div1.innerHTML="<a href='javascript:getList("+i+")'><span style='color:black'>"+i+"</span></a>";
+						}else{
+							div1.innerHTML="<a href='javascript:getList("+i+")'><span style='color:gray'>"+i+"</span></a>";
+						}
 							div1.className="numbox";						
 						pagelist.appendChild(div1);
 						console.log(i);
@@ -119,7 +127,6 @@ var startnum=1;
 				return;  
 			} 
 			var field = f.options[f.selectedIndex].value;
-			
 			xhr.setRequestHeader('Content-Type',
 					'application/x-www-form-urlencoded');
 			var param = "field=" + field + "&search=" + search + "&pagenum="+startnum;

@@ -28,9 +28,8 @@ public class Seach_all_list extends HttpServlet{
 		if(!spageNum.equals("undefined")) {
 			pageNum=Integer.parseInt(spageNum);
 		}
-		System.out.println("페이지넘버"+spageNum);
-		System.out.println(search+","+field+","+pageNum);
-		int startRow=(pageNum-1)*10+1;
+
+		int startRow=(pageNum-1)*24+1;
 		int endRow=startRow+23;
 		SearchDao dao=SearchDao.getinstance();
 		ArrayList<IteminfoVo> list=dao.select_list(startRow,endRow,field,search);
@@ -48,9 +47,12 @@ public class Seach_all_list extends HttpServlet{
 			json.put("regdate",vo.getStoredate());
 			jarr.put(json);
 		}
-		int pageCount=(int)Math.ceil(dao.getCount(field,search)/10.0);
+		int pageCount=(int)Math.ceil(dao.getCount(field,search)/24.0);
+	
 		int startPageNum=(pageNum-1)/10*10+1;
 		int endPageNum=startPageNum+9;
+		System.out.println(startPageNum+"스타트페이지넘");
+		System.out.println(endPageNum+"엔드페이지넘");
 		if(endPageNum>pageCount) {
 			endPageNum=pageCount;
 		}
