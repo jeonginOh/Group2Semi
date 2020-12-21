@@ -88,6 +88,7 @@ border: 2px solid black; width: 200px; height: 200px; text-align: center;">
 </div>
 	<input type="hidden" name="memid" value="${mem.memid }">
 	<input type="hidden" name="addr" value="${mem.addr }">
+	<input type="hidden" name="totprice" value="${totprice }">
 </form>
 
 <script type="text/javascript">

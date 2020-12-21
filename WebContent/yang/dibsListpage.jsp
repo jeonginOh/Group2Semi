@@ -183,13 +183,11 @@ function checkDel(){ //체크박스 삭제
 }
 
 function insBasket(e){
-	let stock=document.getElementsByClassName("stock");
-	let avail=document.getElementsByClassName("avail");
-	for(let i=0;i<stock.length;i++){
-		if(stock[i].value<=0 || avail[i].value==0){ //수량,상태체크후 판매불가시 장바구니에 못담게함
-			alert("수량이없거나 판매불가상태입니다.");
-			return;
-		}
+	var stock=e.target.parentNode.previousSibling.previousSibling.previousSibling.lastChild.value;
+	var avail=e.target.parentNode.previousSibling.previousSibling.lastChild.value;
+	if(stock<=0 || avail==0){ //수량,상태체크후 판매불가시 장바구니에 못담게함
+		alert("수량이없거나 판매불가상태입니다.");
+		return;
 	}
 	xhr=new XMLHttpRequest();
 	itemid=e.target.name;
