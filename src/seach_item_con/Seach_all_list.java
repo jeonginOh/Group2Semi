@@ -71,7 +71,7 @@ public class Seach_all_list extends HttpServlet{
 		
 		
 	}
-	//서치수정
+	
 	
 	
 	
