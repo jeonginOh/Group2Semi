@@ -2,6 +2,8 @@ package semiVo;
 
 import java.sql.Date;
 
+import org.json.JSONObject;
+
 /**
  * 
  */
@@ -129,5 +131,18 @@ public class MemberinfoVo {
         this.point = point;
     }
 
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.append("memid", this.memid);
+        json.append("id", this.id);
+        json.append("age", this.age);
+        json.append("email", this.email);
+        json.append("addr", this.addr);
+        json.append("regdate", this.regdate);
+        json.append("phone", this.phone);
+        json.append("point", this.point);
+        json.append("status", this.status);
+        return json;
+    }
 
 }

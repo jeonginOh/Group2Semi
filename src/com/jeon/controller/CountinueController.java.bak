@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//예약어일수도 있음
 @WebServlet("/countinue")
 public class CountinueController extends HttpServlet{
     @Override

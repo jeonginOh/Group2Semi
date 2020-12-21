@@ -82,19 +82,26 @@ public class LoginFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) arg1;
         HttpSession session = request.getSession();
 
-        request.setAttribute("ref", request.getHeader("referer"));
-        request.setAttribute("method", request.getMethod());
-        request.setAttribute("url", request.getRequestURI());
+        arg0.setAttribute("ref", request.getHeader("referer"));
+        arg0.setAttribute("method", request.getMethod());
+        arg0.setAttribute("url", request.getRequestURI());
         //session에서 memid확인
         if (session.getAttribute("memid")!=null) {
-            //수동 로그인일 경우 진행
-            if (session.getAttribute("menual")!=null && (boolean) session.getAttribute("menual")) arg2.doFilter(arg0, arg1);
-            //임시회원일 경우
+            if (session.getAttribute("menual")!=null && (boolean) session.getAttribute("menual")) {
+                //수동 로그인일 경우 진행
+                arg2.doFilter(arg0, arg1);
+            }
             else if (session.getAttribute("tempuser")!=null && (boolean) session.getAttribute("tempuser")) {
+                //임시회원일 경우
+                // if (request.getRequestURI().equals("")) {
+
+                // }
 
             }else {//자동 로그인일 경우
                 //url에 따라서 로그인 페이지 요청
-                // if
+                // if (request.getRequestURI().equals("")) {
+
+                // }
                 arg2.doFilter(arg0, arg1);
             }
         }
@@ -129,11 +136,11 @@ public class LoginFilter implements Filter{
                     		//일단 다시 로그인
                             // response.sendRedirect(request.getContextPath()+"/auth/loginError.html");
                         }
-                        request.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
+                        arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
                     }
                 }
-                if (!found) request.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
-            }else request.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
+                if (!found) arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
+            }else arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
         }
     }
 }

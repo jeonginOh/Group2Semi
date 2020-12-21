@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,12 @@ public class LogoutController extends HttpServlet{
         String identifier = req.getRemoteAddr()+req.getHeader("User-Agent");
         ldao.expire(memid, identifier);
         session.invalidate();
-        resp.sendRedirect("/");
+        //쿠키삭제
+        Cookie cookie = new Cookie("token", "");
+        cookie.setMaxAge(0); 
+        cookie.setPath("/");
+        resp.addCookie(cookie);
+        
+        resp.sendRedirect(req.getHeader("referer"));
     }
 }

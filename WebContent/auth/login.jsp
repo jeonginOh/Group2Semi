@@ -32,9 +32,35 @@
             width: 100%;
         }
     </style>
+    
 </head>
 <body>
+<%
+	Map<String, String[]> map= request.getParameterMap();
+    String keys[] = new String[map.keySet().size()];
+	for(String key : map.keySet()) {
+		System.out.println("key: "+ key);
+		
+		for(String value : map.get(key)) {
+			System.out.println("value: "+ value);
+			// sb.append(value+"&");
+		}
+	}
+	
+	String method=null;
+	String ref=request.getHeader("referer");
+	System.out.println("ref:"+request.getHeader("referer"));
+	String url=null;
+
+	if (request.getAttribute("method")!=null) method = (String) request.getAttribute("method"); 
+	if (request.getAttribute("url")!=null) url= (String) request.getAttribute("url"); 
+	if (request.getAttribute("ref")!=null) ref= (String) request.getAttribute("ref"); 
+%>
     <div id="content">
+		<%=request.getHeader("referer")%>
+		<%=request.getRequestURI()%>
+		<%=request.getAttribute("ref")%>
+		<%=request.getParameter("ref")%>
         <h1>쇼핑몰</h1>
         <fieldset>
             <legend>로그인</legend>
@@ -54,12 +80,11 @@
         <input type="button" value="임시회원으로 진행하기" id='tempuser' class='btn'>
         <div id="member">
             <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/agree.html">회원가입</a>
-            <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?sapge=/member/findid.html">아이디찾기</a>
+            <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/findid.html">아이디찾기</a>
             <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/findpw.html">비밀번호찾기</a>
         </div>
     </div>
    	<script type="text/javascript">
-	<%
 	// Map<String, String[]> map= request.getParameterMap();
     // StringBuilder sb = new StringBuilder();
 	// for(String key : map.keySet()) {
@@ -74,25 +99,7 @@
 	// if (request.getAttribute("method")!=null) sb.append("method="+(String) request.getAttribute("method")+"&"); 
 	// if (request.getAttribute("ref")!=null) sb.append("ref="+(String) request.getAttribute("ref"));
 	
-	Map<String, String[]> map= request.getParameterMap();
-    String keys[] = new String[map.keySet().size()];
-	for(String key : map.keySet()) {
-		System.out.println("key: "+ key);
-		
-		for(String value : map.get(key)) {
-			System.out.println("value: "+ value);
-			// sb.append(value+"&");
-		}
-	}
 	
-	String method=null;
-	String ref=null;
-	String loc=null;
-
-	if (request.getAttribute("method")!=null) method = (String) request.getAttribute("method"); 
-	if (request.getAttribute("loc")!=null) loc= (String) request.getAttribute("loc"); 
-	if (request.getAttribute("ref")!=null) ref= (String) request.getAttribute("ref"); 
-	%>
 	window.onload=function() {
 	    let loginbtn = document.getElementById('login');
 	    let id = document.getElementById("id");
@@ -103,7 +110,7 @@
 	    
 	    
 	    loginbtn.addEventListener('click', login, false);
-	    tempuser.addEventListener('click', templogin, false);
+	    tempuser.addEventListener('click', tmpuser, false);
 
 	    function login() {
 	        errMsg.innerHTML="";
@@ -134,9 +141,9 @@
 							else if (json.errMsg="0") {err = "아이디와 비밀번호가 맞지 않습니다.";}
 							errMsg.innerText=err;
 	                    }else {
-	                    	console.log('<%=ref%>');
+	                    	//console.log('<%=ref%>');
 							//passparam();
-							location.href='<%=ref%>';
+							location.href='<%=url%>';
 						}
 	                }
 	            }
@@ -146,8 +153,8 @@
 	            xhr.send(param);
 	        }
 		}
-		<%-- console.log('<%=sb.toString() %>'); --%>
-		<%-- function passparam() {
+		/* <%-- console.log('<%=sb.toString() %>');
+		function passparam() {
 			let xhr = new XMLHttpRequest();
 			xhr.onreadystatechange=function() {
 				if (xhr.readyState==4 && xhr.status==200) {
@@ -155,12 +162,6 @@
 					// location.reload();
 					let form = document.createElement("form");
 					form.setAttribute("action", )
-
-
-
-
-
-
 				}
 			};
 			xhr.open('post', '../countinue', true);
@@ -168,9 +169,9 @@
 			let param = '<%=sb.toString() %>';
 			console.log(param);
 			xhr.send(param);
-		} --%>
-		function templogin() {
-			
+		} --%> */
+		function tmpuser() {
+			location.href='<%=request.getContextPath()%>/auth/tmpuser.do?url=<%=url%>';
 		}
 	}
    	</script>

@@ -245,7 +245,7 @@ public class MemberinfoDao {
     }
 
     /**
-     * 일단 다 뽑음
+     * 일단 다 뽑음(pwd, salt 제외)
      * @param memid
      * @return MemberinfoVo
      */
@@ -299,6 +299,62 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt);
         }
     }
+
+
+    /**
+     * getVo에는 pwd, salt가 없기 때문에
+     * @param memid
+     * @param pwd
+     * @return
+     */
+    public boolean newPwd(int memid, String pwd) {
+        Connection conn=null;
+        PreparedStatement pstmt =null;
+        try {
+            conn = DBCPBean.getConn();
+            String sql = "update memberinfo set pwd=?, salt=? where memid=?";
+            pstmt = conn.prepareStatement(sql);
+            String salt = makeSalt();
+            String newpwd = crypt(pwd, salt);
+            pstmt.setString(1, newpwd);
+            pstmt.setString(2, salt);
+            pstmt.setInt(3, memid);
+            if (pstmt.executeUpdate()==1) return true;
+            else return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DBCPBean.close(conn, pstmt);
+        }
+    }
+
+    /**
+     * vo의 memid의 email, addr, phone을 수정함.
+     * 수정할 수 있는게 별로 없다.
+     * @param vo
+     * @return
+     */
+    public boolean change(MemberinfoVo vo) {
+        Connection conn=null;
+        PreparedStatement pstmt =null;
+        try {
+            conn = DBCPBean.getConn();
+            String sql = "update memberinfo set email=?, addr=?, phone=? where memid=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vo.getEmail());
+            pstmt.setString(2, vo.getAddr());
+            pstmt.setString(3, vo.getPhone());
+            pstmt.setInt(4, vo.getMemid());
+            if (pstmt.executeUpdate()==1) return true;
+            else return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DBCPBean.close(conn, pstmt);
+        }
+    }
 /**---------------------------------------------------------------------
  * 임시유저 관련 메소드
 ----------------------------------------------------------------------*/
@@ -315,7 +371,9 @@ private int getDaily_seq() {
         conn = DBCPBean.getConn();
         pstmt = conn.prepareStatement("select daily_seq.nextval from dual");
         res = pstmt.executeQuery();
+        if (res.next())
         return res.getInt(1);
+        else return 0;
     } catch (SQLException e) {
         e.printStackTrace();
         return 0;
@@ -333,7 +391,7 @@ public int newTempUser() {
     PreparedStatement pstmt =null;
     try {
         conn = DBCPBean.getConn();
-        String sql = "insert into memberinfo values memberinfo_memid.nextval, ? null, null, null, null, null, sysdate, null, 0, 3)";
+        String sql = "insert into memberinfo values(memberinfo_memid.nextval, ?, null, null, null, null, null, sysdate, null, 0, 3)";
         pstmt = conn.prepareStatement(sql);
         String id = new SimpleDateFormat("YYMMdd").format(new Date())+getDaily_seq();
         pstmt.setString(1, id);
@@ -351,6 +409,10 @@ public int newTempUser() {
 /**---------------------------------------------------------------------
  * 암호화 관련 메소드
 ----------------------------------------------------------------------*/
+    /**
+     * salt값을 랜덤하게 생성한다.
+     * @return salt
+     */
     public String makeSalt() {
         Random random = new Random();
         byte[] bytes = new byte[8];
