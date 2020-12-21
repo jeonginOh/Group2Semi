@@ -107,7 +107,7 @@ var startnum=1;
 						pagelist.appendChild(div1);
 						console.log(i);
 						console.log(" 페이징스타트넘버확인"+paging.startPageNum);
-						/* 서치수정 */
+						
 					}
 					if (paging.endPageNum < paging.pageCount) {
 						var endiv=document.createElement("div");
