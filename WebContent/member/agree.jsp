@@ -81,7 +81,7 @@
 <body>
     <div id="content">
         <h1>회원가입</h1>
-        <form action="join.html" method="POST" onsubmit="return checkagree()">
+        <form action="join.jsp" method="POST" onsubmit="return checkagree()">
             <label for="checkall"><input type="checkbox" name="" id="checkall">이용약관, 개인정보 수집 및 이용 및 만점 채점에 동의합니다.</label>
             <div id="service">
                 <label for="agree1"><input type="checkbox" name="" id="agree1">이용약관 동의</label>

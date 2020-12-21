@@ -23,7 +23,7 @@ public class BasketInsertController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session=req.getSession();
-		session.setAttribute("memid", 23); //session에 id를 넣어보고 테스트(지워야함)
+		session.setAttribute("memid", 24); //session에 id를 넣어보고 테스트(지워야함)
 		int memid=(int)session.getAttribute("memid");
 		String bd=req.getParameter("bd");
 		int itemid=Integer.parseInt(req.getParameter("itemid"));
