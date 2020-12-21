@@ -32,7 +32,7 @@ public class categoryListController extends HttpServlet{
 		}
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
-		int pageCount=(int)Math.ceil(dao.getItemidCount()/10.0);
+		int pageCount=(int)Math.ceil(dao.getItemidCount(catid)/10.0);
 		int startPageNum=(pageNum-1)/10*10+1;
 		int endPageNum=startPageNum+9;
 		if(endPageNum>pageCount) {
