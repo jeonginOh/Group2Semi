@@ -322,13 +322,16 @@ public class iteminfoDao {
 		}
 	}
 	
-	public int getItemidCount() {
+	public int getItemidCount(String catid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con=DBCPBean.getConn();
 			String sql ="SELECT NVL(COUNT(ITEMID),0) CNT FROM ITEMINFO";
+			if(!catid.equals("") && catid!=null ) {
+				sql+="WHERE CATID LIKE '"+catid+"%'";
+			}
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			rs.next();

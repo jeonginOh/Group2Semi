@@ -37,6 +37,12 @@
 						btn.href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+json.arr[i].itemid;
 						btn.className="btn btn-primary";
 						btn.innerHTML="More";
+						var btn2 = document.createElement("a");
+						btn2.href="<%=request.getContextPath()%>/basketinsert.do?itemid="+json.arr[i].itemid+"&bd=d";
+						btn2.className="jjim";
+						var heart = document.createElement("i");
+						heart.className="fas fa-heart";
+						btn2.appendChild(heart);
 						
 						row[0].appendChild(col3);
 						col3.appendChild(card);
@@ -45,8 +51,9 @@
 						cardbody.appendChild(cardtitle);
 						cardbody.appendChild(cardtext);
 						cardbody.appendChild(btn);
+						cardbody.appendChild(btn2);
 					}
-					if(json.startPageNum>10){l
+					if(json.startPageNum>10){
 						var prev = document.creatElement("a");
 						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
 						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.startPageNum;
