@@ -1,19 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 4</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <style>
-      .card p { margin:20px 0px;}
-      #paging{text-align:center;}
-    </style>
+
     <script type="text/javascript">
 		window.onload=function(){
 			var xhr = null;
@@ -61,16 +49,21 @@
 					if(json.startPageNum>10){l
 						var prev = document.creatElement("a");
 						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
-						prev.href="<%=request.getContextPath() %>/jeungIn/cardlist.jsp?pageNum="+json.startPageNum;
+						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.startPageNum;
 						prev.innerHTML="이전";
 						paging.appendChild(prev);
 					}
 					for(var i = json.startPageNum;i<=json.endPageNum;i++){
 						var pageN = document.createElement("a");
 						<%-- pageN.href="<%= request.getContextPath() %>/list.do?pageNum="+i; --%>
-						pageN.href="<%= request.getContextPath() %>/jeungIn/cardlist.jsp?pageNum="+i;
+						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+i;
 						pageN.innerHTML=i;
 						paging.appendChild(pageN);
+					}if(json.endPageNum<json.pageCount){
+						var next = document.createElement("a");
+						next.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.endPagenum+1;
+						next.innerHTML="다음";
+						paging.appendChild(next);
 					}
 					
 				}
@@ -83,13 +76,10 @@
 			xhr.send();
 		}
 	</script>
-  </head>
-  <body>
+
     <div class="container">
       <div class="row">
       </div>
     </div>
     
     <div id="paging"></div>
-  </body>
-</html>

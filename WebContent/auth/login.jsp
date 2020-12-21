@@ -53,9 +53,9 @@
         </fieldset>
         <input type="button" value="임시회원으로 진행하기" id='tempuser' class='btn'>
         <div id="member">
-            <a href="../member/agree.html">회원가입</a>
-            <a href="../member/findid.html">아이디찾기</a>
-            <a href="../member/findpw.html">비밀번호찾기</a>
+            <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/agree.html">회원가입</a>
+            <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?sapge=/member/findid.html">아이디찾기</a>
+            <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/findpw.html">비밀번호찾기</a>
         </div>
     </div>
    	<script type="text/javascript">

@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 	<div id = "headerTop">
 		<div id = "toptop">
 			<ul>
-				<li><a href="main.jsp?spage="><i class="fas fa-user-plus"></i></a></li>
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/auth/login.jsp"><i class="fas fa-user-plus"></i></a></li>
 				<li> | </li>
-				<li><a href="main.jsp?spage="><i class="fas fa-sign-in-alt"></i></a></li>
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/join.html"><i class="fas fa-sign-in-alt"></i></a></li>
 				<li> | </li>
 				<li><a href="main.jsp?spage="><i class="fas fa-headset"></i></a></li>
 			</ul>
-			<img src = "<%=request.getContextPath() %>/images/mainimage.png" id="mainimg">
+			<a href="main.jsp"><img src = "<%=request.getContextPath() %>/images/mainimage.png" id="mainimg"></a>
 	  	</div>
 	  	<div id = top2>
 		  	<ul>

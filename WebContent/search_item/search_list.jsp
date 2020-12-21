@@ -29,10 +29,9 @@
 
 	<script type="text/javascript">
 		var xhr = null;
-var startnum=1;
+		var startnum=1;
 		function getList(startnum) {
-		 
-		 
+
 			xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				
