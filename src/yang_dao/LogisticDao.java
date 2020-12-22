@@ -142,4 +142,42 @@ public class LogisticDao {
 			DBCPBean.close(con,pstmt,rs);
 		}
 	}
+	public ArrayList<LogiMemJoinVo> list(int memid){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		ArrayList<LogiMemJoinVo> list= new ArrayList<LogiMemJoinVo>();
+		String sql="SELECT * FROM LOGISTIC NATURAL JOIN MEMBERINFO"
+				+ " NATURAL JOIN ITEMINFO WHERE MEMID=? ORDER BY LOGIINFO";
+		try {
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				LogiMemJoinVo vo=new LogiMemJoinVo(
+						rs.getInt("memid"),
+						rs.getString("id"),
+						null, null,
+						rs.getString("age"),
+						rs.getString("email"),
+						rs.getString("addr"),
+						null,
+						rs.getString("phone"),
+						rs.getInt("point"),
+						rs.getInt("status"),
+						rs.getInt("logiid"),
+						rs.getInt("buyid"),
+						rs.getInt("itemid"),
+						rs.getString("logiinfo"),
+						rs.getString("itemname"));
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
 }
