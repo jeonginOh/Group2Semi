@@ -3,7 +3,7 @@
     
     <ul class = "bigcate">
     	<li>
-    		<a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?catid=123"><i class="fas fa-carrot"></i>채소</a>
+    		<a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?catid=111000"><i class="fas fa-carrot"></i>채소</a>
     		<ul class ="smallcate" id="ul_vegi">
     			<li><a href="">콩나물/버섯류</a></li>
     			<li><a href="#">시금치/부추/나물</a></li>
