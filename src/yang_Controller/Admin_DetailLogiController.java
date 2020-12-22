@@ -25,11 +25,12 @@ public class Admin_DetailLogiController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int memid=Integer.parseInt(req.getParameter("memid"));
 		String logiinfo=req.getParameter("logiinfo");
+		String addr=req.getParameter("addr");
 		LogisticDao logidao=LogisticDao.getInstance();
 		MemberinfoDao memdao=MemberinfoDao.getInstance();
 		iteminfoDao itemdao=iteminfoDao.getInstance();
 		BuyListDao buydao=BuyListDao.getInstance();
-		ArrayList<LogisticVo> logivo=logidao.list(memid,logiinfo);
+		ArrayList<LogisticVo> logivo=logidao.list(memid,logiinfo,addr);
 		ArrayList<BuylistVo> buyvo=buydao.list(memid,logiinfo);
 		ArrayList<String> itemname=new ArrayList<String>();
 		for(LogisticVo vo:logivo) {

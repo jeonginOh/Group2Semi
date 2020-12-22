@@ -3,10 +3,21 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<div id="logiAdmWrap">
+<div id="logiAdmWrap" style="text-align: center;">
 <h1>주문배송조회</h1>
 <div>
-	<table style="width: 880px; border: 1px solid black; text-align: center;">
+	<form method="post" action="<%=request.getContextPath()%>/admLogistic.do">
+	<select name=field>
+		<option value="id" <c:if test="${field=='id' }">selected</c:if>>아이디</option>
+		<option value="itemname"<c:if test="${field=='itemname' }">selected</c:if>>물품이름</option>
+		<option value="logiinfo"<c:if test="${field=='logiinfo' }">selected</c:if>>배송상태</option>
+	</select>
+	<input type="text" placeholder="검색어입력" name="keyword" value="${keyword }">
+	<input type="submit" value="검색">
+	</form>
+</div>
+<div>
+	<table style="width: 880px; border: 1px solid black; text-align: center; margin-left: auto; margin-right: auto;">
 		<tr>
 			<th>아이디</th>
 			<th>물품이름</th>
@@ -16,7 +27,7 @@
 		</tr>
 		<c:forEach var="vo" items="${list }">
 		<tr>
-			<td><a href="<%=request.getContextPath()%>/admDetail.do?memid=${vo.memid}&logiinfo=${vo.logiinfo}">${vo.id }</a></td>
+			<td><a href="<%=request.getContextPath()%>/admDetail.do?memid=${vo.memid}&logiinfo=${vo.logiinfo}&addr=${vo.addr}">${vo.id }</a></td>
 			<td>${vo.itemname } 등</td>
 			<td>${vo.addr }</td>
 			<td>
@@ -38,6 +49,26 @@
 		</tr>
 		</c:forEach>
 	</table>
+</div>
+<div>
+	<c:if test="${startPageNum>10 }">
+		<a href="<%=request.getContextPath() %>/admLogistic.do?pageNum=${startPageNum-1 }&field=${field}&keyword=${keyword}">[이전]</a>
+	</c:if>
+	<c:forEach var="i" begin="${startPageNum}" end="${endPageNum }">
+		<c:choose>
+			<c:when test="${pageNum==i }">
+				<a href="<%=request.getContextPath() %>/admLogistic.do?pageNum=${i}&field=${field}&keyword=${keyword}">
+				<span style="color:gray">[${i }]</span></a>
+			</c:when>
+			<c:otherwise>
+				<a href="<%=request.getContextPath() %>/admLogistic.do?pageNum=${i}&field=${field}&keyword=${keyword}">
+				<span style="color:blue">[${i }]</span></a>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	<c:if test="${endPageNum<pageCount }">
+		<a href="<%=request.getContextPath() %>/admLogistic.do?pageNum=${endPageNum+1 }&field=${field}&keyword=${keyword}">[다음]</a>
+	</c:if>
 </div>
 </div>
 

@@ -40,7 +40,9 @@ public class SearchDao {
 						rs.getString("factory"),rs.getString("ORIGIN"),rs.getInt("stock"),rs.getDate("expire"),rs.getDate("storedate")
 						,rs.getString("image"),rs.getInt("avail"));
 				list.add(vo);
-			}return list;
+			}
+			System.out.println(list+"리스트");
+			return list;
 			
 		}catch(SQLException se) {
 			se.printStackTrace();

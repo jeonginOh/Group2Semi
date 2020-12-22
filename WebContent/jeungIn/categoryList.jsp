@@ -34,11 +34,15 @@
 						btn.className="btn btn-primary";
 						btn.innerHTML="More";
 						var btn2 = document.createElement("a");
-						btn2.href="<%=request.getContextPath()%>/basketinsert.do?itemid="+json.arr[i].itemid+"&bd=d";
+						btn2.style="cursor:pointer";
+						btn2.setAttribute("onclick", "insertDibs(event)");
 						btn2.className="jjim";
 						var heart = document.createElement("i");
 						heart.className="fas fa-heart";
 						btn2.appendChild(heart);
+						var hdHeart=document.createElement("input");
+						hdHeart.type="hidden";
+						hdHeart.value=json.arr[i].itemid;
 						
 						
 						row[0].appendChild(col3);
@@ -49,6 +53,7 @@
 						cardbody.appendChild(cardtext);
 						cardbody.appendChild(btn);
 						cardbody.appendChild(btn2);
+						cardbody.appendChild(hdHeart);
 					}
 					if(json.startPageNum>10){l
 						var prev = document.creatElement("a");
@@ -76,6 +81,25 @@
 				pageNum = 1;
 			}
 			xhr.open('get','<%= request.getContextPath() %>/cateList.do?catid=${ param.catid}&pageNum='+pageNum,true);
+			xhr.send();
+		}
+		
+		function insertDibs(e){
+			var itemid=e.target.parentNode.nextSibling.value;
+			xhr=new XMLHttpRequest();
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4 && xhr.status==200){
+					var json=JSON.parse(xhr.responseText);
+					if(json.code=="success"){
+						alert("찜 성공!");
+					}else if(json.code=="overlap"){
+						alert("이미 찜 목록에 있는 상품입니다");
+					}else if(json.code=="fail"){
+						alert("오류로 인해 실패");
+					}
+				}
+			}
+			xhr.open('get','../basketinsert.do?&bd=d&itemid='+itemid,true);
 			xhr.send();
 		}
 	</script>

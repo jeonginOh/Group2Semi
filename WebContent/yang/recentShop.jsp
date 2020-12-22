@@ -115,7 +115,7 @@
 	}
 </script>
 
-<h1>오늘 본 상품</h1>
+<h1>최근 본 상품</h1>
 <div id="recWhole">
 <div id="rwrap">
 </div>
