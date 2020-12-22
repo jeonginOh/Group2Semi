@@ -60,8 +60,12 @@ border: 2px solid black; width: 200px; height: 200px; text-align: center;">
 <br>
 <div>
 	<h3>배송지 정보</h3>
-	<div>
+	<div id="destination">
 		${mem.addr }
+	</div>
+	<div>
+		<input type="button" value="배송지 변경" onclick="changeDes()">
+		<div id="logiChange"></div>
 	</div>
 </div>
 <br>
@@ -87,12 +91,45 @@ border: 2px solid black; width: 200px; height: 200px; text-align: center;">
 </div>
 </div>
 	<input type="hidden" name="memid" value="${mem.memid }">
-	<input type="hidden" name="addr" value="${mem.addr }">
+	<input type="hidden" name="addr" id="addr" value="${mem.addr }">
+	<input type="hidden" name="totprice" value="${totprice }">
 </form>
 
 <script type="text/javascript">
 var msg='${code}';
 if(msg!=""){
 	alert(msg);
+}
+function changeDes(){
+	var logichange=document.getElementById("logiChange");
+	var destination=document.createElement("input");
+	destination.setAttribute("id", "changeD");
+	destination.type="text";
+	destination.style.width="450px";
+	destination.setAttribute("placeholder", "변경할 주소를 적어주세요");
+	var change=document.createElement("input");
+	change.type="button";
+	change.value="변경하기";
+	change.setAttribute("onclick", "commitDes()");
+	logichange.appendChild(destination);
+	logichange.appendChild(change);
+}
+function commitDes(){
+	var des=document.getElementById("destination");
+	var changeDes=document.getElementById("changeD");
+	var addr=document.getElementById("addr");
+	console.log(changeDes.value);
+	if(changeDes.value==""){
+		alert("주소를 입력해주세요.");
+		return;
+	}else{
+		des.innerHTML=changeDes.value;
+		addr.value=changeDes.value;
+	}
+	
+	var logichange=document.getElementById("logiChange");
+	while(logichange.firstChild){
+		logichange.removeChild(logichange.lastChild);
+	}
 }
 </script>

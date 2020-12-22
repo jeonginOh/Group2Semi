@@ -78,10 +78,14 @@ public class FindPwController extends HttpServlet{
         // MemberinfoDao dao = MemberinfoDao.getInstance();
         //login.do?token=45be4001-0fb9-49a4-8e44-b88baea6693b
         String identifier = req.getRemoteAddr()+req.getHeader("User-Agent");
+        //세션을 초기화한다.
+        req.getSession().invalidate();
 
         String token = req.getParameter("token");
         int memid = ldao.templogin(token);
-        ldao.renew(new LoginauthVo(0, token, memid, identifier, -1, null));//접속기록
+
+        ldao.expire(memid);//보안 - 자동로그인 모두 폐기
+        ldao.renew(new LoginauthVo(0, token, memid, identifier, -1, null));//접속기록 재생성
         req.setAttribute("memid", memid);
         //TODO:비밀번호 변경 페이지
         req.getRequestDispatcher("비밀번호변경페이지").forward(req, resp);

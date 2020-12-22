@@ -1,19 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 4</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <style>
-      .card p { margin:20px 0px;}
-      #paging{text-align:center;}
-    </style>
+
     <script type="text/javascript">
 		window.onload=function(){
 			var xhr = null;
@@ -49,6 +37,16 @@
 						btn.href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+json.arr[i].itemid;
 						btn.className="btn btn-primary";
 						btn.innerHTML="More";
+						var btn2 = document.createElement("a");
+						btn2.style="cursor:pointer";
+						btn2.setAttribute("onclick", "insertDibs(event)");
+						btn2.className="jjim";
+						var heart = document.createElement("i");
+						heart.className="fas fa-heart";
+						btn2.appendChild(heart);
+						var hdHeart=document.createElement("input");
+						hdHeart.type="hidden";
+						hdHeart.value=json.arr[i].itemid;
 						
 						row[0].appendChild(col3);
 						col3.appendChild(card);
@@ -57,20 +55,27 @@
 						cardbody.appendChild(cardtitle);
 						cardbody.appendChild(cardtext);
 						cardbody.appendChild(btn);
+						cardbody.appendChild(btn2);
+						cardbody.appendChild(hdHeart);
 					}
-					if(json.startPageNum>10){l
+					if(json.startPageNum>10){
 						var prev = document.creatElement("a");
 						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
-						prev.href="<%=request.getContextPath() %>/jeungIn/cardlist.jsp?pageNum="+json.startPageNum;
+						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.startPageNum;
 						prev.innerHTML="이전";
 						paging.appendChild(prev);
 					}
 					for(var i = json.startPageNum;i<=json.endPageNum;i++){
 						var pageN = document.createElement("a");
 						<%-- pageN.href="<%= request.getContextPath() %>/list.do?pageNum="+i; --%>
-						pageN.href="<%= request.getContextPath() %>/jeungIn/cardlist.jsp?pageNum="+i;
+						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+i;
 						pageN.innerHTML=i;
 						paging.appendChild(pageN);
+					}if(json.endPageNum<json.pageCount){
+						var next = document.createElement("a");
+						next.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.endPagenum+1;
+						next.innerHTML="다음";
+						paging.appendChild(next);
 					}
 					
 				}
@@ -82,14 +87,30 @@
 			xhr.open('get','<%= request.getContextPath() %>/list.do?pageNum='+pageNum ,true);
 			xhr.send();
 		}
+		
+		function insertDibs(e){
+			var itemid=e.target.parentNode.nextSibling.value;
+			xhr=new XMLHttpRequest();
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4 && xhr.status==200){
+					var json=JSON.parse(xhr.responseText);
+					if(json.code=="success"){
+						alert("찜 성공!");
+					}else if(json.code=="overlap"){
+						alert("이미 찜 목록에 있는 상품입니다");
+					}else if(json.code=="fail"){
+						alert("오류로 인해 실패");
+					}
+				}
+			}
+			xhr.open('get','../basketinsert.do?&bd=d&itemid='+itemid,true);
+			xhr.send();
+		}
 	</script>
-  </head>
-  <body>
+
     <div class="container">
       <div class="row">
       </div>
     </div>
     
     <div id="paging"></div>
-  </body>
-</html>

@@ -21,6 +21,7 @@ public class ListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String catid ="";
 		String spageNum = req.getParameter("pageNum");
 		int pageNum=1;
 		if(spageNum!=null) {
@@ -31,7 +32,7 @@ public class ListController extends HttpServlet{
 		
 		iteminfoDao dao = iteminfoDao.getInstance();
 		ArrayList<IteminfoVo> list = dao.itemList(startRow, endRow);
-		int pageCount=(int)Math.ceil(dao.getItemidCount()/10.0);
+		int pageCount=(int)Math.ceil(dao.getItemidCount(catid)/10.0);
 		int startPageNum=(pageNum-1)/10*10+1;
 		int endPageNum=startPageNum+9;
 		if(endPageNum>pageCount) {

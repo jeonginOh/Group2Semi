@@ -257,14 +257,24 @@ public class iteminfoDao {
 	
 	
 	//移댄뀒怨좊━ 由ъ뒪�듃
-	public ArrayList<IteminfoVo> bigcatelist(int catid) {
+	public ArrayList<IteminfoVo> bigcatelist(int startRow,int endRow,int catid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM ITEMINFO WHERE CATID LIKE '"+catid+"%'";
+		String sql = "SELECT * FROM "+
+				"("+
+				"SELECT BB.*,ROWNUM RNUM FROM "+
+				"("+
+					"SELECT * FROM ITEMINFO "+
+					"ORDER BY ITEMID DESC "+
+				")"+
+			"BB)"+
+				"WHERE RNUM>=? AND RNUM<=? AND CATID LIKE'"+catid+"%'";
 		try {
 			con = DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			ArrayList<IteminfoVo> list = new ArrayList<IteminfoVo>();
 			while(rs.next()) {
@@ -312,13 +322,16 @@ public class iteminfoDao {
 		}
 	}
 	
-	public int getItemidCount() {
+	public int getItemidCount(String catid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con=DBCPBean.getConn();
 			String sql ="SELECT NVL(COUNT(ITEMID),0) CNT FROM ITEMINFO";
+			if(!catid.equals("") && catid!=null ) {
+				sql+="WHERE CATID LIKE '"+catid+"%'";
+			}
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			rs.next();

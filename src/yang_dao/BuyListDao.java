@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import db.DBCPBean;
 import semiVo.BuylistVo;
@@ -50,6 +51,38 @@ public class BuyListDao {
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return false;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
+	public ArrayList<BuylistVo> list(int memid,String logiinfo){//물품상태가 다르면 따로 리스트를 뽑음
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		ArrayList<BuylistVo> list=new ArrayList<BuylistVo>();
+		String sql="SELECT BUYID,MEMID,ITEMID,COUNT,STATUS,BUYDATE,COUPID "
+				+ "FROM BUYLIST NATURAL JOIN LOGISTIC WHERE MEMID=? AND LOGIINFO=?";
+		try {
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, memid);
+			pstmt.setString(2, logiinfo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				BuylistVo vo=new BuylistVo(
+						rs.getInt("buyid"),
+						rs.getInt("memid"),
+						rs.getInt("itemid"),
+						rs.getInt("count"),
+						rs.getInt("status"),
+						rs.getDate("buydate"),
+						rs.getInt("coupid"));
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
 		}finally {
 			DBCPBean.close(con,pstmt,rs);
 		}

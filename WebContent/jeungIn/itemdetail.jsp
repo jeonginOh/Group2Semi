@@ -70,6 +70,33 @@
 		xhr.open('get','../basketinsert.do?bd=b&amount=1&itemid='+itemid,true);
 		xhr.send();
 	}
+	function insertDibs(){
+		var itemid=document.getElementById("itemid").value;
+		var stock=document.getElementById("detailstock").value;
+		var avail=document.getElementById("detailavail").value;
+		if(stock<=0 || avail==0){
+			alert("수량이없거나 판매불가상태입니다.");
+			return;
+		}
+		xhr=new XMLHttpRequest();
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4 && xhr.status==200){
+				var json=JSON.parse(xhr.responseText);
+				if(json.code=="success"){
+					alert("찜 담기 성공!");
+					return;
+				}else if(json.code=="overlap"){
+					alert("이미 찜 목록에 있는 상품입니다");
+					return;
+				}else if(json.code=="fail"){
+					alert("오류로 인해 실패");
+					return;
+				}
+			}
+		}
+		xhr.open('get','../basketinsert.do?bd=d&amount=0&itemid='+itemid,true);
+		xhr.send();
+	}
 </script>
 
 <div id = "detail">
@@ -107,6 +134,9 @@
 	<input type="hidden" id="detailavail">
 	<div class = "purchase">
 		<button type = "button" onclick="insertBasket()">
+			<img src = "<%=request.getContextPath() %>/images/구매버튼.png" style="width:100px;height:100px">
+		</button>
+		<button type = "button" onclick="insertDibs()">
 			<img src = "<%=request.getContextPath() %>/images/구매버튼.png" style="width:100px;height:100px">
 		</button>
 	</div>

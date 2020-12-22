@@ -24,7 +24,7 @@ public class detailController extends HttpServlet{
 		iteminfoDao dao = iteminfoDao.getInstance();
 		IteminfoVo vo = dao.detail(Integer.parseInt(itemid));
 		
-		Cookie cookie=new Cookie(itemid, itemid); //네임이 겹칠때 쿠키가 덮어쓰기 되기 위해
+		Cookie cookie=new Cookie("item"+itemid, itemid); //네임이 겹칠때 쿠키가 덮어쓰기 되기 위해"
 	    cookie.setMaxAge(60*60*24); //쿠키 시간은 24시간 설정
 	    cookie.setPath("/");
 	    resp.addCookie(cookie);

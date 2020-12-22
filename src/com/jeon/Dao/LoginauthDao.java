@@ -188,6 +188,11 @@ public class LoginauthDao {
     //======================================================================
     //여기서부터 token을 사용한 임시로그인용 메소드
 
+    /**
+     * 링크는 하루 후 로그인불가
+     * @param token
+     * @return
+     */
     public int templogin(String token) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -195,7 +200,7 @@ public class LoginauthDao {
         try {
             conn = DBCPBean.getConn();
             //자동 로그인시도
-            String sql = "select memid, identifier from loginauth where token=? and per=1";
+            String sql = "select memid, identifier from loginauth where token=? and per=1 and where regdate>=sysdate-1";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, token);
             res=pstmt.executeQuery();

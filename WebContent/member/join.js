@@ -82,7 +82,7 @@ window.onload=function() {
 
     pwdchk.addEventListener("keyup", function(e) {
         let tgt = pwdchk.parentNode.previousSibling.previousSibling;
-        if(pwdchk.value==pwd.value) {
+        if(pwdchk.value!=pwd.value) {
             tgt.textContent="비밀번호가 맞지 않습니다.";
             YouShallNotPass=true;
         }
