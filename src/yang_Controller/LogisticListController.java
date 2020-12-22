@@ -28,7 +28,7 @@ public class LogisticListController extends HttpServlet{
 		LogisticDao logidao=LogisticDao.getInstance();
 		iteminfoDao itemdao=iteminfoDao.getInstance();
 		BuyListDao buydao=BuyListDao.getInstance();
-		ArrayList<LogisticVo> logivo1=logidao.list(memid,"물품준비중");
+		ArrayList<LogisticVo> logivo1=logidao.list(memid, "물품준비중");
 		ArrayList<LogisticVo> logivo2=logidao.list(memid,"발송완료");
 		ArrayList<LogisticVo> logivo3=logidao.list(memid,"배송완료");
 		ArrayList<LogisticVo> logivo4=logidao.list(memid,"반품처리");

@@ -43,7 +43,7 @@
 </div>
 <div>
 	<span>배송지주소</span>
-	<span>${memvo.addr }</span>
+	<span>${logivo[0].addr }</span>
 </div>
 <div>
 	<span>배송상태</span>
