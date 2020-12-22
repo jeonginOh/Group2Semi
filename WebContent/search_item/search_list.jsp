@@ -71,11 +71,12 @@ var startnum=1;
 						var regdate=paging.itemlist[i].regdate;
 						console.log(img1);
 						console.log(itemid);
-						all_list="<a href='#'><img src='<%=request.getContextPath()%>/fileFolder/"+itemimg+"'></a><br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
+						all_list="<a href='#'><img src='<%=request.getContextPath()%>/fileFolder/"+itemimg+"'style=width:10px></a><br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
 						+"<br>제조사: "+factory+"<br>제조일:"+regdate;
 					
 						div.className="search_item";
-					/* 	a.appendChild(img1);
+					/* 	
+						a.appendChild(img1);
 						div.appendChild(a); */
 						console.log( paging.itemlist[i].itemname);
 						div.innerHTML = all_list;
@@ -127,6 +128,7 @@ var startnum=1;
 				alert("값을 입력하세요");
 				return;  
 			} 
+			 
 			var field = f.options[f.selectedIndex].value;
 			xhr.setRequestHeader('Content-Type',
 					'application/x-www-form-urlencoded');

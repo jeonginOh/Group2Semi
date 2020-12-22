@@ -121,6 +121,7 @@ public class IteminfoVo {
 	public void setAvail(int avail) {
 		this.avail = avail;
 	}
+
 	
 	
 }
