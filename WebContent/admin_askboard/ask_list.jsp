@@ -6,10 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-th{style="width:300px;"}
 
-</style>
 </head>
 <body>
 	<c:set var="cp" value="${pageContext.request.contextPath }" />
@@ -20,9 +17,10 @@ th{style="width:300px;"}
 			<th>카테고리</th>
 			<th>사진</th>
 			<th>제목</th>
+			<th>작성자</th>
 			<th>날짜</th>
 		</tr>
-		<c:forEach var="vo" items="${list }">
+		<c:forEach var="vo" items="${list }" varStatus="status">
 			<tr>
 				<td style="width: 30px;" align="center">${vo.askid }</td>
 				<td style="width: 200px;" align="center">
@@ -49,7 +47,21 @@ th{style="width:300px;"}
 				<td style="width: 150px;" align="center"><img src="fileFolder/${vo.image }" style="width:150px"></td>
 				</c:when>
 				</c:choose>
-				<td style="width: 300px;" align="center"><a href="${cp}/ask_detail?askid=${vo.askid}">${vo.title }</a></td>
+				<td style="width: 300px;" align="center"><a href="${cp}/ask_detail?askid=${vo.askid}">${vo.title }</a><br>
+				
+				<c:forEach var="a" items="${aa}">
+				
+				
+
+					<c:if test="${a==vo.askid}">
+							<a href="${cp }/ans_datail?askid=${vo.askid }" style="text-decoration:none; color: red;" id="alink" onclick="aclick(event)"><span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㄴ답변드립니다.</span></a><br>&nbsp;&nbsp;
+			
+			
+					</c:if>
+			
+				</c:forEach>
+				</td>
+				<td style="width: 300px;" align="center">${userid[status.index] }</td>
 				<td style="width: 300px;" align="center">${vo.askdate }</td>
 			</tr>
 		</c:forEach>
@@ -83,5 +95,12 @@ th{style="width:300px;"}
 	<div align="right">
 	</div>
 	<a href="${cp }/admin_askboard/askinsertForm.jsp">글쓰기</a>
+	 ${userid }
+	 <script type="text/javascript">
+	 function aclick(e){
+		 e.target.style.color="gray";
+	 }
+	 
+	 </script>
 </body>
 </html>

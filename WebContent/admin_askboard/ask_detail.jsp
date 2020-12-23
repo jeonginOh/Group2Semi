@@ -9,28 +9,31 @@
 </head>
 <body>
 <div id="askbox" align="center">
-<h1>수정 도와드릴게요</h1>
+<h1>환영합니다</h1><br>
+<a href="${pageContext.request.contextPath }/ask_list">목록으로...</a>
 	<form method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath }/ask_update"  onsubmit="return cktitle()">
-		<input type="hidden" id="askid" name="askid" value="${list.askid }">
+		action="${pageContext.request.contextPath }/ask_detail"  onsubmit="return cktitle()">
+		<input type="hidden" id="askid" name="askid" value="${list.askid }" readonly="readonly">
 		<select name="askcat">
 		<option value="item" <c:if test="${askcat=='item'}">selected</c:if>>상품문의</option>
 		<option value="basong" <c:if test="${askcat=='basong'}">selected</c:if>>배송문의</option>
 		<option value="hwanbull" <c:if test="${askcat=='hwanbull'}">selected</c:if>>환불문의</option>
 		<option value="etc" <c:if test="${askcat=='etc'}">selected</c:if>>기타문의</option>
 		</select>
+		<a>${username }님 환영합니다.</a><br>
 		
-		<input type="text" id="title" name="title" value=${list.title } style="width:400px ">
+		<input type="text" id="title" name="title" value=${list.title } style="width:400px " readonly="readonly">
 		<br>
 				 
 		
-		<textarea rows="20" cols="65" id="context" name="context" >${list.context }</textarea><br>
-		<input type="file" value="image" id="image" onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif">
+		<textarea rows="20" cols="65" id="context" name="context" readonly="readonly">${list.context }</textarea><br>
+		<input type="file" value="image" id="image" onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif" readonly="readonly">
 		
-		<input type="submit" value="수정하기" style="margin-left: 150px"><br>
-<%-- 
-		<a href="${pageContext.request.contextPath }/ans_insert?askid=${list.askid}" style="padding-left: 400px">답변하기</a><a href="" style="padding-left: 15px">삭제하기</a><br> --%>
-
+		<a href="${pageContext.request.contextPath }/ask_update?askid=${list.askid }" style="margin-left: 150px">수정</a>
+		<a href="${pageContext.request.contextPath }/ask_delete?askid=${list.askid }" style="padding-left: 15px">삭제하기</a><br>
+	
+		<a href="${pageContext.request.contextPath }/ans_insert?askid=${list.askid}" style="padding-left: 400px">답변하기</a><br> 
+	
 		<label>현재 등록된 사진</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>변경될 사진</label><br>
 		<div id="red">	
 		<br>
