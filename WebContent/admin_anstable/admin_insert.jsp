@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="askbox" align="center">
-<h1>수정 도와드릴게요</h1>
+<h1>${username }님의 게시글입니다.</h1>
 	<form method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath }/ask_update"  onsubmit="return cktitle()">
+		action="${pageContext.request.contextPath }/ans_insert"  onsubmit="return cktitle()">
 		<input type="hidden" id="askid" name="askid" value="${list.askid }">
 		<select name="askcat">
 		<option value="item" <c:if test="${askcat=='item'}">selected</c:if>>상품문의</option>
@@ -20,18 +20,15 @@
 		<option value="etc" <c:if test="${askcat=='etc'}">selected</c:if>>기타문의</option>
 		</select>
 		
-		<input type="text" id="title" name="title" value=${list.title } style="width:400px ">
+		<input type="text" id="title" name="title" value="답변드립니다" style="width:400px ">
 		<br>
 				 
 		
-		<textarea rows="20" cols="65" id="context" name="context" >${list.context }</textarea><br>
+		<textarea rows="20" cols="65" id="context" name="context" >[기존의내용]사용자가 입력한 글입니다.${username}:   ${list.context }</textarea><br>
 		<input type="file" value="image" id="image" onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif">
-		
-		<input type="submit" value="수정하기" style="margin-left: 150px"><br>
-<%-- 
-		<a href="${pageContext.request.contextPath }/ans_insert?askid=${list.askid}" style="padding-left: 400px">답변하기</a><a href="" style="padding-left: 15px">삭제하기</a><br> --%>
-
-		<label>현재 등록된 사진</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>변경될 사진</label><br>
+		<br>
+		<input type="submit" value="답변저장"><br>
+		<label>문의 요청 사진</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>변경될 사진</label><br>
 		<div id="red">	
 		<br>
 		
@@ -40,7 +37,7 @@
 		<br>
 		<br>
 		<br>
-		<label>현재 등록된사진이 없습니다.</label>
+		<label>등록된사진이 없습니다.</label>
 		</c:when>
 		<c:when test="${list.image!=null }">
 

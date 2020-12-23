@@ -30,5 +30,4 @@ public class Review_con_detail extends HttpServlet {
 		req.getRequestDispatcher("/parks_review/reviewdetail.jsp").forward(req, resp);
 	}
 	
-	
 }
