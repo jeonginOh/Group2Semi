@@ -49,7 +49,6 @@ CREATE TABLE anstable
 (
   ansid   number(10)     NOT NULL,
   askid   number(10)    ,
-  memid   number(10)    ,
   context varchar2(2000),
   image   varchar2(200) ,
   ansdate date          ,
@@ -62,8 +61,6 @@ COMMENT ON COLUMN anstable.ansid IS '답변번호';
 
 COMMENT ON COLUMN anstable.askid IS '문의번호';
 
-COMMENT ON COLUMN anstable.memid IS '사용자번호';
-
 COMMENT ON COLUMN anstable.context IS '내용';
 
 COMMENT ON COLUMN anstable.image IS '이미지';
@@ -73,6 +70,7 @@ COMMENT ON COLUMN anstable.ansdate IS '작성일 ';
 CREATE TABLE asktable
 (
   askid   number(10)     NOT NULL,
+  memid	  number(10)	,
   askcat  number(2)     ,
   title   varchar2(50)  ,
   context varchar2(2000),
@@ -84,6 +82,8 @@ CREATE TABLE asktable
 COMMENT ON TABLE asktable IS '문의게시판';
 
 COMMENT ON COLUMN asktable.askid IS '문의번호';
+
+COMMENT ON COLUMN asktable.memid IS '사용자번호';
 
 COMMENT ON COLUMN asktable.askcat IS '문의카테고리';
 
@@ -477,8 +477,8 @@ ALTER TABLE anstable
     FOREIGN KEY (askid)
     REFERENCES asktable (askid);
 
-ALTER TABLE anstable
-  ADD CONSTRAINT FK_memberinfo_TO_anstable
+ALTER TABLE asktable
+  ADD CONSTRAINT FK_memberinfo_TO_asktable
     FOREIGN KEY (memid)
     REFERENCES memberinfo (memid);
 
