@@ -4,9 +4,9 @@
 	<div id = "headerTop">
 		<div id = "toptop">
 			<ul>
-				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/auth/login.jsp"><i class="fas fa-user-plus"></i></a></li>
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/join.jsp"><i class="fas fa-user-plus"></i></a></li>
 				<li> | </li>
-				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/join.jsp"><i class="fas fa-sign-in-alt"></i></a></li>
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/auth/login.jsp"><i class="fas fa-sign-in-alt"></i></a></li>
 				<li> | </li>
 				<li><a href="main.jsp?spage="><i class="fas fa-headset"></i></a></li>
 			</ul>
@@ -23,8 +23,8 @@
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=">할인상품</a></li>
 				<li> | </li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=">이벤트</a></li>
-				<li><input type="text" value ="검색어를 입력하세요"></li>
-				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage="><i class="fas fa-search"></i></a></li>
+<!-- 				<li><input type="text" value ="검색어를 입력하세요"></li> -->
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/search_item/search_list.jsp"><i class="fas fa-search"></i></a></li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/dibsListpage.jsp"><i class="fas fa-heart"></i></a></li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/basketListpage.jsp"><i class="fas fa-shopping-cart"></i></a></li>
 			</ul>

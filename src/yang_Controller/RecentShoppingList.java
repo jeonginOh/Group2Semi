@@ -2,6 +2,7 @@ package yang_Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,12 @@ public class RecentShoppingList extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Cookie[] cookies=req.getCookies();
+//		ArrayList<Cookie> cookielist=new ArrayList<Cookie>();
+//		for(Cookie c:cookies) {
+//			if(c.getName().startsWith("items")) {
+//				cookielist.add(c);
+//			}
+//		}
 		String spageNum=req.getParameter("pageNum");
 		int pageNum=1;
 		if(spageNum!=null) {
@@ -37,15 +44,16 @@ public class RecentShoppingList extends HttpServlet{
 		JSONArray arr=new JSONArray();
 		arr.put(json2);
 		for(int i=startRow;i<=endRow;i++) {
-				int itemid=Integer.parseInt(cookies[i].getValue());
-				iteminfoDao dao=iteminfoDao.getInstance();
-				IteminfoVo vo=dao.detail(itemid);
-				JSONObject json=new JSONObject();
-				json.put("itemid", vo.getItemid());
-				json.put("itemname",vo.getItemname());
-				json.put("image",vo.getImage());
-				json.put("avail", vo.getAvail());
-				arr.put(json);
+			
+			int itemid=Integer.parseInt(cookies[i].getValue());
+			iteminfoDao dao=iteminfoDao.getInstance();
+			IteminfoVo vo=dao.detail(itemid);
+			JSONObject json=new JSONObject();
+			json.put("itemid", vo.getItemid());
+			json.put("itemname",vo.getItemname());
+			json.put("image",vo.getImage());
+			json.put("avail", vo.getAvail());
+			arr.put(json);
 		}
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();

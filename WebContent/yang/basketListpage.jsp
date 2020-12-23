@@ -78,7 +78,7 @@ function pgListBasket(){
 				var a=document.createElement("a");
 				var img=document.createElement("img");
 				a.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=itemdetail.jsp?itemid="+json[i].itemid;
-				img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
+				img.src="<%=request.getContextPath()%>/product/"+json[i].image;
 				img.className="bkpgitem";
 				var itemname=document.createElement("span");
 				itemname.innerHTML=json[i].itemname;

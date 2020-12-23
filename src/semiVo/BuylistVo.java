@@ -11,6 +11,11 @@ public class BuylistVo {
 	private Date buydate;
 	private int coupid;
 	public BuylistVo() {}
+	public BuylistVo(int itemid,int count) {
+		super();
+		this.itemid = itemid;
+		this.count = count;
+	}
 	public BuylistVo(int buyid, int memid, int itemid, int count, int status, Date buydate, int coupid) {
 		super();
 		this.buyid = buyid;

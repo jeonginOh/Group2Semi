@@ -61,7 +61,7 @@
 					}
 					
 					a.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=itemdetail.jsp?itemid="+json[i].itemid;
-					img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
+					img.src="<%=request.getContextPath()%>/product/"+json[i].image;
 					a.appendChild(img);
 					
 					
@@ -115,7 +115,7 @@
 	}
 </script>
 
-<h1>오늘 본 상품</h1>
+<h1>최근 본 상품</h1>
 <div id="recWhole">
 <div id="rwrap">
 </div>
