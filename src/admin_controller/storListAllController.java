@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import admin_storageDao.storageDao;
 import ohDao.iteminfoDao;
 import semiVo.IteminfoVo;
+import semiVo.storageVo;
 
 @WebServlet("/storList.do")
 public class storListAllController extends HttpServlet{
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String spageNum=req.getParameter("pageNum");
-		String catid = req.getParameter("catid");
-		String bigCate = req.getParameter("bigCage");
+		String bigCate = req.getParameter("bigCate");
 		String smallCate = req.getParameter("smallCate");
 		String avail = req.getParameter("avail");
 		String itemname = req.getParameter("itemname");
@@ -36,7 +36,7 @@ public class storListAllController extends HttpServlet{
 		int endRow=startRow+9;
 		
 		storageDao dao = storageDao.getInstance();
-		ArrayList<IteminfoVo> list = dao.storageList(startRow,endRow,bigCate,smallCate,avail,itemname,factory,origin,stDate,endDate);
+		ArrayList<storageVo> list = dao.storageList(startRow,endRow,bigCate,smallCate,avail,itemname,factory,origin,stDate,endDate);
 		int pageCount=(int)Math.ceil(dao.getCount(bigCate,smallCate,avail,itemname,factory,origin,stDate,endDate)/10.0);
 		int startPageNum=(pageNum-1)/10*10+1;
 		int endPageNum=startPageNum+9;
@@ -48,6 +48,15 @@ public class storListAllController extends HttpServlet{
 		req.setAttribute("startPageNum", startPageNum);
 		req.setAttribute("endPageNum", endPageNum);
 		req.setAttribute("pageNum", pageNum);
-		req.getRequestDispatcher("/admin_jeungin.jsp").forward(req,resp);
+		req.setAttribute("bigCate", bigCate);
+		req.setAttribute("smallCate", smallCate);
+		req.setAttribute("avail", avail);
+		req.setAttribute("itemname", itemname);
+		req.setAttribute("factory", factory);
+		req.setAttribute("origin", origin);
+		req.setAttribute("stDate", stDate);
+		req.setAttribute("endDate", endDate);
+		
+		req.getRequestDispatcher("/admin_jeungin/storageinfo.jsp").forward(req,resp);
 	}
 }

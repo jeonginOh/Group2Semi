@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import db.DBCPBean;
 import semiVo.IteminfoVo;
+import semiVo.storageVo;
 
 public class storageDao {
 
@@ -133,7 +134,7 @@ public class storageDao {
 		}
 	}
 	
-	public ArrayList<IteminfoVo> storageList(int startRow,int endRow, String bigCate,String smallCate,String avail,String itemname,String factory,String origin,String stDate,String endDate){
+	public ArrayList<storageVo> storageList(int startRow,int endRow, String bigCate,String smallCate,String avail,String itemname,String factory,String origin,String stDate,String endDate){
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
@@ -143,9 +144,22 @@ public class storageDao {
 					" ("+
 					" 	SELECT * FROM ITEMINFO INNER JOIN CATEGORY "+
 					"   ON ITEMINFO.CATID=CATEGORY.CATID";
-		
+		System.out.println(bigCate);
 		if(!bigCate.equals("전체") && smallCate.equals("전체")) {
-			sql += " WHERE CATEGORY.CATNAME='"+bigCate+"'";
+			
+			if(bigCate.equals("채소")) {
+				sql += " WHERE CATEGORY.CATID LIKE '111000%'";
+			}else if(bigCate.equals("과일")) {
+				sql += " WHERE CATEGORY.CATID LIKE '222000%'";
+			}else if(bigCate.equals("수산")) {
+				sql += " WHERE CATEGORY.CATID LIKE '333000%'";
+			}else if(bigCate.equals("정육")) {
+				sql += " WHERE CATEGORY.CATID LIKE '444000%'";
+			}else if(bigCate.equals("완제품")) {
+				sql += " WHERE CATEGORY.CATID LIKE '555000%'";
+			}else if(bigCate.equals("음료")) {
+				sql += " WHERE CATEGORY.CATID LIKE '666000%'";
+			}
 			
 			if(avail.equals("재고")) {
 				sql+=" AND ITEMINFO.AVAIL=1";
@@ -216,7 +230,7 @@ public class storageDao {
 			}else {}
 		}
 		
-		sql += " ORDER BY ITEMNUM DESC "+
+		sql += " ORDER BY ITEMID DESC "+
 				")AA "+
 				") WHERE RNUM>=? AND RNUM<=?";
 		try {
@@ -225,7 +239,7 @@ public class storageDao {
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			rs=pstmt.executeQuery();
-			ArrayList<IteminfoVo> list = new ArrayList<IteminfoVo>();
+			ArrayList<storageVo> list = new ArrayList<storageVo>();
 			while(rs.next()) {
 				int itemid = rs.getInt("itemid");
 				String itemname1 = rs.getString("itemname");
@@ -238,7 +252,8 @@ public class storageDao {
 				Date storedate = rs.getDate("storedate");
 				String image = rs.getString("image");
 				int avail1 = rs.getInt("avail");
-				IteminfoVo vo = new IteminfoVo(itemid,itemname1,catid,price,factory1,origin1,stock,expire,storedate,image,avail1);
+				String catname = rs.getString("catname");
+				storageVo vo = new storageVo(itemid,itemname1,catid,price,factory1,origin1,stock,expire,storedate,image,avail1,catname);
 				list.add(vo);
 			}
 			return list;
