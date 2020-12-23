@@ -1,3 +1,9 @@
+/* 
+ * memberinfo 테이블의 입출력을 관리함
+ * 메소드에서, memid는 0이면 존재하지 않고, -1이면 에러
+ * status는 -1 탈퇴, 0은 존재하지 않는다.(휴먼에러), 1 일반회원, 2 관리자, 3 임시회원
+ * 
+ */
 package com.jeon.Dao;
 
 import java.security.MessageDigest;
@@ -7,10 +13,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import db.DBCPBean;
+import oracle.net.aso.a;
+import oracle.net.aso.l;
 import semiVo.MemberinfoVo;
 
 /**
@@ -161,7 +174,8 @@ public class MemberinfoDao {
         try {
             conn = DBCPBean.getConn();
             //status가 1인 회원(일반회원)을 대상으로 조회
-            String sql = "select id from memberinfo where "+type+"=? and status in(0,1)";
+            // String sql = "select id from memberinfo where "+type+"=? and status in(0,1)";
+            String sql = "select id from memberinfo where "+type+"=? and status=1";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, value);
             res = pstmt.executeQuery();
@@ -355,6 +369,298 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt);
         }
     }
+/*---------------------------------------------------------------------
+    관리자페이지
+---------------------------------------------------------------------*/
+//#region 리스트
+
+/**
+ * 
+ * @param search 0-1 type, search 2-3 age 4-5 regdate 6-7 point 8-9 status
+ * @param startrow
+ * @param endrow
+ * @param order
+ * @param orderby
+ * @return
+ */
+public ArrayList<MemberinfoVo> list(String[] searches, int startrow, int endrow, String order, String orderby) {
+    Connection conn = null;
+    ResultSet res = null;
+    PreparedStatement pstmt = null;
+    ArrayList<MemberinfoVo> list = new ArrayList<>();
+    String[] querys = {
+        "select * from (select rownum rnum, mi.* from (select * from memberinfo order by "+orderby+" "+order+") mi) where rnum between ? and ?",
+        "select * from (select rownum rnum, mi.* from (select * from memberinfo where ",
+        "order by "+orderby+" "+order+") mi) where rnum between ? and ?"
+    };
+    try {
+        conn = DBCPBean.getConn();
+        // String sql = "select * from (select rownum rnum, mi.* from (select * from memberinfo where regexp_like (?, ?) order by memid "+order+") mi) where rnum between ? and ?";
+        pstmt = listpstmt(conn, searches, startrow, endrow, querys);
+        res = pstmt.executeQuery();
+        while(res.next()) {
+            list.add(new MemberinfoVo(res.getInt("memid"), res.getString("id"), null, null, res.getString("age"), res.getString("email"), res.getString("addr"), res.getDate("regdate"), res.getString("phone"), res.getInt("point"), res.getInt("status")));
+        }
+        if (list.size()!=0) return list;
+        else return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return null;
+    } finally {
+        DBCPBean.close(conn, res, pstmt);
+    }
+}
+public ArrayList<MemberinfoVo> list(int startrow, int endrow, String order, String orderby) {
+    return list(null, startrow, endrow, order, orderby);
+}
+
+// private PreparedStatement listpstmt(Connection conn, String type, String search, int startrow, int endrow, String order)
+//         throws SQLException {
+//     PreparedStatement pstmt = null;
+//     if (type==null || type.isBlank() || search==null || search.isBlank()) {
+//         pstmt = conn.prepareStatement("select * from (select rownum rnum, mi.* from (select * from memberinfo order by memid "+order+") mi) where rnum between ? and ?");
+//         pstmt.setInt(1, startrow);
+//         pstmt.setInt(2, endrow);
+//     } else {
+//         pstmt = conn.prepareStatement("select * from (select rownum rnum, mi.* from (select * from memberinfo where regexp_like (?, ?) order by memid "+order+") mi) where rnum between ? and ?");
+//         pstmt.setString(1, type);
+//         pstmt.setString(2, search);
+//         pstmt.setInt(3, startrow);
+//         pstmt.setInt(4, endrow);
+//     }
+//     return pstmt;
+// }
+
+/**
+ * 
+ * @param conn
+ * @param search
+ * @param startrow
+ * @param endrow
+ * @param querys 0 for search==null 1 for pre, 2 for after
+ * @return
+ * @throws SQLException
+ */
+private PreparedStatement listpstmt(Connection conn, String[] search, int startrow, int endrow, String[] querys) throws SQLException {
+    PreparedStatement pstmt = null;
+    int count=0;
+    if (search==null) {
+        pstmt = conn.prepareStatement(querys[0]);
+        // pstmt.setString(++count, orderby);
+        if (startrow>0) pstmt.setInt(++count, startrow);
+        if (endrow>0)pstmt.setInt(++count, endrow);
+    } else {
+        StringBuilder sql = new StringBuilder();
+        sql.append(querys[1]);
+        //#region 빈값제거
+        
+        ArrayList<String> arr = new ArrayList<>();
+        if (search[0]!=null && search[1]!=null) {
+            sql.append("regexp_like ("+search[0]+", ?) and ");
+            arr.add(search[1]);
+        }
+        if (search[2]!=null || search[3]!=null) {
+            sql.append("age");
+            if (search[2]==null) {
+                sql.append("<=? and ");
+                arr.add(search[3]);
+            }else if (search[3]==null) {
+                sql.append(">=? and ");
+                arr.add(search[2]);
+            }else {
+                sql.append(" between ? and ? and ");
+                arr.add(search[2]);
+                arr.add(search[3]);
+            }
+        }
+        if (search[4]!=null || search[5]!=null) {
+            sql.append("regdate");
+            if (search[4]==null) {
+                sql.append("<=? and ");
+                arr.add(search[5]);
+            }else if (search[5]==null) {
+                sql.append(">=? and ");
+                arr.add(search[4]);
+            }else {
+                sql.append(" between ? and ? and ");
+                arr.add(search[4]);
+                arr.add(search[5]);
+            }
+        }
+        if (search[6]!=null || search[7]!=null) {
+            sql.append("point");
+            if (search[6]==null) {
+                sql.append("<=? and ");
+                arr.add(search[7]);
+            }else if (search[7]==null) {
+                sql.append(">=? and ");
+                arr.add(search[6]);
+            }else {
+                sql.append(" between ? and ? and ");
+                arr.add(search[6]);
+                arr.add(search[7]);
+            }
+        }
+        if (arr.size()>0) sql.delete(sql.length()-4, sql.length());
+        else sql.delete(sql.length()-6, sql.length());
+        if (querys[2]!=null) sql.append(querys[2]);
+        pstmt = conn.prepareStatement(sql.toString());
+        System.out.println("SQL: "+sql.toString());
+        System.out.println("startrow:"+startrow);
+        System.out.println("endrow:"+endrow);
+        System.out.println("arrsize:"+arr.size());
+
+        // for (;qs[count]!=null; count++) {
+        //     pstmt.setString(count+c, qs[count]);
+        //     // System.out.println(count+c+" "+ qs[count]);
+        // }
+        for (String string : arr) {
+            System.out.println("arr:="+string);
+        }
+        for (int i=0; i<arr.size(); i++) {
+            pstmt.setString(i+1, arr.get(i));
+            System.out.println("index"+i+"arr="+arr.get(i));
+        }
+        int c = arr.size();
+        // pstmt.setString(++count, orderby);
+        // System.out.println(count + orderby);
+        if (startrow>0) pstmt.setInt(++c, startrow);
+        if (endrow>0)pstmt.setInt(++c, endrow);
+        // System.out.println(count + startrow);
+        // System.out.println(count + endrow);
+        }
+    return pstmt;
+}
+/**
+ * 
+ * @param search 0-1 type, search 2-3 age 4-5 regdate 6-7 point 8-9 status
+ * @param startrow
+ * @param endrow
+ * @param order asc, desc
+ * @param orderby 
+ * @return
+ */
+public JSONObject jsonlist(String[] searches, int startrow, int endrow, String order, String orderby) {
+    Connection conn = null;
+    ResultSet res = null;
+    PreparedStatement pstmt = null;
+    JSONObject json = new JSONObject();
+    JSONArray list = new JSONArray();
+    String[] querys = {
+        "select * from (select rownum rnum, mi.* from (select * from memberinfo order by "+orderby+" "+order+") mi) where rnum between ? and ?",
+        "select * from (select rownum rnum, mi.* from (select * from memberinfo where ",
+        "order by "+orderby+" "+order+") mi) where rnum between ? and ?"
+    };
+    try {
+        conn = DBCPBean.getConn();
+        System.out.println("JSONLIST");
+        pstmt = listpstmt(conn, searches, startrow, endrow, querys);
+        res = pstmt.executeQuery();
+        while(res.next()) {
+            JSONObject memjson = new JSONObject();
+            memjson.append("rnum", res.getInt("rnum"));
+            memjson.append("memid", res.getInt("memid"));
+            memjson.append("id", res.getString("id"));
+            memjson.append("age", res.getString("age"));
+            memjson.append("email", res.getString("email"));
+            memjson.append("addr", res.getString("addr"));
+            memjson.append("regdate", res.getDate("regdate"));
+            memjson.append("phone", res.getString("phone"));
+            memjson.append("point", res.getInt("point"));
+            memjson.append("status", res.getInt("status"));
+            list.put(memjson);
+        }
+        if (list.length()!=0) {
+            json.put("list", list);
+            return json;
+        }
+        else return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return null;
+    } finally {
+        DBCPBean.close(conn, res, pstmt);
+    }
+}
+public JSONObject jsonlist(int startrow, int endrow, String order, String orderby) {
+    return jsonlist(null, startrow, endrow, order, orderby);
+}
+
+// public int size(String type, String search) {
+//     Connection conn = null;
+//     PreparedStatement pstmt = null;
+//     ResultSet res=null;
+//     try {
+//         conn = DBCPBean.getConn();
+//         String sql = "select nvl(count(memid), 0) cnt from memberinfo";
+//         if (search==null || search.isBlank() || type==null || type.isBlank()) pstmt = conn.prepareStatement(sql);
+//         else {
+//             sql += " where regexp_like (?, ?)";
+//             pstmt = conn.prepareStatement(sql);
+//             pstmt.setString(1, type);
+//             pstmt.setString(2, search);
+//         }
+//         res = pstmt.executeQuery();
+//         res.next();
+//         return res.getInt(1);
+//     } catch (SQLException e) {
+//         e.printStackTrace();
+//         return 0;
+//     } finally {
+//         DBCPBean.close(conn, pstmt, res);
+//     }
+// }
+
+public int size(String[] search) {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet res=null;
+    try {
+        conn = DBCPBean.getConn();
+        StringBuilder sbsql = new StringBuilder();
+        sbsql.append("select nvl(count(memid), 0) maxrow from memberinfo where");
+        String[] querys = {
+            "select nvl(count(memid), 0) cnt from memberinfo",
+            "select nvl(count(memid), 0) cnt from memberinfo where ",
+            null
+        };
+        System.out.println("SIZE-----");
+        pstmt = listpstmt(conn, search, -1, -1, querys);
+        res = pstmt.executeQuery();
+        res.next();
+        System.out.println(res.getInt(1));
+        return res.getInt(1);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return 0;
+    } finally {
+        DBCPBean.close(conn, pstmt, res);
+    }
+}
+
+public void test(String a, String b) {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet res = null;
+    try {
+        conn = DBCPBean.getConn();
+        pstmt = conn.prepareStatement("select nvl(count(memid), 0) cnt from memberinfo where regexp_like (?, ?) ");
+        pstmt.setString(1,a);
+        pstmt.setString(2,b);
+        res = pstmt.executeQuery();
+        while(res.next()) {
+            System.out.println(res.getString(1));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        
+    } finally {
+        DBCPBean.close(conn, pstmt, res);
+    }
+}
+
+
+//#endregion
 /**---------------------------------------------------------------------
  * 임시유저 관련 메소드
 ----------------------------------------------------------------------*/
@@ -382,7 +688,7 @@ private int getDaily_seq() {
     }
 }
 /**
- * 임시회원을 만들고 memid를 리턴한다. 임시회원은 memid, id와 regdate, status만 존재한다.
+ * 임시회원을 만들고 memid를 리턴한다. 임시회원은 memid, id와 regdate, status=3만 존재한다.
  * @param vo
  * @return memid
  */

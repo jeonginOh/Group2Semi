@@ -57,10 +57,6 @@
 	if (request.getAttribute("ref")!=null) ref= (String) request.getAttribute("ref"); 
 %>
     <div id="content">
-		<%=request.getHeader("referer")%>
-		<%=request.getRequestURI()%>
-		<%=request.getAttribute("ref")%>
-		<%=request.getParameter("ref")%>
         <h1>쇼핑몰</h1>
         <fieldset>
             <legend>로그인</legend>
