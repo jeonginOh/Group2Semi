@@ -27,6 +27,7 @@
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/search_item/search_list.jsp"><i class="fas fa-search"></i></a></li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/dibsListpage.jsp"><i class="fas fa-heart"></i></a></li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/basketListpage.jsp"><i class="fas fa-shopping-cart"></i></a></li>
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/logistic.do"><i class="fas fa-shipping-fast"></i></a></li>
 			</ul>
 		</div>
 	</div>

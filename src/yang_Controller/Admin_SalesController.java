@@ -18,13 +18,12 @@ public class Admin_SalesController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String ymd=req.getParameter("ymd");
 		String sdetail=req.getParameter("detail");
-		System.out.println(ymd+","+sdetail);
 		String detail=sdetail.substring(0, sdetail.length()-1); //전(체가 제거) or 연도 or 숫자
-		System.out.println(detail);
 		
 		BuyListDao bdao=BuyListDao.getInstance();
 		ArrayList<SalesVo> sales=bdao.sales(ymd, detail);
 		req.setAttribute("sales", sales);
+		req.setAttribute("code", "sales");
 		req.getRequestDispatcher("/yang_admin/admin_board.jsp").forward(req, resp);
 	}
 }
