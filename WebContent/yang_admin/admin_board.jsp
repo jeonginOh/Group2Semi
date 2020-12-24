@@ -8,7 +8,22 @@
       google.charts.setOnLoadCallback(drawChart);
       google.charts.setOnLoadCallback(drawChart2);
 
+window.onload=function(){
+	var rank=document.getElementById("rank");
+	var sales=document.getElementById("sales");
+	var code="<c:out value='${code}'/>";
+	
+	if(code=='rank'){
+		rank.style.visibility="visible";
+		sales.style.visibility="hidden";
+	}else if(code=='sales'){
+		rank.style.visibility="hidden";
+		sales.style.visibility="visible";
+	}
+}
+
 function drawChart() {
+	
 var itemid=document.getElementsByName("itemid");
 var cnt=document.getElementsByName("count");
 var data = new google.visualization.DataTable();
@@ -29,6 +44,7 @@ chart.draw(data, options);
 }
 
 function drawChart2() {
+	
 	var dat=document.getElementsByName("dateD");
 	var totprice=document.getElementsByName("totprice");
 	var data = new google.visualization.DataTable();
@@ -76,11 +92,25 @@ function categoryChange(e){
 	    detail.appendChild(opt);
 	  } 
 }
+
+function showRank(){
+	var rank=document.getElementById("rank");
+	var sales=document.getElementById("sales");
+	rank.style.visibility="visible";
+	sales.style.visibility="hidden";
+}
+
+function showSales(){
+	var rank=document.getElementById("rank");
+	var sales=document.getElementById("sales");
+	rank.style.visibility="hidden";
+	sales.style.visibility="visible";
+}
 </script>
 <div id="wrap" style="width: 800px;">
 <input type="button" value="판매순위" onclick="showRank()">
 <input type="button" value="매출표" onclick="showSales()">
-<div id="rank" style="text-align: center;">
+<div id="rank" style="text-align: center; visibility: hidden; position: absolute; left: 300px; top: 150px;">
 <h1>판매순위(상위 5개)</h1>
 <form action="<%=request.getContextPath() %>/admbuystats.do" method="post">
 <input type="radio" name="ymd" value="y" checked="checked"><span>연도별</span>
@@ -99,7 +129,7 @@ function categoryChange(e){
 </div>
 
 
-<div id="sales">
+<div id="sales" style="text-align: center; visibility: hidden; position: absolute; left: 300px; top: 150px;">
 <form action="<%=request.getContextPath() %>/admsales.do" method="post">
 <select onchange="categoryChange(this)" name="ymd">
 	<option value="y">연도별 매출</option>
