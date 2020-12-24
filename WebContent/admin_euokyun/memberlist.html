@@ -235,19 +235,19 @@
             xhr.onreadystatechange=function() {
                 if (xhr.readyState==4 && xhr.status==200) {
                     cleartable();
-                    let json = JSON.parse(xhr.responseText);
+                    const json = JSON.parse(xhr.responseText);
                     pagenum=JSON.parse(json.pagenum);
-                    let startpage=JSON.parse(json.startpage);
-                    let endpage = JSON.parse(json.endpage);
-                    let maxpage = JSON.parse(json.maxpage);
-                    let endrow = JSON.parse(json.endrow);
-                    let startrow = JSON.parse(json.startrow);
-                    let rowsize = JSON.parse(json.rowsize);
+                    const startpage=JSON.parse(json.startpage);
+                    const endpage = JSON.parse(json.endpage);
+                    const maxpage = JSON.parse(json.maxpage);
+                    const endrow = JSON.parse(json.endrow);
+                    const startrow = JSON.parse(json.startrow);
+                    const rowsize = JSON.parse(json.rowsize);
                     if (rowsize==0) {
-                        let tr = document.createElement("tr");
-                        let td = document.createElement("td");
+                        const tr = document.createElement("tr");
+                        const td = document.createElement("td");
                         td.setAttribute('colspan', 11);
-                        let nothing = document.createElement("p");
+                        const nothing = document.createElement("p");
                         nothing.id="errMsg";
                         nothing.innerText="결과가 없습니다.";
                         td.append(nothing);
