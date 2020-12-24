@@ -90,7 +90,7 @@ function categoryChange(e){
 	    opt.value = d[x];
 	    opt.innerHTML = d[x];
 	    detail.appendChild(opt);
-	  } 
+	  }
 }
 
 function showRank(){

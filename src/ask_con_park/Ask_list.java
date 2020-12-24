@@ -48,6 +48,6 @@ public class Ask_list extends HttpServlet{
 		req.setAttribute("startPageNum", startPageNum);
 		req.setAttribute("endPageNum", endPageNum);
 		req.setAttribute("pageNum", pageNum);
-		req.getRequestDispatcher("/admin_askboard/ask_list.jsp").forward(req, resp);
+		req.getRequestDispatcher("/jeungIn/main.jsp?spage=/admin_askboard/ask_list.jsp").forward(req, resp);
 	}
 }

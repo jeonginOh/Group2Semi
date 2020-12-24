@@ -18,18 +18,21 @@ function cktitle(){
 }
 
 </script>
+
 	<form method="post" enctype="multipart/form-data"
-		action="../reviewinsert.do?itemid=2&memid=1" onsubmit="return cktitle()">
+		action="${pageContext.request.contextPath }/reviewinsert.do" onsubmit="return cktitle()" style="margin:0 auto; width: 40%; margin-top: 100px" >
+			<input type="hidden" id="itemid" name="itemid" value="${itemid }">
 		<div id="red"
-			style="width: 500px; height: 500px; border: 2px solid red">
+			style="width: 500px; height: 500px; border: 2px solid red" align="center">
 			제목:<input type="text"  id="title" name="title"  required="required" onclick="if(this.value==this.defaultValue){this.value=''}" 
-		onblur="if (this.value == '') { this.value = this.defaultValue;" value="제목을입력하세요" >
+		onblur="if (this.value == '') { this.value = this.defaultValue;" value="제목을입력하세요 " >
 <br>
-			<textarea rows="20" cols="50" id="context" name="context" onclick="if(this.value==this.defaultValue){this.value=''}" 
-		onblur="if (this.value == '') { this.value = this.defaultValue;">내용을 입력하세요</textarea>
+			<textarea rows="20" cols="50" style="margin-top: 0px; margin-bottom: 0px; height: 315px; resize: none;"
+			 id="context" name="context" onclick="if(this.value==this.defaultValue){this.value=''}" 
+		onblur="if (this.value == '') { this.value = this.defaultValue;">내용을 입력하세요 ${itemid }</textarea>
 			<br> <input type="file" value="image" id="image"
 				onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif"><br> <input
-				type="submit" value="저장" >
+				type="submit" value="저장" ><br>
 				
 		<input type="radio" name="star" id="star" value=1>
 		<label  >★</label>
@@ -41,16 +44,16 @@ function cktitle(){
 		<label >★★★★</label>
 		<input type="radio" name="star" id="star" value=5 checked="checked">
 		<label  >★★★★★</label>
-		
-	
+		<br>
+		<a href="${pageContext.request.contextPath }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${itemid }">리뷰목록으로....</a>
 			
 		</div>
 	
 
 
 	</form>
-	<script type="text/javascript">
-		function insertReview() {
+ 	<script type="text/javascript">
+ 	<!--		function insertReview() {
 
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
@@ -88,8 +91,8 @@ function cktitle(){
 			var param = "title=" + title + "&context=" + context
 					+ "&itemid=1&memid=1";
 			xhr.send(param);
-		}
-
+		} 
+-->
 		function setimg(event) {
 			var reader = new FileReader();
 			reader.onload = function(event) {

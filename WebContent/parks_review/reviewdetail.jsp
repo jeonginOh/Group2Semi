@@ -6,9 +6,10 @@
 <head>
 <style type="text/css">
 #commList {
-	position: absolute;
-	left: 530px;
-	top: 70px;
+	display:inline-block;
+	position: relative;
+	left: 505px;
+	bottom: 512px;
 }
 </style>
 <meta charset="UTF-8">
@@ -92,11 +93,14 @@
 		</tr>
 
 	</table>
+	<c:if test="${revcount>0 }">
 	<a
 		href="${pageContext.request.contextPath }/reviewdelete?revid=${vo.revid }&itemid=${vo.itemid}">삭제</a>
 	<a
 		href="${pageContext.request.contextPath }/reviewupdate?revid=${vo.revid }&itemid=${vo.itemid}">수정</a>
-	<div id="commList"></div>
+	<a 
+		href="${pageContext.request.contextPath }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${vo.itemid }">리뷰목록으로....</a>	
+		</c:if>
 	<div id="commAdd">
 		<input type="hidden" value=${username } id="user" name="user"
 			readonly="readonly">
@@ -106,8 +110,12 @@
 	<div id="box">
 		<label>댓글: </label>
 		<textarea rows="1" cols="60" id="context"></textarea>
-		<br> <input type="button" value="등록" onclick="insertComm()">
+		<br>
+		<c:if test="${revcount>0 }">  
+		 <input type="button" value="등록" onclick="insertComm()">
+		</c:if>
 	</div>
+	<div id="commList"></div>
 	<script type="text/javascript">
 		function insertComm() {
 			var xhr = new XMLHttpRequest();
@@ -154,7 +162,7 @@
 						div.className = "comm";
 						div.style.border = "solid 2px black";
 						div.style.marginTop = "10px";
-						div.style.width = "500px";
+						div.style.width = "380px";
 						commList.appendChild(div);
 			/* if문으로 글쓴이일 경우 상태+운영자일경우 삭제버튼(전체삭제버튼도 생김)이 생기게 할수 있음 */
 					}
