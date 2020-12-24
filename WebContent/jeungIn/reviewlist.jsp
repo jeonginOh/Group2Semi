@@ -140,10 +140,10 @@ if(msg=="fail"){
 	<input type="hidden" id="detailavail">
 	<div class = "purchase">
 		<button type = "button" onclick="insertBasket()">
-			<img src = "<%=request.getContextPath() %>/images/구매버튼.png" style="width:100px;height:100px">
+			<img src = "<%=request.getContextPath() %>/icon/구매버튼.png" style="width:50px;height:50px">
 		</button>
 		<button type = "button" onclick="insertDibs()">
-			<img src = "<%=request.getContextPath() %>/images/구매버튼.png" style="width:100px;height:100px">
+			<img src = "<%=request.getContextPath() %>/icon/heart.PNG" style="width:50px;height:50px">
 		</button>
 <c:import url="/reviewlist2.do?itemid=${param.itemid }&pageNum=${param.pageNum }"></c:import>
 		
