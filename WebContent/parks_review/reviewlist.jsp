@@ -39,16 +39,18 @@
 			</c:when>
 			<c:when test="${ave>0.6 }">
 				<h1>
-					<br> 평균평점 : ${ ave} <br> ★ <br>
+					<br> 평균평점 : ${ ave}$ <br> ★<br>
 				</h1>
 			</c:when>
 		</c:choose>
 	</h1>
-	<a
-		href="${pageContext.request.contextPath }/parks_review/reviewindex.jsp">물품리스트</a>
+		<c:if test="${buycount >0}">
+		<a href="${cp }/reviewinsert.do?itemid=${itemid1 }">리뷰등록</a>
+		</c:if>
+		<a>${buycount[status.index]}</a>
 	<div id="box">
 		<table style="table-layout: fixed;" border="1" bordercolor="red"
-			width="1400" align="center">
+			width="900" align="center">
 			<tr>
 				<th
 					style="width: 7%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">제목</th>

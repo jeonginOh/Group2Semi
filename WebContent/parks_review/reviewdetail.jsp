@@ -92,10 +92,12 @@
 		</tr>
 
 	</table>
+	<c:if test="${revcount>0 }">
 	<a
 		href="${pageContext.request.contextPath }/reviewdelete?revid=${vo.revid }&itemid=${vo.itemid}">삭제</a>
 	<a
 		href="${pageContext.request.contextPath }/reviewupdate?revid=${vo.revid }&itemid=${vo.itemid}">수정</a>
+		</c:if>
 	<div id="commList"></div>
 	<div id="commAdd">
 		<input type="hidden" value=${username } id="user" name="user"
@@ -106,7 +108,10 @@
 	<div id="box">
 		<label>댓글: </label>
 		<textarea rows="1" cols="60" id="context"></textarea>
-		<br> <input type="button" value="등록" onclick="insertComm()">
+		<br>
+		<c:if test="${revcount>0 }">  
+		 <input type="button" value="등록" onclick="insertComm()">
+		</c:if>
 	</div>
 	<script type="text/javascript">
 		function insertComm() {

@@ -218,7 +218,6 @@ public class ItemreviewDao {
 			DBCPBean.close(con, pstmt, rs);
 		}
 	}
-
 	public String memId(int revid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -304,5 +303,54 @@ public class ItemreviewDao {
 			DBCPBean.close(con,pstmt,rs);
 		}
 		
+	}
+	public int get_buyid(int itemid,int memid) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=DBCPBean.getConn();
+			String sql = "select count(buyid) cnt from buylist inner join memberinfo on memberinfo.memid=buylist.memid inner join iteminfo on iteminfo.itemid=buylist.itemid where buylist.itemid=? and buylist.memid=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, itemid);
+			pstmt.setInt(2, memid);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				int buycount=rs.getInt("cnt");
+				return buycount;
+			}
+			return -1;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,null);
+		}
+	}
+	public int get_revid(int revid,int itemid,int memid) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=DBCPBean.getConn();
+			String sql = "select count(revid)  from itemreview inner join memberinfo on \r\n" + 
+					"memberinfo.memid=itemreview.memid inner join iteminfo on\r\n" + 
+					"iteminfo.itemid=itemreview.itemid where itemreview.revid=? and iteminfo.itemid=? and memberinfo.memid=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, revid);
+			pstmt.setInt(2, itemid);
+			pstmt.setInt(3, memid);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				int revcount=rs.getInt(1);
+				return revcount;
+			}
+			return -1;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,null);
+		}
 	}
 }

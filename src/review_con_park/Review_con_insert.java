@@ -24,9 +24,16 @@ import semiVo.ItemreviewVo;
 @WebServlet("/reviewinsert.do")
 public class Review_con_insert extends HttpServlet {
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int itemid=Integer.parseInt(req.getParameter("itemid"));
+		req.setAttribute("itemid", itemid);
+		req.getRequestDispatcher("/parks_review/writer_review.jsp").forward(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String path = req.getSession().getServletContext().getRealPath("/fileFolder");
+		HttpSession ss=req.getSession();
 		// 파일저장경로
 		int size = 1024 * 1024 * 10;
 		// 파일크기
@@ -34,7 +41,8 @@ public class Review_con_insert extends HttpServlet {
 		try {
 			MultipartRequest multi = new MultipartRequest(req, path, size, "utf-8", new DefaultFileRenamePolicy());
 			int itemid = Integer.parseInt(multi.getParameter("itemid"));
-			int memid = Integer.parseInt(multi.getParameter("memid"));
+			int memid = Integer.parseInt((String)ss.getAttribute("memid"));
+			System.out.println(memid);
 			int star=Integer.parseInt(multi.getParameter("star"));
 			System.out.println(star);
 			System.out.println("dddd");

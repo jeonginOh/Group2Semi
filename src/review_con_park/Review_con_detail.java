@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import itemreviewDao.ItemreviewDao;
 import semiVo.ItemreviewVo;
@@ -17,6 +18,16 @@ public class Review_con_detail extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String spageNum=req.getParameter("pageNum");
+	
+		HttpSession ss=req.getSession();
+		String memid1=(String)ss.getAttribute("memid");
+		int memid=0;		
+		if(memid1==null ) {
+			memid=15616589;
+		}else {
+			memid=Integer.parseInt(memid1);
+		}
+	
 		int revid=Integer.parseInt(req.getParameter("revid"));
 		int itemid=Integer.parseInt(req.getParameter("itemid"));
 		ItemreviewDao dao=ItemreviewDao.getInstance();
@@ -24,6 +35,8 @@ public class Review_con_detail extends HttpServlet {
 		ItemreviewVo vo=dao.review_listupdate(revid);
 		String username=dao.memId(revid);
 		String itemname=dao.itemname(itemid);
+		int reviewcount=dao.get_revid(revid, itemid, memid);
+		req.setAttribute("revcount", reviewcount);
 		req.setAttribute("itemname", itemname);
 		req.setAttribute("username", username);
 		req.setAttribute("vo", vo);

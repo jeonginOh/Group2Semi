@@ -70,7 +70,7 @@
 						var regdate=paging.itemlist[i].regdate;
 						console.log(img1);
 						console.log(itemid);
-						all_list="<a href='#'><img src='<%=request.getContextPath()%>/fileFolder/"+itemimg+"'style=width:10px></a><br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
+						all_list="<a href='#'><img src='<%=request.getContextPath()%>/fileFolder/"+itemimg+"'style=width:100px></a><br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
 						+"<br>제조사: "+factory+"<br>제조일:"+regdate;
 					
 						div.className="search_item";
