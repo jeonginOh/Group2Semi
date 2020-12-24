@@ -27,7 +27,8 @@ function cktitle(){
 			제목:<input type="text"  id="title" name="title"  required="required" onclick="if(this.value==this.defaultValue){this.value=''}" 
 		onblur="if (this.value == '') { this.value = this.defaultValue;" value="제목을입력하세요 " >
 <br>
-			<textarea rows="20" cols="50" id="context" name="context" onclick="if(this.value==this.defaultValue){this.value=''}" 
+			<textarea rows="20" cols="50" style="margin-top: 0px; margin-bottom: 0px; height: 315px; resize: none;"
+			 id="context" name="context" onclick="if(this.value==this.defaultValue){this.value=''}" 
 		onblur="if (this.value == '') { this.value = this.defaultValue;">내용을 입력하세요 ${itemid }</textarea>
 			<br> <input type="file" value="image" id="image"
 				onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif"><br> <input
@@ -44,7 +45,7 @@ function cktitle(){
 		<input type="radio" name="star" id="star" value=5 checked="checked">
 		<label  >★★★★★</label>
 		<br>
-		<a href="${pageContext.request.contextPath }/reviewlist2.do?itemid=${itemid}">리뷰목록으로....</a>
+		<a href="${pageContext.request.contextPath }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${itemid }">리뷰목록으로....</a>
 			
 		</div>
 	

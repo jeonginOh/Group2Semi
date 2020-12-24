@@ -3,6 +3,11 @@
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script type="text/javascript">
+
+var msg='${code}';
+if(msg=="fail"){
+	alert("작업에 실패했습니다.");
+}
 	window.onload=function(){
 		var xhr = null;
 		xhr = new XMLHttpRequest();
@@ -140,7 +145,7 @@
 		<button type = "button" onclick="insertDibs()">
 			<img src = "<%=request.getContextPath() %>/images/구매버튼.png" style="width:100px;height:100px">
 		</button>
-<c:import url="/reviewlist2.do?itemid=${param.itemid2 }"></c:import>
+<c:import url="/reviewlist2.do?itemid=${param.itemid }&pageNum=${param.pageNum }"></c:import>
 		
 
 	</div>

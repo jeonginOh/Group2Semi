@@ -20,9 +20,9 @@ public class Review_con_detail extends HttpServlet {
 		String spageNum=req.getParameter("pageNum");
 	
 		HttpSession ss=req.getSession();
-		String memid1=(String)ss.getAttribute("memid");
+		String memid1=String.valueOf(ss.getAttribute("memid"));
 		int memid=0;		
-		if(memid1==null ) {
+		if(memid1.equals("null")) {
 			memid=15616589;
 		}else {
 			memid=Integer.parseInt(memid1);
@@ -40,7 +40,7 @@ public class Review_con_detail extends HttpServlet {
 		req.setAttribute("itemname", itemname);
 		req.setAttribute("username", username);
 		req.setAttribute("vo", vo);
-		req.getRequestDispatcher("/parks_review/reviewdetail.jsp").forward(req, resp);
+		req.getRequestDispatcher("/jeungIn/main.jsp?spage=/parks_review/reviewdetail.jsp").forward(req, resp);
 	}
 	
 }

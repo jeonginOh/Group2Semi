@@ -27,7 +27,7 @@ public class Review_con_insert extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int itemid=Integer.parseInt(req.getParameter("itemid"));
 		req.setAttribute("itemid", itemid);
-		req.getRequestDispatcher("/parks_review/writer_review.jsp").forward(req, resp);
+		req.getRequestDispatcher("/jeungIn/main.jsp?spage=/parks_review/writer_review.jsp").forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,14 +41,14 @@ public class Review_con_insert extends HttpServlet {
 		try {
 			MultipartRequest multi = new MultipartRequest(req, path, size, "utf-8", new DefaultFileRenamePolicy());
 			int itemid = Integer.parseInt(multi.getParameter("itemid"));
-			int memid = Integer.parseInt((String)ss.getAttribute("memid"));
+			int memid =(int)ss.getAttribute("memid");
 			System.out.println(memid);
 			int star=Integer.parseInt(multi.getParameter("star"));
 			System.out.println(star);
 			System.out.println("dddd");
 			String title = multi.getParameter("title");
 			String context = multi.getParameter("context");
-			String file = multi.getOriginalFileName("image");
+			String file = multi.getFilesystemName("image");
 
 			ItemreviewVo insertvo = new ItemreviewVo(0, itemid, memid, title, file, context, star, null);
 			ItemreviewDao reviewdao = ItemreviewDao.getInstance();
@@ -58,11 +58,11 @@ public class Review_con_insert extends HttpServlet {
 			if (n > 0) {
 				req.setAttribute("code", "success");
 				req.setAttribute("itemid", itemid);
-				req.getRequestDispatcher("/parks_review/insertsucc.jsp").forward(req, resp);
+				req.getRequestDispatcher("/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid).forward(req, resp);
 			} else {
 				req.setAttribute("code", "fail");
 				req.setAttribute("itemid", itemid);
-				req.getRequestDispatcher("/parks_review/insertsucc.jsp").forward(req, resp);
+				req.getRequestDispatcher("/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid).forward(req, resp);
 			}
 			PrintWriter pw = resp.getWriter();
 			pw.print(jsonlist.toString());

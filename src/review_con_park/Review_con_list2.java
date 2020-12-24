@@ -19,9 +19,9 @@ public class Review_con_list2 extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession ss=req.getSession();
-		String memid1=(String)ss.getAttribute("memid");
+		String memid1=String.valueOf(ss.getAttribute("memid"));
 		int memid=0;		
-		if(memid1==null ) {
+		if(memid1.equals("null") ) {
 			memid=15616589;
 		}else {
 			memid=Integer.parseInt(memid1);
@@ -33,19 +33,21 @@ public class Review_con_list2 extends HttpServlet {
 			itemid=1;
 		}
 		String spageNum = req.getParameter("pageNum");
+		System.out.println("spageNum:"+spageNum);
 		int pageNum = 1;
-		if (spageNum != null) {
+		if (!spageNum.equals("") && spageNum != null) {
 			pageNum = Integer.parseInt(spageNum);
 		}
-		int startRow = (pageNum - 1) * 10 + 1;
-		int endRow = startRow + 9;
+		int startRow = (pageNum - 1) * 5 + 1;
+		int endRow = startRow + 4;
 		ItemreviewDao dao = ItemreviewDao.getInstance();
 		double ave = dao.avestar(itemid);
 		int buycount=dao.get_buyid(itemid, memid);
 		String itemname = dao.itemname(itemid);
-		ArrayList<String> username = dao.userName(memid);
+		ArrayList<String> username = dao.userName(itemid);
 		ArrayList<ItemreviewVo> list = dao.review_list2(itemid, startRow, endRow);
-		int pageCount = (int) Math.ceil(dao.getCount(itemid) / 10.0);
+		int pageCount = (int) Math.ceil(dao.getCount(itemid) / 5.0);
+		System.out.println("페이지카운트:"+pageCount);
 		int startPageNum = (pageNum - 1) / 10 * 10 + 1;
 		int endPageNum = startPageNum + 9;
 		if (endPageNum > pageCount) {
