@@ -354,6 +354,7 @@ public class MemberinfoDao {
         PreparedStatement pstmt =null;
         try {
             conn = DBCPBean.getConn();
+            // String sql = "update memberinfo set email=?, addr=?, phone=?, point=?, status=? where memid=?";
             String sql = "update memberinfo set email=?, addr=?, phone=? where memid=?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, vo.getEmail());
@@ -369,6 +370,7 @@ public class MemberinfoDao {
             DBCPBean.close(conn, pstmt);
         }
     }
+    
 /*---------------------------------------------------------------------
     관리자페이지
 ---------------------------------------------------------------------*/
@@ -563,7 +565,7 @@ private PreparedStatement listpstmt(Connection conn, String[] search, int startr
  * @param orderby 
  * @return
  */
-public JSONObject jsonlist(String[] searches, int startrow, int endrow, String order, String orderby) {
+public JSONObject jsonList(String[] searches, int startrow, int endrow, String order, String orderby) {
     Connection conn = null;
     ResultSet res = null;
     PreparedStatement pstmt = null;
@@ -605,8 +607,8 @@ public JSONObject jsonlist(String[] searches, int startrow, int endrow, String o
         DBCPBean.close(conn, res, pstmt);
     }
 }
-public JSONObject jsonlist(int startrow, int endrow, String order, String orderby) {
-    return jsonlist(null, startrow, endrow, order, orderby);
+public JSONObject jsonList(int startrow, int endrow, String order, String orderby) {
+    return jsonList(null, startrow, endrow, order, orderby);
 }
 
 // public int size(String type, String search) {
@@ -661,26 +663,74 @@ public int size(String[] search) {
     }
 }
 
-public void test(String a, String b) {
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet res = null;
+
+/**
+ * currently support - point, status
+ * @param type
+ * @param value
+ * @param memids
+ * @return
+ */
+public boolean batchchange(String type, String value, int[] memids) {
+    Connection conn=null;
+    PreparedStatement pstmt =null;
     try {
         conn = DBCPBean.getConn();
-        pstmt = conn.prepareStatement("select nvl(count(memid), 0) cnt from memberinfo where regexp_like (?, ?) ");
-        pstmt.setString(1,a);
-        pstmt.setString(2,b);
-        res = pstmt.executeQuery();
-        while(res.next()) {
-            System.out.println(res.getString(1));
+        conn.setAutoCommit(false);
+        // String sql = "update memberinfo set email=?, addr=?, phone=?, point=?, status=? where memid=?";
+        StringBuilder sb = new StringBuilder();
+        sb.append("update memberinfo set ");
+        if (value.startsWith("+") || value.startsWith("-") || value.startsWith("/") || value.startsWith("*")) 
+            sb.append(type+"="+type+value);
+        else sb.append(type+"="+value);
+        sb.append(" where memid in(");
+        for(int i=0; i<memids.length; i++) {
+            sb.append("?, ");
+        }
+        sb.delete(sb.length()-2, sb.length());
+        sb.append(")");
+        pstmt = conn.prepareStatement(sb.toString());
+        
+        for(int i=0; i<memids.length; i++) {
+            pstmt.setInt(i+1, memids[i]);
+        }
+        if (pstmt.executeUpdate()==memids.length) {
+            conn.commit();
+            return true;
+        } else {
+            conn.rollback();
+            return false;
         }
     } catch (SQLException e) {
         e.printStackTrace();
-        
+        try {if (conn!=null) conn.rollback();}
+        catch (SQLException e1) {e1.printStackTrace();}
+        return false;
     } finally {
-        DBCPBean.close(conn, pstmt, res);
+        DBCPBean.close(conn, pstmt);
     }
 }
+
+// public void test(String a, String b) {
+//     Connection conn = null;
+//     PreparedStatement pstmt = null;
+//     ResultSet res = null;
+//     try {
+//         conn = DBCPBean.getConn();
+//         pstmt = conn.prepareStatement("select nvl(count(memid), 0) cnt from memberinfo where regexp_like (?, ?) ");
+//         pstmt.setString(1,a);
+//         pstmt.setString(2,b);
+//         res = pstmt.executeQuery();
+//         while(res.next()) {
+//             System.out.println(res.getString(1));
+//         }
+//     } catch (SQLException e) {
+//         e.printStackTrace();
+        
+//     } finally {
+//         DBCPBean.close(conn, pstmt, res);
+//     }
+// }
 
 
 //#endregion

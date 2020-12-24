@@ -54,16 +54,17 @@
             	<thead>
 	            	<tr>
 		                <th><input type="checkbox" name="체크" id="checkall"></th>
-		                <th id="memid">회원번호</th>
-		                <th id="id">아이디</th>
-		                <th id="age">생년월일</th>
-		                <th id="sex">성별</th>
-		                <th id="email">이메일</th>
-		                <th id="addr">주소</th>
-		                <th id="regdate">가입일</th>
-		                <th id="phone">전화번호</th>
-		                <th id="point">포인트</th>
-	                	<th id="status">회원종류</th>
+		                <th id="t_memid">회원번호</th>
+		                <th id="t_id">아이디</th>
+		                <th id="t_age">생년월일</th>
+		                <th id="t_sex">성별</th>
+		                <th id="t_email">이메일</th>
+		                <th id="t_addr">주소</th>
+		                <th id="t_regdate">가입일</th>
+		                <th id="t_phone">전화번호</th>
+		                <th id="t_point">포인트</th>
+	                	<th id="t_status">회원종류</th>
+	                	<th id="t_cancel"></th>
 	                </tr>
             	</thead>
 	            <tbody id='tbody'></tbody>
@@ -77,6 +78,9 @@
             <label for="details">상세검색</label>
             <input type="checkbox" name="details" id="details">
             <input type="button" value="검색하기" id="searchbtn">
+
+            input:b
+
             <div id="detailsearch">
                 <!-- 상세검색 -->
                 <div id="d_age"><label for="d_age">생년월일</label><input type="text" name="agemin" id="agemin" placeholder="최소">~<input type="text" name="agemax" id="agemax" placeholder="최대"></div>
@@ -87,7 +91,7 @@
     </div>
 
     <script type="text/javascript">
-    //페이지설정용 엘리먼트
+        //페이지설정용 엘리먼트
         let rowsize = document.getElementById('rowsize');
         let order = document.getElementById('order');
         let orderby = document.getElementById('orderby');
@@ -103,9 +107,7 @@
         //검색용 엘리먼트
         let searchctl = document.getElementById('searchctl');
         searchctrl.addEventListener("keydown", function (e) {
-            if (e.keyCode==13) {
-                showlist(e)
-            }
+            if (e.keyCode==13) showlist(e);
         }, false);
         let type = document.getElementById('type');
         let search = document.getElementById('search');
@@ -138,14 +140,30 @@
             }
         }
 
+        //order 설정 영역
+        let t_memid = document.getElementById('t_memid');
+        let t_id = document.getElementById('t_id');
+        let t_age = document.getElementById('t_age');
+        let t_sex = document.getElementById('t_sex');
+        let t_email = document.getElementById('t_email');
+        let t_addr = document.getElementById('t_addr');
+        let t_regdate = document.getElementById('t_regdate');
+        let t_phone = document.getElementById('t_phone');
+        let t_point = document.getElementById('t_point');
+        let t_status = document.getElementById('t_status');
+        let t_cancel = document.getElementById('t_cancel');
+        
 
-        //멤버 선택 기능
+
+//#region 멤버 선택 기능
+/**
+ * checkbox로 선택하는 기능
+ * 선택된걸 기억하고 다른 페이지로 돌아왔을 때 다시 선택되게 해야 함
+ * 검색조건이 바뀌면 초기화됨
+ */
+        
         const selected = [];
-        /**
-         * checkbox로 선택하는 기능
-         * 선택된걸 기억하고 다른 페이지로 돌아왔을 때 다시 선택되게 해야 함
-         * 검색조건이 바뀌면 초기화됨
-         */
+        
         let checkall = document.getElementById('checkall');
         checkall.addEventListener('click', function(e){
             let selmem = document.getElementsByName('selectmember');
@@ -163,6 +181,7 @@
                 }
             });
         });
+
         function checkallstate() {
             let selmem = document.getElementsByName('selectmember');
             let allgreen = Array.from(selmem).some(box=>{return !box.checked;});
@@ -176,9 +195,7 @@
             }
             console.log(selected);
         }
-        /**
-         * selected 배열을 비운다.
-         */
+
         function selected_cleanall() {
             selected.splice(0);
             checkallstate();
@@ -196,9 +213,18 @@
             });
             return box;
         }
-
         
-        //list생성용 엘리먼트
+        function batchedit() {
+            if (selected.length>0) {
+
+            }
+        }
+        //^[+-/*]??\d+$ 
+//#endregion
+
+
+
+//#region list생성용 엘리먼트
         let list = document.getElementById('list');
         let table = document.getElementById('table');
         let tbody = document.getElementById('tbody');
@@ -211,18 +237,25 @@
          *검색어를 입력했지만 검색버튼을 누르지 않고 페이지 버튼을 눌렀을때 사용
          */
         let unchangedparameters="";
-
+        let pagenum=1;
         /**
-         * @param pagenum 숫자면 page만 변경, 숫자가 아니면...
+         * @param args 숫자면 page 변경, 숫자가 아니면...
          * 받는 event의 종류
          * 검색관련 - searchctrl, searchbtn - 검색조건이 바뀜(페이지는 1페이지로 초기화)
-         * 페이지설정관련 - rowsize, order, orderby, pagesize - 검색조건이 바뀌지 않음(페이지는 1페이지로 초기화)
+         * 페이지설정관련 - rowsize, pagesize- 검색조건이 바뀌지 않음(페이지는 1페이지로 초기화)
+         * order, orderby - 페이지 초기화할 필요가 없음
          */
-        function showlist(pagenum) {
+        function showlist(args) {
             let param = "order="+order.value+"&orderby="+orderby.value+"&rowsize="+rowsize.value+"&pagesize="+pagesize.value;
-            if (pagenum!=event) param+="&pagenum="+pagenum;
-            else if (pagenum==undefined) {}
-            else if (pagenum.target.id.includes('search',0)) {
+            if (args==undefined) param+="&pagenum="+pagenum;
+            else if (args!=event) {
+                pagenum=args;
+                param+="&pagenum="+pagenum;
+            }
+            else if (args.target.id.includes('order',0)) {
+                param+="&pagenum="+pagenum;
+            }
+            else if (args.target.id.includes('search',0)) {
                 selected_cleanall(); //선택된 목록도 초기화한다.
                 let searchparam = "&type="+type.value+"&search="+search.value;
                 if (details.checked) searchparam+="&agemin="+agemin.value+"&agemax="+agemax.value+"&regdatemin="+regdatemin.value+"&regdatemax="+regdatemax.value+"&pointmin="+pointmin.value+"&pointmax="+pointmax.value;
@@ -237,6 +270,7 @@
                     cleartable();
                     const json = JSON.parse(xhr.responseText);
                     pagenum=JSON.parse(json.pagenum);
+                    console.log("pagenum renew: "+pagenum);
                     const startpage=JSON.parse(json.startpage);
                     const endpage = JSON.parse(json.endpage);
                     const maxpage = JSON.parse(json.maxpage);
@@ -296,10 +330,14 @@
                             tdphone.textContent=mem.phone;
                             
                             const tdpoint = document.createElement("td");
-                            tdpoint.textContent=mem.point;
+                            tdpoint.append(tdpointinput(mem.point));
                             
                             const tdstatus = document.createElement("td");
-                            tdstatus.textContent=scl[JSON.parse(mem.status)+1];
+                            // tdstatus.textContent=scl[JSON.parse(mem.status)+1];
+                            tdstatus.append(tdstatusinput(JSON.parse(mem.status)+1));
+
+                            // const tdcancel = document.createElement("td");
+
                             tr.append(tdcheckbox);
                             tr.append(tdmemid);
                             tr.append(tdid);
@@ -311,6 +349,7 @@
                             tr.append(tdphone);
                             tr.append(tdpoint);
                             tr.append(tdstatus);
+                            // tr.append(tdcancel);
                             tbody.append(tr);
                             checkallstate();
                         }
@@ -362,20 +401,80 @@
             console.log(param);
             xhr.send(param);
         }
-            
-        
-        
-
 
         /**
-         * 테이블 초기화 처리
-         * 
+         * 리스트 초기화 처리
          */
         function cleartable() {
             while(tbody.firstChild) {tbody.firstChild.remove();}
             while(pagectrl.firstChild) {pagectrl.firstChild.remove();}
-
+            //selectedclean은 여기 넣지 않는다.
         }
+//#endregion
+
+//#region 검색부
+        function tdpointinput(value) {
+            const input = document.createElement("input");
+            input.type="text";
+            input.className="point";
+            input.value=value;
+            input.setAttribute("data-orig", value);
+            input.addEventListener('keyup', function (e) {
+                if (!/^\d+$/.test(e.target.value)) e.target.value = e.target.value.replace(/[\D]/g, "");
+                else{
+                    console.log(e.target);
+                    console.log(e.target.parentNode.parentNode.id);
+                    memedit(e.target);
+                }
+            });
+            return input;
+        }
+        
+        function tdstatusinput(value) {
+            const select = document.createElement("select");
+            select.className="status";
+            for(let i=0;i<scl.length; i++) {
+                const opt = document.createElement("option");
+                opt.value=i-1;
+                opt.textContent=scl[i];
+                if (i==value) opt.setAttribute("selected", true);
+                select.append(opt);
+            }
+            select.addEventListener('change', function(e){
+                // showcancel(e.target);
+                memedit(e.target);
+            });
+            return select;
+        }
+//#endregion
+
+
+
+
+        // function showcancel() {
+        //     //TODO: 취소버튼, update
+        //     console.log(arguments);
+        // }
+        function memedit(elem) {
+            let edittarget = elem.parentNode.parentNode.id;
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=function() {
+                if (xhr.readyState==4 && xhr.status==200) {
+                    let json = JSON.parse(xhr.responseText);
+                    if (!JSON.parse(json.result)) {
+                        alert("에러가 발생했습니다.");
+                    }
+                    showlist();
+                }
+            };
+            xhr.open('post', '../admin/memberlist.edit', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            let param = "memid="+edittarget+"&"+elem.className+"="+elem.value;
+            console.log(param);
+            xhr.send(param);
+        }
+        
+        
 
 
         //페이지 로드 후 자동 실행

@@ -126,7 +126,7 @@ public class MemberList extends HttpServlet {
 
         int endrow = pagenum*rowsize;
         int startrow = endrow-rowsize+1;
-        JSONObject json = dao.jsonlist(searches, startrow, endrow, order, orderby);
+        JSONObject json = dao.jsonList(searches, startrow, endrow, order, orderby);
         if (json==null) json = new JSONObject();
         int startpage = ((pagenum-1)/pagesize)*pagesize+1;
         int endpage = startpage+pagesize-1;

@@ -1,0 +1,37 @@
+package com.jeon.admin;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.jeon.Dao.MemberinfoDao;
+
+import org.json.JSONObject;
+
+import semiVo.MemberinfoVo;
+@WebServlet("/admin/memberlist.edit")
+public class MemberListEdit extends HttpServlet {
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/plain;charset=utf-8");
+        MemberinfoDao dao = MemberinfoDao.getInstance();
+        MemberinfoVo vo = null;
+        if (req.getParameter("memid")!=null && !req.getParameter("memid").isBlank()){
+            vo = dao.getVo(Integer.parseInt(req.getParameter("memid")));
+        }
+        if (req.getParameter("point")!=null && !req.getParameter("point").isBlank()){
+            vo.setPoint(Integer.parseInt(req.getParameter("point")));
+        }
+        if (req.getParameter("status")!=null && !req.getParameter("status").isBlank()){
+            vo.setStatus(Integer.parseInt(req.getParameter("status")));
+        }
+        
+        JSONObject json = new JSONObject();
+        json.put("result", dao.change(vo));
+        resp.getWriter().print(json);
+    }
+}
