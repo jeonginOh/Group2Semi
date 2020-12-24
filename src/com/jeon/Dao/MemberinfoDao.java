@@ -459,48 +459,69 @@ private PreparedStatement listpstmt(Connection conn, String[] search, int startr
             sql.append("regexp_like ("+search[0]+", ?) and ");
             arr.add(search[1]);
         }
-        if (search[2]!=null || search[3]!=null) {
-            sql.append("age");
-            if (search[2]==null) {
-                sql.append("<=? and ");
-                arr.add(search[3]);
-            }else if (search[3]==null) {
-                sql.append(">=? and ");
-                arr.add(search[2]);
-            }else {
-                sql.append(" between ? and ? and ");
-                arr.add(search[2]);
-                arr.add(search[3]);
+        String[] cols = {"age", "regdate", "point"};
+        for(int i=1; i<=cols.length; i++) {
+            if (search[i*2]!=null || search[i*2+1]!=null) {
+                sql.append(cols[i-1]);
+                if (search[i*2]==null) {
+                    sql.append("<=? ");
+                    arr.add(search[i*2+1]);
+                }else if (search[i*2+1]==null) {
+                    sql.append(">=? ");
+                    arr.add(search[i*2]);
+                }else {
+                    sql.append(" between ? and ? ");
+                    arr.add(search[i*2]);
+                    arr.add(search[i*2+1]);
+                }
+                sql.append("and ");
             }
         }
-        if (search[4]!=null || search[5]!=null) {
-            sql.append("regdate");
-            if (search[4]==null) {
-                sql.append("<=? and ");
-                arr.add(search[5]);
-            }else if (search[5]==null) {
-                sql.append(">=? and ");
-                arr.add(search[4]);
-            }else {
-                sql.append(" between ? and ? and ");
-                arr.add(search[4]);
-                arr.add(search[5]);
-            }
-        }
-        if (search[6]!=null || search[7]!=null) {
-            sql.append("point");
-            if (search[6]==null) {
-                sql.append("<=? and ");
-                arr.add(search[7]);
-            }else if (search[7]==null) {
-                sql.append(">=? and ");
-                arr.add(search[6]);
-            }else {
-                sql.append(" between ? and ? and ");
-                arr.add(search[6]);
-                arr.add(search[7]);
-            }
-        }
+        // if (search[2]!=null || search[3]!=null) {
+        //     sql.append("age");
+        //     if (search[2]==null) {
+        //         sql.append("<=? ");
+        //         arr.add(search[3]);
+        //     }else if (search[3]==null) {
+        //         sql.append(">=? ");
+        //         arr.add(search[2]);
+        //     }else {
+        //         sql.append(" between ? and ? ");
+        //         arr.add(search[2]);
+        //         arr.add(search[3]);
+        //     }
+        //     sql.append("and ");
+        // }
+        // if (search[4]!=null || search[5]!=null) {
+        //     sql.append("regdate");
+        //     if (search[4]==null) {
+        //         sql.append("<=? ");
+        //         arr.add(search[5]);
+        //     }else if (search[5]==null) {
+        //         sql.append(">=? ");
+        //         arr.add(search[4]);
+        //     }else {
+        //         sql.append(" between ? and ? ");
+        //         arr.add(search[4]);
+        //         arr.add(search[5]);
+        //     }
+        //     sql.append("and ");
+        // }
+        // if (search[6]!=null || search[7]!=null) {
+        //     sql.append("point");
+        //     if (search[6]==null) {
+        //         sql.append("<=? ");
+        //         arr.add(search[7]);
+        //     }else if (search[7]==null) {
+        //         sql.append(">=? ");
+        //         arr.add(search[6]);
+        //     }else {
+        //         sql.append(" between ? and ? ");
+        //         arr.add(search[6]);
+        //         arr.add(search[7]);
+        //     }
+        //     sql.append("and ");
+        // }
         if (arr.size()>0) sql.delete(sql.length()-4, sql.length());
         else sql.delete(sql.length()-6, sql.length());
         if (querys[2]!=null) sql.append(querys[2]);
@@ -531,6 +552,8 @@ private PreparedStatement listpstmt(Connection conn, String[] search, int startr
         }
     return pstmt;
 }
+
+
 /**
  * 
  * @param search 0-1 type, search 2-3 age 4-5 regdate 6-7 point 8-9 status

@@ -1,0 +1,385 @@
+<!-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>admin/memberlist.jsp</title>
+<style type="text/css">
+    #content div{align-self: center;}
+    /* #list{margin:auto; padding:auto;} */
+    #list{width:fit-content;}
+    #pagectrl{text-align: center;}
+    #pagectrl *{display:inline-block; }
+    .paging{padding: 20px;}
+    .paging_before{padding: 20px;}
+    .paging_after{padding:20px;}
+    #currpage{font-size: 2em;}
+    #errMsg{text-align: center;}
+</style>
+</head>
+<body>
+    <div id="content">
+        <div id="listctrl">
+            <label for="rowsize">리스트크기</label>
+            <select name="rowsize" id="rowsize">
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+            </select>
+            <label for="orderby">컬럼</label>
+            <select name="orderby" id="orderby">
+                <option value="memid" selected>회원번호</option>
+                <option value="id">아이디</option>
+                <option value="age">나이</option>
+                <option value="email">이메일</option>
+                <option value="addr">주소</option>
+                <option value="regdate">가입일</option>
+                <option value="phone">전화번호</option>
+                <option value="point">포인트</option>
+            </select>
+            <label for="order">순서</label>
+            <select name="order" id="order">
+                <option value="asc" selected>오름차순</option>
+                <option value="desc">내림차순</option>
+            </select>
+            <label for="pagesize">페이지 수</label>
+            <select name="pagesize" id="pagesize">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+            </select>
+        </div>
+        <div id="list">
+            <table id='table'>
+            	<thead>
+	            	<tr>
+		                <th><input type="checkbox" name="체크" id="checkall"></th>
+		                <th id="memid">회원번호</th>
+		                <th id="id">아이디</th>
+		                <th id="age">생년월일</th>
+		                <th id="sex">성별</th>
+		                <th id="email">이메일</th>
+		                <th id="addr">주소</th>
+		                <th id="regdate">가입일</th>
+		                <th id="phone">전화번호</th>
+		                <th id="point">포인트</th>
+	                	<th id="status">회원종류</th>
+	                </tr>
+            	</thead>
+	            <tbody id='tbody'></tbody>
+            </table>
+        </div>
+        <div id="pagectrl"></div>
+        <div id="searchctrl">
+            <label for="type">검색</label>
+            <select name="type" id="type"><option value="memid" selected>회원번호</option><option value="id">아이디</option><option value="age">생년월일</option><option value="sex">성별</option><option value="regdate">가입일</option><option value="point">포인트</option><option value="status">회원종류</option></select>
+            <input type="text" name="search" id="search">
+            <label for="details">상세검색</label>
+            <input type="checkbox" name="details" id="details">
+            <input type="button" value="검색하기" id="searchbtn">
+            <div id="detailsearch">
+                <!-- 상세검색 -->
+                <div id="d_age"><label for="d_age">생년월일</label><input type="text" name="agemin" id="agemin" placeholder="최소">~<input type="text" name="agemax" id="agemax" placeholder="최대"></div>
+                <div id="d_regdate"><label for="d_regdate">가입일</label><input type="text" name="regdatemin" id="regdatemin" placeholder="최소">~<input type="text" name="regdatemax" id="regdatemax" placeholder="최대"></div>
+                <div id="d_point"><label for="d_point">포인트</label><input type="text" name="pointmin" id="pointmin" placeholder="최소">~<input type="text" name="pointmax" id="pointmax" placeholder="최대"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    //페이지설정용 엘리먼트
+        let rowsize = document.getElementById('rowsize');
+        let order = document.getElementById('order');
+        let orderby = document.getElementById('orderby');
+        let pagesize = document.getElementById('pagesize');
+        rowsize.addEventListener("change", showlist, false);
+        order.addEventListener("change", showlist, false);
+        orderby.addEventListener("change", showlist, false);
+        pagesize.addEventListener("change", showlist, false);
+        
+        //페이지번호용 엘리먼트
+        let pagectrl = document.getElementById('pagectrl');
+        
+        //검색용 엘리먼트
+        let searchctl = document.getElementById('searchctl');
+        searchctrl.addEventListener("keydown", function (e) {
+            if (e.keyCode==13) {
+                showlist(e)
+            }
+        }, false);
+        let type = document.getElementById('type');
+        let search = document.getElementById('search');
+        let details = document.getElementById('details');
+        let detailsearch = document.getElementById('detailsearch');
+        let searchbtn = document.getElementById('searchbtn');
+        detailsearch.style="display:none";
+        searchbtn.addEventListener('click', showlist, false);
+
+
+        let agemin = document.getElementById('agemin');
+        let agemax = document.getElementById('agemax');
+        let regdatemin = document.getElementById('regdatemin');
+        let regdatemax = document.getElementById('regdatemax');
+        let pointmin = document.getElementById('pointmin');
+        let pointmax = document.getElementById('pointmax');
+
+        details.addEventListener('click', detailhide, false);
+        function detailhide() {
+            if (details.checked) {
+                detailsearch.style="display:";
+            }else {
+                detailsearch.style="display:none";
+                agemin.value="";
+                agemax.value="";
+                regdatemin.value="";
+                regdatemax.value="";
+                pointmin.value="";
+                pointmax.value="";
+            }
+        }
+
+
+        //멤버 선택 기능
+        const selected = [];
+        /**
+         * checkbox로 선택하는 기능
+         * 선택된걸 기억하고 다른 페이지로 돌아왔을 때 다시 선택되게 해야 함
+         * 검색조건이 바뀌면 초기화됨
+         */
+        let checkall = document.getElementById('checkall');
+        checkall.addEventListener('click', function(e){
+            let selmem = document.getElementsByName('selectmember');
+            selmem.forEach((entries)=>{
+                if (checkall.checked){
+                    if (!entries.checked) {
+                        entries.checked=true;
+                        tdcheckboxevent(entries);
+                    }
+                }else {
+                    if (entries.checked) {
+                        entries.checked=false;
+                        tdcheckboxevent(entries);
+                    }
+                }
+            });
+        });
+        function checkallstate() {
+            let selmem = document.getElementsByName('selectmember');
+            let allgreen = Array.from(selmem).some(box=>{return !box.checked;});
+            checkall.checked=!allgreen;
+        }
+        function tdcheckboxevent(tgt) {
+            if (tgt.checked) selected.push(tgt.value);
+            else {
+                let idx = selected.findIndex((element)=>element==tgt.value);
+                if (idx>=0) selected.splice(idx, 1);
+            }
+            console.log(selected);
+        }
+        /**
+         * selected 배열을 비운다.
+         */
+        function selected_cleanall() {
+            selected.splice(0);
+            checkallstate();
+        }
+
+        function tdcheckboxmaker(memid){
+            let box = document.createElement("input");
+            box.type='checkbox';
+            box.name='selectmember';
+            box.value=memid;
+            if (selected.findIndex((element)=>element==memid)>=0) box.setAttribute("checked", true);
+            box.addEventListener('click', function(e){
+                tdcheckboxevent(e.target);
+                checkallstate();
+            });
+            return box;
+        }
+
+        
+        //list생성용 엘리먼트
+        let list = document.getElementById('list');
+        let table = document.getElementById('table');
+        let tbody = document.getElementById('tbody');
+        const scl = ["탈퇴회원", "에러", "일반회원", "관리자", "임시회원"];
+        const sex = ["", "남자", "여자", "남자", "여자"];
+        const ageexp = /(.{6})(.)/;
+
+        /** 
+         *페이지 내에서 유지되는 파라미터(검색조건이 수정되었지만 검색하지 않을 때 필요함)
+         *검색어를 입력했지만 검색버튼을 누르지 않고 페이지 버튼을 눌렀을때 사용
+         */
+        let unchangedparameters="";
+
+        /**
+         * @param pagenum 숫자면 page만 변경, 숫자가 아니면...
+         * 받는 event의 종류
+         * 검색관련 - searchctrl, searchbtn - 검색조건이 바뀜(페이지는 1페이지로 초기화)
+         * 페이지설정관련 - rowsize, order, orderby, pagesize - 검색조건이 바뀌지 않음(페이지는 1페이지로 초기화)
+         */
+        function showlist(pagenum) {
+            let param = "order="+order.value+"&orderby="+orderby.value+"&rowsize="+rowsize.value+"&pagesize="+pagesize.value;
+            if (pagenum!=event) param+="&pagenum="+pagenum;
+            else if (pagenum==undefined) {}
+            else if (pagenum.target.id.includes('search',0)) {
+                selected_cleanall(); //선택된 목록도 초기화한다.
+                let searchparam = "&type="+type.value+"&search="+search.value;
+                if (details.checked) searchparam+="&agemin="+agemin.value+"&agemax="+agemax.value+"&regdatemin="+regdatemin.value+"&regdatemax="+regdatemax.value+"&pointmin="+pointmin.value+"&pointmax="+pointmax.value;
+                unchangedparameters=searchparam;
+            }
+            param+=unchangedparameters;
+            
+
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=function() {
+                if (xhr.readyState==4 && xhr.status==200) {
+                    cleartable();
+                    let json = JSON.parse(xhr.responseText);
+                    pagenum=JSON.parse(json.pagenum);
+                    let startpage=JSON.parse(json.startpage);
+                    let endpage = JSON.parse(json.endpage);
+                    let maxpage = JSON.parse(json.maxpage);
+                    let endrow = JSON.parse(json.endrow);
+                    let startrow = JSON.parse(json.startrow);
+                    let rowsize = JSON.parse(json.rowsize);
+                    if (rowsize==0) {
+                        let tr = document.createElement("tr");
+                        let td = document.createElement("td");
+                        td.setAttribute('colspan', 11);
+                        let nothing = document.createElement("p");
+                        nothing.id="errMsg";
+                        nothing.innerText="결과가 없습니다.";
+                        td.append(nothing);
+                        tr.append(td);
+                        tbody.append(tr);
+                    }
+                    else{
+                        //#region 리스트생성
+                        for (let index = 0; index<Math.min(endrow, rowsize)-startrow+1; index++) {
+                            const mem = json.list[index];
+                            const tr = document.createElement("tr");
+                            tr.id=mem.memid;
+                            tr.className="listrows";
+
+                            const tdcheckbox = document.createElement("td");
+                            const tdcheckboxlabel = document.createElement("label");
+                            tdcheckboxlabel.setAttribute('for', mem.memid);
+                            tdcheckboxlabel.textContent=mem.rnum;
+                            const tdcheckboxinput = tdcheckboxmaker(mem.memid);
+
+                            tdcheckboxlabel.append(tdcheckboxinput);
+                            tdcheckbox.append(tdcheckboxlabel);
+
+                            const tdmemid = document.createElement("td");
+                            tdmemid.textContent=mem.memid;
+                            
+                            const tdid = document.createElement("td");
+                            tdid.textContent=mem.id;
+                            
+                            const tdage = document.createElement("td");
+                            tdage.textContent=mem.age.toString().replace(ageexp, "$1");
+                            
+                            const tdsex = document.createElement("td");
+                            tdsex.textContent=sex[mem.age.toString().replace(ageexp, "$2")];
+                            
+                            const tdemail = document.createElement("td");
+                            tdemail.textContent=mem.email;
+                            
+                            const tdaddr = document.createElement("td");
+                            tdaddr.textContent=mem.addr;
+                            
+                            const tdregdate = document.createElement("td");
+                            tdregdate.textContent=mem.regdate;
+                            
+                            const tdphone = document.createElement("td");
+                            tdphone.textContent=mem.phone;
+                            
+                            const tdpoint = document.createElement("td");
+                            tdpoint.textContent=mem.point;
+                            
+                            const tdstatus = document.createElement("td");
+                            tdstatus.textContent=scl[JSON.parse(mem.status)+1];
+                            tr.append(tdcheckbox);
+                            tr.append(tdmemid);
+                            tr.append(tdid);
+                            tr.append(tdage);
+                            tr.append(tdsex);
+                            tr.append(tdemail);
+                            tr.append(tdaddr);
+                            tr.append(tdregdate);
+                            tr.append(tdphone);
+                            tr.append(tdpoint);
+                            tr.append(tdstatus);
+                            tbody.append(tr);
+                            checkallstate();
+                        }
+                        //#endregion
+                        //#region paging
+                        let div = document.createElement("div");
+                        function makepagingp(index) {
+                            let p = document.createElement("p");
+                            p.addEventListener('click', function (e) {
+                                showlist(e.target.textContent);
+                            }, false);
+                            p.innerText = index;
+                            return p;
+                        }
+                        // div.className = "paging";
+                        if (startpage>pagesize.value) {
+                            let p = makepagingp(startpage-1);
+                            p.className="paging_before";
+                            div.append(p);
+                        }
+                        for (let i=startpage; i<=endpage; i++) {
+                            let p = makepagingp(i);
+                            p.className="paging";
+                            if (i==pagenum) p.id="currpage";
+                            div.append(p);
+                        }
+                        if (maxpage>endpage) {
+                            let p = makepagingp(endpage+1);
+                            p.className="paging_after";
+                            div.append(p);
+                        }
+                        pagectrl.append(div);
+                        //#endregion
+                    }
+                }else if (xhr.readyState==4 && xhr.status!=200) {
+                    let tr = document.createElement("tr");
+                    let td = document.createElement("td");
+                    td.setAttribute('colspan', 11);
+                    let nothing = document.createElement("p");
+                    nothing.id="errMsg";
+                    nothing.innerText="에러가 발생했습니다.";
+                    td.append(nothing);
+                    tr.append(td);
+                    tbody.append(tr);
+                }
+            }
+            xhr.open('post', '../admin/memberlist', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            console.log(param);
+            xhr.send(param);
+        }
+            
+        
+        
+
+
+        /**
+         * 테이블 초기화 처리
+         * 
+         */
+        function cleartable() {
+            while(tbody.firstChild) {tbody.firstChild.remove();}
+            while(pagectrl.firstChild) {pagectrl.firstChild.remove();}
+
+        }
+
+
+        //페이지 로드 후 자동 실행
+        showlist();
+    </script>
+</body>
+</html>
