@@ -14,7 +14,7 @@
 	  	</div>
 	  	<div id = top2>
 		  	<ul>
-				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp">전체 카테고리</a></li>
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/jeungIn/cardlist.jsp">전체 카테고리</a></li>
 				<li> | </li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=">신상품</a></li>
 				<li> | </li>
