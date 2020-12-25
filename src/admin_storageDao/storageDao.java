@@ -265,4 +265,54 @@ public class storageDao {
 		}
 	}
 	
+	public int storageInsert(int itemid,String itemname,int catid,String price,String factory,String origin,String stock,int expire,String image) {
+		Connection con =null;
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO ITEMINFO VALUES(?,?,?,?,?,?,?,SYSDATE"+expire+",SYSDATE,?,?)";
+		try {
+			con=DBCPBean.getConn();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,itemid);
+			pstmt.setString(2,itemname);
+			pstmt.setInt(3,catid);
+			pstmt.setString(4,price);
+			pstmt.setString(5,factory);
+			pstmt.setString(6,origin);
+			pstmt.setString(7,stock);
+			pstmt.setString(8,image);
+			pstmt.setInt(9,1);
+
+			int suc = pstmt.executeUpdate();
+			
+			return suc;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt);
+		}
+	}
+	
+	public int storCatid(String catname) {
+		Connection con =null;
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
+		int catid=0;
+		String sql = "SELECT CATID FROM CATEGORY WHERE CATNAME = ?";
+		try {
+			con=DBCPBean.getConn();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, catname);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				catid = rs.getInt("catid");
+			}
+			return catid;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
 }
