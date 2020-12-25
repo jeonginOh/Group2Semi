@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-#askbox{padding-left: 500px; padding-top: 100px;}
+#askbox{padding-left: 150px; padding-top: 100px; background-color: gray;}
 
 </style>
 </head>
@@ -29,8 +29,9 @@ function cktitle(){
 }
 </script>
 <div id="askbox">
+<a href="${pageContext.request.contextPath }/ask_list">목록으로...</a>
 	<form method="post" enctype="multipart/form-data"
-		action="../ask_insert"  onsubmit="return cktitle()">
+		action="${pageContext.request.contextPath }/ask_insert"  onsubmit="return cktitle()">
 		
 		<select name="askcat" id="askcat" onchange="jinc1()">
 		<option value="item" <c:if test="${askcat=='item'}">selected</c:if> onclick=bics()>상품문의</option>
@@ -38,7 +39,7 @@ function cktitle(){
 		<option value="hwanbull" <c:if test="${askcat=='hwanbull'}">selected</c:if>>환불문의</option>
 		<option value="etc" <c:if test="${askcat=='etc'}">selected</c:if>>기타문의</option>
 		</select>
-		진하게<input type="checkbox" id="jin" name="jin"  >
+		
 		<input type="text" id="title" name="title" style="width:400px ">
 		<br>
 		<input type="file" value="image" id="image"

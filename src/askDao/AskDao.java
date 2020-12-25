@@ -271,4 +271,49 @@ public class AskDao {
 			DBCPBean.close(con,pstmt,null);
 		}
 	} 
+	public int who_writer(int memid){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			String sql="select memid from memberinfo where memid=?";
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, memid);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}else {
+				return -1;
+			}
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,null);
+		}
+	}
+	public boolean whowriter(int askid, int memid) {
+		Connection con = null;
+		ResultSet rs=null;
+		PreparedStatement pstmt = null;
+		try {
+			String sql="select * from asktable inner join memberinfo on asktable.memid=memberinfo.memid where asktable.askid=? and memberinfo.memid=?";
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, askid);
+			pstmt.setInt(2,memid);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return true;
+			}else {
+				return false;
+			}
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return false;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
 }
