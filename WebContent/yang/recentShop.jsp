@@ -1,16 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<style>
-/*	#recWhole{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
-	.pg{position: relative; left: 80px;}
-	.pg:link{color: black;} 
-	.pg:visited{color:black;}
-	.pg:active{color:black;}
-	.recbox{display: inline-block;}
-	.recitem{width:100px; height: 100px; }
-	.recspan{font-size: 0.8em;}*/
-</style>
 
 <script type="text/javascript">
 	var pageNum=1; //모든 함수에서 쓰기때문에 전역변수로
