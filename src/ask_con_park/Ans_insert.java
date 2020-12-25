@@ -25,7 +25,7 @@ public class Ans_insert extends HttpServlet{
 	String username=dao.select_who(askid);
 	req.setAttribute("list", vo);
 	req.setAttribute("username", username);
-	req.getRequestDispatcher("/admin_anstable/admin_insert.jsp").forward(req, resp);
+	req.getRequestDispatcher("/jeungIn/main.jsp?spage=/admin_anstable/admin_insert.jsp").forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -59,10 +59,10 @@ public class Ans_insert extends HttpServlet{
 			resp.setContentType("text/plain;charset=utf-8");
 			if(n>0) {
 				req.setAttribute("code", "good");
-				req.getRequestDispatcher("/ask_list?pageNum=1&field=&keyword=").forward(req, resp);
+				req.getRequestDispatcher("/jeungIn/main.jsp?spage=/ask_list?pageNum=1&field=&keyword=").forward(req, resp);
 			}else {
 				req.setAttribute("code", "bad");
-				req.getRequestDispatcher("/ask_list?pageNum=1&field=&keyword=").forward(req, resp);
+				req.getRequestDispatcher("/jeungIn/main.jsp?spage=/ask_list?pageNum=1&field=&keyword=").forward(req, resp);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

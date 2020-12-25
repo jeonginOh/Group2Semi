@@ -137,8 +137,9 @@ public class ItemreviewDao {
 		ResultSet rs = null;
 		try {
 			con = DBCPBean.getConn();
-			String sql = "select NVL(count(itemid),0) cnt from itemreview";
+			String sql = "select NVL(count(itemid),0) cnt from itemreview where itemid=?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, itemid);
 			rs = pstmt.executeQuery();
 			rs.next();
 			int cnt = rs.getInt(1);

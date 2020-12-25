@@ -23,13 +23,23 @@ public class Ask_detail extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	int askid=Integer.parseInt(req.getParameter("askid"));
+	HttpSession ss=req.getSession();
+	String memid1=(String)ss.getAttribute("memid");
+	int memid=0;
+	if(memid1!=null) {
+		memid=Integer.parseInt(memid1);
+	}else {
+		memid=0;
+	}
 	AskDao dao=AskDao.getInstance();
 	AsktableVo vo=dao.select_getinfo(askid);
 	String username=dao.select_who(askid);
+	boolean whos=dao.whowriter(askid, memid);
+	req.setAttribute("whos", whos);
 	req.setAttribute("list", vo);
 	req.setAttribute("username", username);
 	System.out.println("디테일확인");
-	req.getRequestDispatcher("/admin_askboard/ask_detail.jsp").forward(req, resp);
+	req.getRequestDispatcher("/jeungIn/main.jsp?spage=/admin_askboard/ask_detail.jsp").forward(req, resp);
 	}
 	
 

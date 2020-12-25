@@ -22,7 +22,7 @@ public class Ask_update extends HttpServlet{
 	AsktableVo vo=dao.select_getinfo(askid);
 	req.setAttribute("list", vo);
 	System.out.println("디테일확인");
-	req.getRequestDispatcher("/admin_askboard/ask_updateForm.jsp").forward(req, resp);
+	req.getRequestDispatcher("/jeungIn/main.jsp?spage=/admin_askboard/ask_updateForm.jsp").forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -58,10 +58,10 @@ public class Ask_update extends HttpServlet{
 			
 			if(n>0) {
 				req.setAttribute("code", "good");
-				req.getRequestDispatcher("/ask_list?pageNum=1&field=&keyword=").forward(req, resp);
+				req.getRequestDispatcher("/jeungIn/main.jsp?spage=/ask_list?pageNum=1&field=&keyword=").forward(req, resp);
 			}else {
 				req.setAttribute("code", "bad");
-				req.getRequestDispatcher("/admin_askboard/ask_list.jsp").forward(req, resp);
+				req.getRequestDispatcher("/jeungIn/main.jsp?spage=/admin_askboard/ask_list.jsp").forward(req, resp);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

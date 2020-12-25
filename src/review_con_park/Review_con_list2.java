@@ -48,8 +48,8 @@ public class Review_con_list2 extends HttpServlet {
 		ArrayList<ItemreviewVo> list = dao.review_list2(itemid, startRow, endRow);
 		int pageCount = (int) Math.ceil(dao.getCount(itemid) / 5.0);
 		System.out.println("페이지카운트:"+pageCount);
-		int startPageNum = (pageNum - 1) / 10 * 10 + 1;
-		int endPageNum = startPageNum + 9;
+		int startPageNum = (pageNum - 1) / 5 * 5 + 1;
+		int endPageNum = startPageNum + 4;
 		if (endPageNum > pageCount) {
 			endPageNum = pageCount;
 		}
