@@ -22,8 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import db.DBCPBean;
-import oracle.net.aso.a;
-import oracle.net.aso.l;
 import semiVo.MemberinfoVo;
 
 /**
@@ -33,6 +31,13 @@ public class MemberinfoDao {
     private MemberinfoDao() {}
     private static MemberinfoDao instance = new MemberinfoDao();
     public static MemberinfoDao getInstance() {return instance;}
+    public final static int DELETED=-1;
+    public final static int MEMBER=1;
+    public final static int ADMIN=2;
+    public final static int TEMPMEMBER=3;
+
+
+
     /**
      * memid가 존재하는지 확인한다.(0 이상)
      * @param map id, pwd
@@ -76,7 +81,7 @@ public class MemberinfoDao {
     
     /**
      * status를 가져온다.
-     * @param memid
+     * @param memid 
      * @return
      */
     public int getStatus(int memid) {
@@ -100,11 +105,14 @@ public class MemberinfoDao {
     }
 
     public boolean isMember(int memid) {
-        return getStatus(memid)==1;
+        return getStatus(memid)==MEMBER;
     }
     
     public boolean isDeleted(int memid) {
-        return getStatus(memid)==-1;
+        return getStatus(memid)==DELETED;
+    }
+    public boolean isAdmin(int memid) {
+        return getStatus(memid)==ADMIN;
     }
 
 
@@ -220,7 +228,7 @@ public class MemberinfoDao {
      * @param memid
      * @return {@code String} id
      */
-    public String getid(int memid) {
+    public String getId(int memid) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet res = null;
@@ -376,9 +384,10 @@ public class MemberinfoDao {
 ---------------------------------------------------------------------*/
 //#region 리스트
 
+
 /**
  * 
- * @param search 0-1 type, search 2-3 age 4-5 regdate 6-7 point 8-9 status
+ * @param search 0-1 type, search 2-3 age 4-5 regdate 6-7 point
  * @param startrow
  * @param endrow
  * @param order

@@ -1,0 +1,30 @@
+package com.jeon.admin;
+
+import java.io.IOException;
+import java.lang.reflect.Member;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.jeon.Dao.MemberinfoDao;
+
+import org.json.JSONObject;
+
+public class AdminLoginController extends HttpServlet{
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/plain;charset=utf-8");
+        JSONObject json = new JSONObject();
+        HttpSession session = req.getSession();
+        MemberinfoDao dao = MemberinfoDao.getInstance();
+        if (session!=null && session.getAttribute("memid")!=null) {
+            int memid = (int) session.getAttribute("memid");
+            if (session.getAttribute("admin")!=null && true) {
+                session.setAttribute("admin", dao.isAdmin(memid));
+            }
+        }
+    }
+}

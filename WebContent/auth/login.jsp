@@ -50,7 +50,7 @@
 	String method=null;
 	String ref=request.getHeader("referer");
 	System.out.println("ref:"+request.getHeader("referer"));
-	String url=null;
+	String url="jeungIn/main.jsp";
 
 	if (request.getAttribute("method")!=null) method = (String) request.getAttribute("method"); 
 	if (request.getAttribute("url")!=null) url= (String) request.getAttribute("url"); 
@@ -139,7 +139,7 @@
 	                    }else {
 	                    	//console.log('<%=ref%>');
 							//passparam();
-							location.href='<%=url%>';
+							location.href='<%=request.getContextPath()%>/<%=url%>';
 						}
 	                }
 	            }

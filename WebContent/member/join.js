@@ -53,7 +53,7 @@ window.onload=function() {
                     mailauthcode=json.mailauthcode;
                 }
             };
-            xhr.open('get', 'joincheck.do?email='+email.value, true);
+            xhr.open('get', '../member/joincheck.do?email='+email.value, true);
             // let param = "email="+email.value;
             xhr.send();
         }

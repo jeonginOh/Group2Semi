@@ -66,6 +66,9 @@
             let addr = document.getElementById('addr');
             let phone = document.getElementById('phone');
             let cancel = document.getElementById('cancel');
+            cancel.addEventListener("click", function(e){
+                history.back();
+            })
             let editthis = document.getElementById('editthis');
 
             let ori_email;
@@ -163,9 +166,7 @@
 
             function email_final_checker() {
                 if (emailchecker()) {
-                    // if (email.value!=ori_email && email.value!="") {
-                        checkavail(event.target);
-                    // }
+                    checkavail(event.target);
                 }
             }
 
@@ -173,9 +174,7 @@
 
             function phone_final_checker() {
                 if (phonechecker()) {
-                    // if (phone.value!=ori_phone && phone.value!="") {
-                        checkavail(event.target);
-                    // }
+                    checkavail(event.target);
                 }
             }
 
@@ -217,6 +216,7 @@
             }
 
             function addrchecker(){
+                //TODO: 주소 api
                 return true;
             }
 

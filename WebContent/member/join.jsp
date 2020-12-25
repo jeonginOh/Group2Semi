@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>member/join.html</title>
-    <script src="join.js"></script>
+    <script src="<%=request.getContextPath()%>/member/join.js"></script>
     <style type="text/css">
         #content{
             width:400px;
@@ -31,7 +31,7 @@
 </head>
 <body>
     <div id="content">
-        <form action="join.do" method="post" onsubmit="return canpass()">
+        <form action="<%=request.getContextPath()%>/member/join.do" method="post" onsubmit="return canpass()">
             <div class="join">
                 <div>
                     <h4><label for="id">아이디</label></h4>

@@ -22,6 +22,7 @@ public class MainPageListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session=req.getSession();
+		//@euokyun 1225 20:21
 		int memid=(int)session.getAttribute("memid");
 		String bd=req.getParameter("bd");
 		String spageNum=req.getParameter("pageNum");

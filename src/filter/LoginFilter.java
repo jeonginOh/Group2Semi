@@ -16,18 +16,18 @@ import javax.servlet.http.HttpSession;
 import com.jeon.Dao.LoginauthDao;
 
 import semiVo.LoginauthVo;
-// @WebFilter(
-//     urlPatterns = {
-//         "/member/*",
-//         "/anotherurl/*"
-//     },
-//     initParams = {
-//         @WebInitParam(
-//         name = "encoding", 
-//         value = "UTF-8"
-//         )
-//     }
-// )
+/* @WebFilter(
+    urlPatterns = {
+        "/member/*",
+        "/anotherurl/*"
+    },
+    initParams = {
+        @WebInitParam(
+        name = "encoding", 
+        value = "UTF-8"
+        )
+    }
+) */
     /**
      * referer를 통한 파라미터 전달법
      * 흐름 : 요청->(인터럽트 발생--| 필터->로그인.jsp->Controller |--)->목적지.jsp
@@ -59,7 +59,6 @@ import semiVo.LoginauthVo;
      * req.getParameter
      * req.getAttr... 
      */
-
      /**
       * 방법 3
       * 방법 2에서 로그인페이지에서 로그인 성공하면 새로운 controller를 통해서 forward
@@ -85,24 +84,26 @@ public class LoginFilter implements Filter{
         arg0.setAttribute("ref", request.getHeader("referer"));
         arg0.setAttribute("method", request.getMethod());
         arg0.setAttribute("url", request.getRequestURI());
+        // System.out.println(request.getRequestURI().replace(request.getContextPath(), ""));
+        // -> /user/editinfo.jsp
+        // -> /user/myinfo.do
+
         //session에서 memid확인
         if (session.getAttribute("memid")!=null) {
             if (session.getAttribute("menual")!=null && (boolean) session.getAttribute("menual")) {
                 //수동 로그인일 경우 진행
                 arg2.doFilter(arg0, arg1);
-            }
-            else if (session.getAttribute("tempuser")!=null && (boolean) session.getAttribute("tempuser")) {
+            } else if (session.getAttribute("tempuser")!=null && (boolean) session.getAttribute("tempuser")) {
                 //임시회원일 경우
-                // if (request.getRequestURI().equals("")) {
+                // if (request.getRequestURI().replace(request.getContextPath(), "").equals("")) {
 
                 // }
-            }
-            else if (session.getAttribute("admin")!=null && (boolean) session.getAttribute("admin")) {
+            } else if (session.getAttribute("admin")!=null && (boolean) session.getAttribute("admin")) {
                 //관리자일 경우
-            }
-            else {//자동 로그인일 경우
+            } else {
+                //자동 로그인일 경우
                 //url에 따라서 로그인 페이지 요청
-                // if (request.getRequestURI().equals("")) {
+                // if (request.getRequestURI().replace(request.getContextPath(), "").equals("")) {
 
                 // }
                 arg2.doFilter(arg0, arg1);
