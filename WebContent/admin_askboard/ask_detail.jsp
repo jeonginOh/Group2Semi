@@ -27,14 +27,18 @@
 				 
 		
 		<textarea rows="20" cols="65" id="context" name="context" readonly="readonly">${list.context }</textarea><br>
-		<input type="file" value="image" id="image" onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif" readonly="readonly">
 		<c:if test="${whos=='true' }">
+		<input type="file" value="image" id="image" onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif" readonly="readonly">
+	
 		<a href="${pageContext.request.contextPath }/ask_update?askid=${list.askid }" style="margin-left: 150px">수정</a>
 		<a href="${pageContext.request.contextPath }/ask_delete?askid=${list.askid }" style="padding-left: 15px">삭제하기</a><br>
 		</c:if>
 		<a href="${pageContext.request.contextPath }/ans_insert?askid=${list.askid}" style="padding-left: 400px">답변하기</a><br> 
 	
-		<label>현재 등록된 사진</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>변경될 사진</label><br>
+		<label>현재 등록된 사진</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<c:if test="${whos=='true' }">
+		<label>변경될 사진</label><br>
+		</c:if>
 		<div id="red">	
 		<br>
 		
