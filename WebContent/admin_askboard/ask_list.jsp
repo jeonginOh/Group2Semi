@@ -8,10 +8,10 @@
 <title>Insert title here</title>
 
 </head>
-<body>
+<body >
 	<c:set var="cp" value="${pageContext.request.contextPath }" />
-	<h1 align="center">문의게시판</h1><br><br>
-	<table align="center" style="width:1000">
+	<h1 align="center">문의게시판</h1>	<jsp:include page="FAQ.jsp"/> <br><br>
+	<table align="center" style="width:1000;" >
 		<tr >
 			<th>no.</th>
 			<th>카테고리</th>
@@ -41,10 +41,10 @@
 				</td>
 				<c:choose>
 					<c:when test="${vo.image==null }">
-				<td style="width: 150px;" align="center"><img src="fileFolder/base.jpg" style="width:150px"></td>
+				<td style="width: 150px;" align="center"><img src="<%=request.getContextPath() %>/fileFolder/base.jpg" style="width:150px"></td>
 					</c:when>
 					<c:when test="${vo.image!=null }">
-				<td style="width: 150px;" align="center"><img src="fileFolder/${vo.image }" style="width:150px"></td>
+				<td style="width: 150px;" align="center"><img src="<%=request.getContextPath() %>/fileFolder/${vo.image }" style="width:150px"></td>
 				</c:when>
 				</c:choose>
 				<td style="width: 300px;" align="center"><a href="${cp}/ask_detail?askid=${vo.askid}">${vo.title }</a><br>
@@ -66,6 +66,9 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<c:if test="${isuser!=-1 }">
+	<a href="${cp }/jeungIn/main.jsp?spage=/admin_askboard/askinsertForm.jsp?memid=${isuser}">글쓰기</a><br>
+	</c:if>
 	<div align="center">
 	<c:if test="${startPageNum>10 }">
 		<a href="${cp }/ask_list?pageNum=${startPageNum-1}&field=${field}&keyword=${keyword}">[이전]</a>
@@ -82,7 +85,7 @@
 	</c:forEach>
 	<c:if test="${endPageNum<pageCount }">
 	<a href="${cp }/ask_list?pageNum=${endPageNum+1}&field=${field}&keyword=${keyword}">[다음]</a>
-	</c:if>
+	</c:if><br>
 	</div>
 	<form action="${cp }/ask_list" method="post" align="center">
 		<input type="text" name="keyword" id="keyword">
@@ -94,13 +97,13 @@
 	</form>
 	<div align="right">
 	</div>
-	<a href="${cp }/admin_askboard/askinsertForm.jsp">글쓰기</a>
-	 ${userid }
 	 <script type="text/javascript">
 	 function aclick(e){
 		 e.target.style.color="gray";
 	 }
 	 
 	 </script>
+
+	 
 </body>
 </html>

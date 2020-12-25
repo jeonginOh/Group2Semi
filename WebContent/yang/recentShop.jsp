@@ -61,7 +61,7 @@
 					}
 					
 					a.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=itemdetail.jsp?itemid="+json[i].itemid;
-					img.src="<%=request.getContextPath()%>/yang/images/"+json[i].image;
+					img.src="<%=request.getContextPath()%>/product/"+json[i].image;
 					a.appendChild(img);
 					
 					

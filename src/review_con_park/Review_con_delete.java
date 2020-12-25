@@ -21,11 +21,11 @@ public class Review_con_delete extends HttpServlet{
 		if (n > 0) {
 			req.setAttribute("code", "success");
 			req.setAttribute("itemid", itemid);
-			req.getRequestDispatcher("/parks_review/insertsucc.jsp").forward(req, resp);
+			req.getRequestDispatcher("/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid).forward(req, resp);
 		} else {
 			req.setAttribute("code", "fail");
 			req.setAttribute("itemid", itemid);
-			req.getRequestDispatcher("/parks_review/insertsucc.jsp").forward(req, resp);
+			req.getRequestDispatcher("/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid).forward(req, resp);
 		}
 	
 	}

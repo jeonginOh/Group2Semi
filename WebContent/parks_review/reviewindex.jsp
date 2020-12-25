@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath }/reviewlist2.do?itemid=1">상품리뷰</a>
+<a href="${pageContext.request.contextPath }/reviewlist2.do?itemid=4">상품리뷰</a>
 <a href="writer_review.jsp">리뷰등록</a>
 </body>
 </html>

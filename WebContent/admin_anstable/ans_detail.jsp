@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-.askbox{height: 150px;}
+.askbox{height: 200px; width: 850px;}
 
 
 </style>

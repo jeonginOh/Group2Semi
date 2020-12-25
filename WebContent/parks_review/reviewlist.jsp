@@ -39,16 +39,18 @@
 			</c:when>
 			<c:when test="${ave>0.6 }">
 				<h1>
-					<br> 평균평점 : ${ ave} <br> ★ <br>
+					<br> 평균평점 : ${ ave}$ <br> ★<br>
 				</h1>
 			</c:when>
 		</c:choose>
 	</h1>
-	<a
-		href="${pageContext.request.contextPath }/parks_review/reviewindex.jsp">물품리스트</a>
+		<c:if test="${buycount >0}">
+		<a href="${cp }/reviewinsert.do?itemid=${itemid1 }">리뷰등록</a>
+		</c:if>
+		<a>${buycount[status.index]}</a>
 	<div id="box">
 		<table style="table-layout: fixed;" border="1" bordercolor="red"
-			width="1400" align="center">
+			width="900" align="center">
 			<tr>
 				<th
 					style="width: 7%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">제목</th>
@@ -84,7 +86,7 @@
 						등록된 사진이 없습니다.
 						</c:when>
 							<c:when test="${vo.image!=null }">
-								<img src="fileFolder/${vo.image }" style="width: 200px;"
+								<img src="<%=request.getContextPath() %>/fileFolder/${vo.image }" style="width: 200px;"
 									onclick="imgup(event); imgout(event);" id="img1">
 							</c:when>
 						</c:choose></td>
@@ -142,7 +144,7 @@
 			href="${cp }/reviewlist2.do?pageNum=${startPageNum-1}&itemid=${itemid1}">[이전]</a>
 	</c:if>
 	<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
-		<a href="${cp }/reviewlist2.do?pageNum=${i}&itemid=${itemid1}">[${i }]</a>
+		<a href="${cp }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?pageNum=${i}&itemid=${itemid1}">[${i }]</a>
 	</c:forEach>
 	<c:if test="${endPageNum<pageCount }">
 		<a

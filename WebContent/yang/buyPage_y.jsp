@@ -22,6 +22,7 @@
 			</tr>
 			<input type="hidden" name="item" value="${vo.itemid }">
 			<input type="hidden" name="amount" value="${amountlist[status.index] }">
+			<input type="hidden" name="itemname" value="${vo.itemname }">
 			</c:forEach>
 		</table>
 	</div>
@@ -31,6 +32,7 @@ border: 2px solid black; width: 200px; height: 200px; text-align: center;">
 	<h2>총 결제금액</h2>
 	<div>
 		<span style="font-size: 1.2em; line-height: 150px;">${totprice }원</span>
+		<input type="hidden" name="totprice" value="${totprice }">
 	</div>
 </div>
 <br>
@@ -80,9 +82,9 @@ border: 2px solid black; width: 200px; height: 200px; text-align: center;">
 <br>
 <div>
 	<h3>결제수단</h3>
-	<input type="radio" name="paywith" checked="checked">
+	<input type="radio" name="paywith" value="현금결제" checked="checked">
 	<span>현금결제</span>
-	<input type="radio" name="paywith">
+	<input type="radio" name="paywith" value="카드결제">
 	<span>카드결제</span>
 </div>
 <br>

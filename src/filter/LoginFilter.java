@@ -96,8 +96,11 @@ public class LoginFilter implements Filter{
                 // if (request.getRequestURI().equals("")) {
 
                 // }
-
-            }else {//자동 로그인일 경우
+            }
+            else if (session.getAttribute("admin")!=null && (boolean) session.getAttribute("admin")) {
+                //관리자일 경우
+            }
+            else {//자동 로그인일 경우
                 //url에 따라서 로그인 페이지 요청
                 // if (request.getRequestURI().equals("")) {
 

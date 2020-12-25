@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="askbox" align="center">
-<h1>${username }님의 게시글입니다.</h1>
+<h3>글번호${list.askid }: 답변입니다</h3>
 	<form method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath }/ans_insert"  onsubmit="return cktitle()">
 		<input type="hidden" id="askid" name="askid" value="${list.askid }">
@@ -24,11 +24,11 @@
 		<br>
 				 
 		
-		<textarea rows="20" cols="65" id="context" name="context" >[기존의내용]사용자가 입력한 글입니다.${username}:   ${list.context }</textarea><br>
+		<textarea rows="20" cols="65" id="context" name="context" >&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;[${username} 님]이 입력한 글입니다. :   ${list.context }</textarea><br>
 		<input type="file" value="image" id="image" onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif">
 		<br>
 		<input type="submit" value="답변저장"><br>
-		<label>문의 요청 사진</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>변경될 사진</label><br>
+		<label>문의 관련 사진</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>변경될 사진</label><br>
 		<div id="red">	
 		<br>
 		

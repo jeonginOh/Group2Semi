@@ -1,6 +1,8 @@
 package yang_Controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,7 +56,23 @@ public class BuyItemsSaveController extends HttpServlet{ //구매한목록,배�
 		if(n1>0 && n2>0 && n3>0) { //성공했으면 장바구니에서도 제거,아이템인포에서 개수만큼 차감
 			BasketDao bdao=BasketDao.getInstance();
 			bdao.buyDelBasket(memid);
-			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp"); //영수증페이지로
+			String itemname[]=req.getParameterValues("itemname"); 
+			int totprice=Integer.parseInt(req.getParameter("totprice")); 
+			int surtax=(int)Math.round(totprice*0.1); 
+			int itemAmount=item.length; 
+			ArrayList<BuylistVo> blist=dao.list(memid, "물품준비중");
+			BuylistVo bvo=blist.get(0);
+			Date buydate=bvo.getBuydate();
+			int ordernum=bvo.getBuyid();
+			String paywith=req.getParameter("paywith");
+			req.setAttribute("totprice", totprice); //총합계금액
+			req.setAttribute("repItem", itemname[0]); //대표 아이템이름 뽑아내기
+			req.setAttribute("itemAmount", itemAmount); //총 물품 산 개수
+			req.setAttribute("surtax", surtax); //부가세
+			req.setAttribute("buydate", buydate); //구매날짜
+			req.setAttribute("ordernum", ordernum); //구매번호
+			req.setAttribute("paywith", paywith); //결제수단
+			req.getRequestDispatcher("/jeungIn/main.jsp?spage=/yang/recipt.jsp").forward(req,resp);
 		}else {
 			req.setAttribute("code", "오류로 인해 결제실패. 관리자에게 문의해주세요.");
 			req.getRequestDispatcher("/jeungIn/main.jsp?spage=/yang/buyPage_y.jsp").forward(req, resp);
