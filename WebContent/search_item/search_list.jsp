@@ -58,18 +58,17 @@
 						var div = document.createElement("div");
 						var imglist=document.createElement("div");
 						var img1=document.createElement("img");
-						var itemimg=paging.itemlist[i].itemimg;
 						
-						img1.setAttribute("src", "fileFolder/"+itemimg+".jpg")
-						console.log(img1);
+						var itemimg=paging.itemlist[i].itemimg;			
+						img1.setAttribute("src", "fileFolder/"+itemimg);
+						
 						var itemid=paging.itemlist[i].itemid;
 						var itemName=paging.itemlist[i].itemname;
 						var price=paging.itemlist[i].price;
 						var factory=paging.itemlist[i].factory;
 						var origin=paging.itemlist[i].origin;
 						var regdate=paging.itemlist[i].regdate;
-						console.log(img1);
-						console.log(itemid);
+
 						all_list="<a href='<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid+"'>"+"<img src='<%=request.getContextPath()%>/fileFolder/"+itemimg+"'style=width:100px></a>"+
 						"<br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
 						+"<br>제조사: "+factory+"<br>제조일:"+regdate;

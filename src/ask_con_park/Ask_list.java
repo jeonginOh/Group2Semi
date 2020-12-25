@@ -20,9 +20,9 @@ public class Ask_list extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		HttpSession ss=req.getSession();
 		int memid=0;
-		String memid1=(String)ss.getAttribute("memid");
+		String memid1=String.valueOf(ss.getAttribute("memid"));
 	
-		if(memid1!=null) {
+		if(!memid1.equals("null")) {
 			memid=Integer.parseInt(memid1);
 		}else {
 			memid=0;

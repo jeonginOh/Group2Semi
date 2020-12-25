@@ -64,7 +64,7 @@ public class BuyListDao {
 		ResultSet rs=null;
 		ArrayList<BuylistVo> list=new ArrayList<BuylistVo>();
 		String sql="SELECT BUYID,MEMID,ITEMID,COUNT,STATUS,BUYDATE,COUPID "
-				+ "FROM BUYLIST NATURAL JOIN LOGISTIC WHERE MEMID=? AND LOGIINFO=?";
+				+ "FROM BUYLIST NATURAL JOIN LOGISTIC WHERE MEMID=? AND LOGIINFO=? ORDER BY BUYID DESC";
 		try {
 			con=DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
