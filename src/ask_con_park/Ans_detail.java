@@ -23,10 +23,10 @@ public class Ans_detail extends HttpServlet{
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	 int askid=Integer.parseInt(req.getParameter("askid"));
 	HttpSession ss=req.getSession();
-	int memid=0;
-	String memid1=(String)ss.getAttribute("memid");
-	if(memid1!=null) {
-		memid=Integer.parseInt(memid1);
+
+	int memid=0;		
+	if(ss!=null && ss.getAttribute("memid") !=null && !ss.getAttribute("memid").equals("")) {
+		memid=(Integer)ss.getAttribute("memid");
 	}else {
 		memid=0;
 	}
