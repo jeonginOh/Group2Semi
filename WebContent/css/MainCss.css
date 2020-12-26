@@ -245,7 +245,7 @@
 		
 		/*장바구니 페이지 css*/
 	 	.buyFloating { position: fixed; left: 1400px; top: 250px; margin-right: -720px; text-align:center;  
-					width: 300px; height:300px; border: 1px solid purple; padding-top:150px;} 
+					width: 300px; height:350px; border: 1px solid purple; padding-top:100px;} 
  		.bkpgitem{width: 150px; height: 150px;} 
 	 	.itemname{display:inline-block; width: 150px;} 
 	 	#pgBasketTbl{width: 890px; border: 1px solid black;} 
