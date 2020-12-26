@@ -139,7 +139,8 @@
 	                    }else {
 	                    	//console.log('<%=ref%>');
 							//passparam();
-							location.href='<%=request.getContextPath()%>/<%=url%>';
+							// location.href='<%=request.getContextPath()%><%=url%>';
+							location.href='<%=url%>';
 						}
 	                }
 	            }

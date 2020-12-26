@@ -25,7 +25,7 @@ public class TemporalLoginController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         MemberinfoDao dao = MemberinfoDao.getInstance();
         JSONObject json = new JSONObject();
-        String url = req.getParameter("rul");
+        String url = req.getParameter("url");
         System.out.println(url);
         int memid = dao.newTempUser();
         if (memid>0) {

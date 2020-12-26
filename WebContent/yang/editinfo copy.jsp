@@ -9,14 +9,9 @@
 </head>
 <body>
     <div id="content">
-        <h1>회원정보수정</h1>
-        <legend>정보수정</legend>
+        <h1>비회원 결제정보입력</h1>
+        <legend>정보입력</legend>
         <!-- <form action="myinfo.do" method="post" onsubmit="return canpass()"> -->
-            <div>
-                <h4><label for="id">아이디</label></h4>
-                <span id="idMsg"></span>
-                <div id="idrow" class="inputrow"><input type="text" name="id" id="id" class='inputtext' disabled></div>
-            </div>
             <div>
                 <h4><label for="pwd">비밀번호</label></h4>
                 <span id="pwdMsg"></span>
@@ -46,7 +41,7 @@
                 <div id="addrrow" class="inputrow"><input type="text" name="addr" id="addr" class='inputtext' placeholder="변경하지 않습니다."></div>
             </div>
             <div>
-                <h4><label for="phone">전화번호</label></h4>
+                <h4><label for="phone">전화번호(아이디로 사용)</label></h4>
                 <span id="phoneMsg"></span>
                 <div id="phonerow" class="inputrow"><input type="text" name="phone" id="phone" class='inputtext' placeholder="변경하지 않습니다."></div>
             </div>
@@ -193,7 +188,7 @@
                 let tgt = pwd.parentNode.previousSibling.previousSibling;
                 let regex = /^(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{6,15}$/;
                 // console.log(regex.test(pwd.value));
-                if(regex.test(pwd.value) || pwd.value=="") {
+                if(regex.test(pwd.value)) {
                     tgt.textContent="";
                     pwdchkchecker();
                     return true;
@@ -206,7 +201,7 @@
             function emailchecker() {
                 let tgt = email.parentNode.previousSibling.previousSibling;
                 let regex = /^[a-z0-9_+.]+@[a-z0-9.]+\.\w{2,4}$/;
-                if(regex.test(email.value) || email.value=="") {
+                if(regex.test(email.value)) {
                     tgt.textContent="";
                     return true;
                 }else {
@@ -223,7 +218,7 @@
             function phonechecker() {
                 let tgt = phone.parentNode.previousSibling.previousSibling;
                 let regex = /^(\d{3})-?(\d{4})-?(\d{4})$/;
-                if(regex.test(phone.value) || phone.value=="") {
+                if(regex.test(phone.value)) {
                     phone.value=phone.value.replace(regex, "$1$2$3");
                     tgt.textContent="";
                     return true;
@@ -286,13 +281,7 @@
 
 
             function canpass() {
-                // console.log(emailpass);
-                // console.log(phonepass);
-                // console.log(pwdchecker());
-                // console.log(pwdchkchecker());
-                // console.log(addrchecker());
                 return (mailverified && emailpass && phonepass && pwdchecker() && pwdchkchecker() && addrchecker());
-                // else return false;
             }
             /**
              * 이거 왜 두번눌러야 작동해요
@@ -307,8 +296,7 @@
                             if (xhr.readyState==4 && xhr.status==200) {
                                 let json = JSON.parse(xhr.responseText);
                                 if(JSON.parse(json.result)) {
-                                    confirm("변경되었습니다.");
-                                    info_init();
+                                    history.back();
                                 }else {
                                     confirm("에러가 발생했습니다.");
                                 }

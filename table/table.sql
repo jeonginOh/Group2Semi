@@ -70,7 +70,7 @@ COMMENT ON COLUMN anstable.ansdate IS '작성일 ';
 CREATE TABLE asktable
 (
   askid   number(10)     NOT NULL,
-  memid	  number(10)	,
+  memid   number(10)    ,
   askcat  number(2)     ,
   title   varchar2(50)  ,
   context varchar2(2000),
@@ -477,11 +477,6 @@ ALTER TABLE anstable
     FOREIGN KEY (askid)
     REFERENCES asktable (askid);
 
-ALTER TABLE asktable
-  ADD CONSTRAINT FK_memberinfo_TO_asktable
-    FOREIGN KEY (memid)
-    REFERENCES memberinfo (memid);
-
 ALTER TABLE coupon
   ADD CONSTRAINT FK_memberinfo_TO_coupon
     FOREIGN KEY (memid)
@@ -494,6 +489,11 @@ ALTER TABLE logistic
 
 ALTER TABLE loginauth
   ADD CONSTRAINT FK_memberinfo_TO_loginauth
+    FOREIGN KEY (memid)
+    REFERENCES memberinfo (memid);
+
+ALTER TABLE asktable
+  ADD CONSTRAINT FK_memberinfo_TO_asktable
     FOREIGN KEY (memid)
     REFERENCES memberinfo (memid);
 
