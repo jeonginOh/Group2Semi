@@ -268,7 +268,7 @@ public class storageDao {
 	public int storageInsert(int itemid,String itemname,int catid,String price,String factory,String origin,String stock,int expire,String image) {
 		Connection con =null;
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO ITEMINFO VALUES(?,?,?,?,?,?,?,SYSDATE"+expire+",SYSDATE,?,?)";
+		String sql = "INSERT INTO ITEMINFO VALUES(?,?,?,?,?,?,?,SYSDATE+"+expire+",SYSDATE,?,?)";
 		try {
 			con=DBCPBean.getConn();
 			pstmt = con.prepareStatement(sql);

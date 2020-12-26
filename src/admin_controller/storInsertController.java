@@ -21,7 +21,7 @@ public class storInsertController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		
 		
-		String saveDir = req.getServletContext().getRealPath("/upload");
+		String saveDir = req.getServletContext().getRealPath("/product");
 		MultipartRequest mr = new MultipartRequest(
 								req,
 								saveDir,
