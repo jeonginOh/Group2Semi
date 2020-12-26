@@ -15,17 +15,17 @@
             <div>
                 <h4><label for="pwd">비밀번호</label></h4>
                 <span id="pwdMsg"></span>
-                <div id="pwdrow" class="inputrow"><input type="password" name="pwd" id="pwd" class='inputtext' placeholder="변경하지 않습니다."></div>
+                <div id="pwdrow" class="inputrow"><input type="password" name="pwd" id="pwd" class='inputtext'></div>
             </div>
             <div>
                 <h4><label for="pwdchk">비밀번호 확인</label></h4>
                 <span id="pwdchkMsg"></span>
-                <div id="pwdchkrow" class="inputrow"><input type="password" name="pwdchk" id="pwdchk" class='inputtext' placeholder="변경하지 않습니다."></div>
+                <div id="pwdchkrow" class="inputrow"><input type="password" name="pwdchk" id="pwdchk" class='inputtext'></div>
             </div>
             <div>
                 <h4><label for="email">이메일</label></h4>
                 <span id="emailMsg"></span>
-                <div id="emailrow" class="inputrow"><input type="email" name="email" id="email" class='inputtext' placeholder="변경하지 않습니다."></div>
+                <div id="emailrow" class="inputrow"><input type="email" name="email" id="email" class='inputtext'></div>
                 <div id="btnarea">
                     <input type="button" value="인증코드발송" id="emailauth" class='btn'>
                     <input type="text" name="" id="emailcode" class='inputtext' placeholder="인증코드 입력">
@@ -38,12 +38,12 @@
             <div>
                 <h4><label for="addr">주소</label></h4>
                 <span id="addrMsg"></span>
-                <div id="addrrow" class="inputrow"><input type="text" name="addr" id="addr" class='inputtext' placeholder="변경하지 않습니다."></div>
+                <div id="addrrow" class="inputrow"><input type="text" name="addr" id="addr" class='inputtext'></div>
             </div>
             <div>
                 <h4><label for="phone">전화번호(아이디로 사용)</label></h4>
                 <span id="phoneMsg"></span>
-                <div id="phonerow" class="inputrow"><input type="text" name="phone" id="phone" class='inputtext' placeholder="변경하지 않습니다."></div>
+                <div id="phonerow" class="inputrow"><input type="text" name="phone" id="phone" class='inputtext'></div>
             </div>
             <div class="btns">
                 <input type="button" value="취소" id='cancel'>
@@ -62,7 +62,8 @@
             let phone = document.getElementById('phone');
             let cancel = document.getElementById('cancel');
             cancel.addEventListener("click", function(e){
-                history.back();
+               <%session.setAttribute("tempuser", true);%>
+            	history.back();
             })
             let editthis = document.getElementById('editthis');
 
@@ -281,7 +282,7 @@
 
 
             function canpass() {
-                return (mailverified && emailpass && phonepass && pwdchecker() && pwdchkchecker() && addrchecker());
+                return (/*mailverified && */emailpass && phonepass && pwdchecker() && pwdchkchecker() && addrchecker());
             }
             /**
              * 이거 왜 두번눌러야 작동해요
@@ -289,30 +290,24 @@
             function editthisclickevent() {
                 checkavail(email);
                 checkavail(phone);
-                if (confirm("변경하시겠습니까?")) {
-                    if (canpass()) {
-                        let xhr = new XMLHttpRequest();
-                        xhr.onreadystatechange=function() {
-                            if (xhr.readyState==4 && xhr.status==200) {
-                                let json = JSON.parse(xhr.responseText);
-                                if(JSON.parse(json.result)) {
-                                    history.back();
-                                }else {
-                                    confirm("에러가 발생했습니다.");
-                                }
-                            }
-                        };
-                        xhr.open('post', '../user/myinfo.do', true);
-                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                        let param = "pwd="+pwd.value+"&email="+email.value+"&addr="+addr.value+"&phone="+phone.value;
-                        console.log(param);
-                        xhr.send(param);
-                    }else {
-                        alert("잘못된 입력입니다.");
+                let xhr = new XMLHttpRequest();
+                xhr.onreadystatechange=function() {
+                    if (xhr.readyState==4 && xhr.status==200) {
+                        let json = JSON.parse(xhr.responseText);
+                        if(JSON.parse(json.result)) {
+                        	<%session.setAttribute("tempuser", false);%>
+                            location.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/basketListpage.jsp";
+                        }else {
+                            confirm("에러가 발생했습니다.");
+                        }
                     }
-                }
+                };
+                xhr.open('post', '<%=request.getContextPath()%>/user/myinfo.do', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                let param = "pwd="+pwd.value+"&email="+email.value+"&addr="+addr.value+"&phone="+phone.value;
+                console.log(param);
+                xhr.send(param);
             }
-            
         }
         function josa(word, josa) {
             let lastword = word.charCodeAt(word.length-1);
