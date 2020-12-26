@@ -88,7 +88,7 @@
 
 				</c:choose></td>
 		<tr>
-			<td>글내용${revcount }</td>
+			<td>글내용</td>
 			<td><textarea rows="5" cols="50" readonly="readonly">${vo.context }</textarea></td>
 		</tr>
 	

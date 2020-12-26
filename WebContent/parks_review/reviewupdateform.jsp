@@ -13,9 +13,9 @@
 		action="${pageContext.request.contextPath }/reviewupdate">
 		<div id="red"
 			style="width: 500px; height: 500px;">
-			제목:<input type="text" value=${vo.title } id="title" name="title" required="required"><br>
+			제목:<input type="text" value=${vo.title } id="title" name="title" required="required" placeholder="${vo.title }"><br>
 			<textarea rows="20" cols="50" id="context" name="context"
-					 >${vo.context }</textarea>
+					placeholder="${vo.context }" ></textarea>
 			<br> <input type="file" value="사진올리기" id="image"
 				onchange="setimg(event);" name="image" accept=".jpg, .png, .gif" ><br> <input
 				type="submit" value="저장"><br>
