@@ -514,3 +514,18 @@ INSERT INTO ITEMINFO VALUES(17,'낙지볶음',333000400,6800,'하이즈엉','베
 INSERT INTO ITEMINFO VALUES(18,'명란젓',333000400,29500,'블라디보스토크','러시아',400,SYSDATE+250,SYSDATE,'pollackroe.PNG',1);
 INSERT INTO ITEMINFO VALUES(19,'광천파래김',333000500,4250,'홍성','한국',1300,SYSDATE+150,SYSDATE,'laver.PNG',1);
 INSERT INTO ITEMINFO VALUES(20,'미역',333000500,8900,'부산','한국',940,SYSDATE+170,SYSDATE-34,'seaweed.PNG',1);
+
+insert into iteminfo values(50,'삼겹살',444000200,15000,'한돈','한국',150,sysdate+60,sysdate,'sam.png',1);
+insert into iteminfo values(51,'목살',444000200,13000,'한돈','한국',180,sysdate+50,sysdate,'mok.png',1);
+insert into iteminfo values(52,'꽃등심',444000100,25000,'횡성','한국',100,sysdate+30,sysdate,'flower.png',1);
+insert into iteminfo values(53,'안심',444000100,23000,'횡성','한국',110,sysdate+30,sysdate,'rest.png',1);
+insert into iteminfo values(54,'생닭',444000300,8000,'하림','한국',200,sysdate+30,sysdate,'dak.png',1);
+insert into iteminfo values(55,'오리',444000300,12000,'하림','한국',110,sysdate+30,sysdate,'ori.png',1);
+insert into iteminfo values(56,'제육',444000400,16000,'더본','한국',80,sysdate+15,sysdate,'je.png',1);
+insert into iteminfo values(57,'불고기',444000400,20000,'더본','한국',110,sysdate+15,sysdate,'bull.png',1);
+insert into iteminfo values(58,'계란6구',444000500,3000,'양','한국',60,sysdate+20,sysdate,'smallegg.png',1);
+insert into iteminfo values(59,'계란30구',444000500,5000,'양','한국',110,sysdate+20,sysdate,'bigegg.png',1);
+insert into iteminfo values(60,'닭가슴살샐러드',444000500,8000,'오빠닭','한국',110,sysdate+7,sysdate,'dakga.png',1);
+insert into iteminfo values(61,'모듬샐러드',555000100,9000,'샐러드코리아','한국',110,sysdate+7,sysdate,'allsal.png',1);
+insert into iteminfo values(62,'백도시락',555000200,5000,'더본','한국',110,sysdate+7,sysdate,'backdo.png',1);
+insert into iteminfo values(63,'옛날도시락',555000100,3000,'도시락킹','한국',110,sysdate+7,sysdate,'olddo.png',1);

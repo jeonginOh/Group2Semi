@@ -47,7 +47,7 @@ public class AskDao {
 			if(field!=null && !field.equals("")) {
 			sql="select * from(\r\n" + 
 					"select aa.*,rownum rnum from(\r\n" + 
-					"(select * from asktable where  "+field+ " like '%" +keyword+ "%' order by askid desc)\r\n" + 
+					"(select *  from asktable inner join memberinfo on asktable.memid=memberinfo.memid where  "+field+ " like '%" +keyword+ "%' order by askid desc)\r\n" + 
 					")aa )where rnum>=? and rnum<=?";
 
 			}else {
@@ -81,9 +81,9 @@ public class AskDao {
 		try {
 			con = DBCPBean.getConn();
 			if(keyword==null || keyword.equals("")) {
-			sql = "select NVL(count(askid),0) cnt from asktable";
+			sql = "select NVL(count(askid),0) cnt from asktable inner join memberinfo on memberinfo.memid=asktable.memid";
 			}else {
-				sql="select NVL(count(askid),0) cnt from asktable where "+filed+" like '%"+keyword+"%'";
+				sql="select NVL(count(askid),0) cnt from asktable inner join memberinfo on memberinfo.memid=asktable.memid where "+filed+" like '%"+keyword+"%'";
 			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();

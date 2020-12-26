@@ -92,6 +92,7 @@
 		 <select name="field">
 			<option value="title"  <c:if test="${field=='title'}">selected</c:if>>제목</option>
 			<option value="context" <c:if test="${field=='context'}">selected</c:if>>내용</option>
+			<option value="id" <c:if test="${field=='id'}">selected</c:if>>작성자</option>
 		
 		</select> <input type="submit" value="검색">
 	</form>

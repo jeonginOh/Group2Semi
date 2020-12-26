@@ -88,19 +88,19 @@
 
 				</c:choose></td>
 		<tr>
-			<td>글내용</td>
+			<td>글내용${revcount }</td>
 			<td><textarea rows="5" cols="50" readonly="readonly">${vo.context }</textarea></td>
 		</tr>
-
+	
 	</table>
 	<c:if test="${revcount>0 }">
 	<a
 		href="${pageContext.request.contextPath }/reviewdelete?revid=${vo.revid }&itemid=${vo.itemid}">삭제</a>
 	<a
 		href="${pageContext.request.contextPath }/reviewupdate?revid=${vo.revid }&itemid=${vo.itemid}">수정</a>
+		</c:if>
 	<a 
 		href="${pageContext.request.contextPath }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${vo.itemid }">리뷰목록으로....</a>	
-		</c:if>
 	<div id="commAdd">
 		<input type="hidden" value=${username } id="user" name="user"
 			readonly="readonly">

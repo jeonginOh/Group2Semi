@@ -55,6 +55,7 @@ public class Review_con_update extends HttpServlet{
 		ItemreviewVo insertvo = new ItemreviewVo(revid, 0, 0, title, file, context, star, null);
 		int n = reviewdao.review_update(insertvo);
 		resp.setContentType("text/plain;charset=utf-8");
+		System.out.println("수정목록확이누ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ");
 		if (n > 0) {
 			System.out.println("실행확인");
 			req.setAttribute("code", "success");

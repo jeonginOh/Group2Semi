@@ -24,13 +24,14 @@ public class Ask_detail extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	int askid=Integer.parseInt(req.getParameter("askid"));
 	HttpSession ss=req.getSession();
-	String memid1=(String)ss.getAttribute("memid");
-	int memid=0;
-	if(memid1!=null) {
-		memid=Integer.parseInt(memid1);
+	
+	int memid=0;		
+	if(ss!=null && ss.getAttribute("memid") !=null && !ss.getAttribute("memid").equals("")) {
+		memid=(Integer)ss.getAttribute("memid");
 	}else {
 		memid=0;
 	}
+	
 	AskDao dao=AskDao.getInstance();
 	AsktableVo vo=dao.select_getinfo(askid);
 	String username=dao.select_who(askid);
