@@ -27,9 +27,7 @@ public class BuyItemsController_y extends HttpServlet{ //정보들 가져와서 
 		String amount[]=req.getParameterValues("paramAmount");
 		HttpSession session=req.getSession();
 		int memid=(int)session.getAttribute("memid");
-		if((boolean)session.getAttribute("tempuser")) {
-			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp?spage=/yang/editinfo.jsp");
-		}else {
+		if(session.getAttribute("tempuser")==null) {
 			MemberinfoDao memdao=MemberinfoDao.getInstance(); //회원정보 가져오기
 			MemberinfoVo mem=memdao.getVo(memid);
 			iteminfoDao dao=iteminfoDao.getInstance(); //물품정보 가져오기
@@ -50,6 +48,8 @@ public class BuyItemsController_y extends HttpServlet{ //정보들 가져와서 
 			req.setAttribute("mem", mem);
 			req.setAttribute("coup", coup);
 			req.getRequestDispatcher("/jeungIn/main.jsp?spage=/yang/buyPage_y.jsp").forward(req, resp);
+		}else if((boolean)session.getAttribute("tempuser")) {
+			resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp?spage=/yang/editinfo.jsp");
 		}
 	}
 }
