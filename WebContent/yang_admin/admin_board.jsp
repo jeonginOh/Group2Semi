@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<style>
+	tr.exline td{border-bottom: 1px solid black;}
+</style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -146,5 +148,32 @@ function showSales(){
 	<input type="hidden" value="${sales.price }" name="totprice">
 </c:forEach>
 <div id="barchart_values" style="width: 900px; height: 300px;"></div>
+<div style="text-align: center;">
+	<table style="border: 1px solid black; width: 700px;">
+		<tr>
+			<th>날짜</th>
+			<th>물품</th>
+			<th>판매액</th>
+		</tr>
+		<c:forEach var="tblsales" items="${tblsales }">
+		<c:choose>
+		<c:when test="${tblsales.itemname eq '합계' }">
+		<tr class="exline">
+			<td>${tblsales.dat }</td>
+			<td>${tblsales.itemname }</td>
+			<td>${tblsales.price }</td>
+		</tr>
+		</c:when>
+		<c:otherwise>
+		<tr>
+			<td>${tblsales.dat }</td>
+			<td>${tblsales.itemname }</td>
+			<td>${tblsales.price }</td>
+		</tr>
+		</c:otherwise>
+		</c:choose>
+		</c:forEach>
+	</table>
+</div>
 </div>
 </div>

@@ -79,10 +79,6 @@ if(msg=="fail"){
 		var itemid=document.getElementById("itemid").value;
 		var stock=document.getElementById("detailstock").value;
 		var avail=document.getElementById("detailavail").value;
-		if(stock<=0 || avail==0){
-			alert("수량이없거나 판매불가상태입니다.");
-			return;
-		}
 		xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState==4 && xhr.status==200){

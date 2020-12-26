@@ -44,8 +44,8 @@
   <filter-mapping>
     <filter-name>TestFilter</filter-name>
     <url-pattern>/*</url-pattern>
-    <!-- <dispatcher>INCLUDE</dispatcher>
-    <dispatcher>FORWARD</dispatcher> -->
+<!--     <dispatcher>INCLUDE</dispatcher> -->
+<!--     <dispatcher>FORWARD</dispatcher> -->
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
 </web-app>
