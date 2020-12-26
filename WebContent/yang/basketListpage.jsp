@@ -29,7 +29,7 @@
 	<input type="button" value="장바구니에서 삭제" onclick="checkDel()">
 </div>
 
-<div class="buyFloating">
+<div id="buyFloating">
 	<div>
 		<span class="resultspan">상품금액:</span>
 		<span id="totpriceView" class="resultspan"></span>
@@ -281,5 +281,11 @@ function plusCount(e){
 		console.log("ggg");
 	}
 }
+
+// onscroll = function() {
+// 	  var nVScroll = document.documentElement.scrollTop || document.body.scrollTop;
+// 	  if(nVScroll > 500) $("#buyFloating").css("position", "fixed"); 
+// 	  else $("#buyFloating").css("position", "relative");
+// 	};
 
 </script>
