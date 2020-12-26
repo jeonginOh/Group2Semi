@@ -62,7 +62,6 @@
             let phone = document.getElementById('phone');
             let cancel = document.getElementById('cancel');
             cancel.addEventListener("click", function(e){
-               <%session.setAttribute("tempuser", true);%>
             	history.back();
             })
             let editthis = document.getElementById('editthis');
@@ -295,8 +294,7 @@
                     if (xhr.readyState==4 && xhr.status==200) {
                         let json = JSON.parse(xhr.responseText);
                         if(JSON.parse(json.result)) {
-                        	<%session.removeAttribute("tempuser");%>
-                            location.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/basketListpage.jsp";
+                            location.href="<%=request.getContextPath()%>/deleteTemp";
                         }else {
                             confirm("에러가 발생했습니다.");
                         }
