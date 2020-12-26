@@ -41,10 +41,10 @@
 				</td>
 				<c:choose>
 					<c:when test="${vo.image==null }">
-				<td style="width: 150px;" align="center"><img src="<%=request.getContextPath() %>/fileFolder/base.jpg" style="width:150px"></td>
+				<td style="width: 150px;" align="center"><img src="${cp }/fileFolder/base.jpg" style="width:150px"></td>
 					</c:when>
 					<c:when test="${vo.image!=null }">
-				<td style="width: 150px;" align="center"><img src="<%=request.getContextPath() %>/fileFolder/${vo.image }" style="width:150px"></td>
+				<td style="width: 150px;" align="center"><img src="${cp }/fileFolder/${vo.image }" style="width:150px"></td>
 				</c:when>
 				</c:choose>
 				<td style="width: 300px;" align="center"><a href="${cp}/ask_detail?askid=${vo.askid}">${vo.title }</a><br>

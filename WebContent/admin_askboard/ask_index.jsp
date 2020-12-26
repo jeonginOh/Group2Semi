@@ -9,7 +9,7 @@
 <body>
 <%
 session.setMaxInactiveInterval(60*60);
-  session.setAttribute("memid", "1");
+  session.setAttribute("memid", "2");
 	String memid1=(String)session.getAttribute("memid");
 %>
 <a href="${pageContext.request.contextPath }/ask_list">문의게시판</a>
