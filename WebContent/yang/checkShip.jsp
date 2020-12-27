@@ -15,7 +15,9 @@
 		<c:forEach var="vo" items="${logivo1 }" varStatus="status">
 		<tr>
 			<td>
+				<a href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${vo.itemid}">
 				${itemname1[status.index] }/${buyvo1[status.index].count }
+				</a>
 			</td>
 			<td>${vo.addr }</td>
 			<td>
