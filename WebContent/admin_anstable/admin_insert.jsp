@@ -24,7 +24,7 @@
 		<br>
 				 
 		
-		<textarea rows="20" cols="65" id="context" name="context" >&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;[${username} 님]이 입력한 글입니다. :   ${list.context }</textarea><br>
+		<textarea rows="20" cols="65" id="context" name="context" style="color: red;">&#10;&#13;&#10;&#10;&#13;&#10;&#10;&#13;&#10;[${username} 님]이 입력한 글입니다. :   ${list.context }</textarea><br>
 		<input type="file" value="image" id="image" onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif">
 		<br>
 		<input type="submit" value="답변저장"><br>

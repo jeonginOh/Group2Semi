@@ -32,7 +32,7 @@
  --%>		<br>
 				 
 		
-		<textarea rows="20" cols="65" id="context" name="context" readonly="readonly">${list.ansdate}에 작성된 답변입니다..&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;
+		<textarea rows="20" cols="65" id="context" name="context" readonly="readonly">${list.ansdate}에 작성된 답변입니다..&#10;&#13;&#10;
 ${list.context }</textarea><br>
 		<input type="file" value="image" id="image" onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif" readonly="readonly">
 		

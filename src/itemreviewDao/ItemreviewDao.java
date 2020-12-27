@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import db.DBCPBean;
 import oracle.jdbc.driver.DBConversion;
+import semiVo.Admin_review_Vo;
 import semiVo.ItemreviewVo;
 import semiVo.Rev_childVo;
 
@@ -354,4 +355,57 @@ public class ItemreviewDao {
 			DBCPBean.close(con,pstmt,null);
 		}
 	}
+	public ArrayList<Admin_review_Vo> admin_review(int num,int num1){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql= "select aa.* from(select count(revid) cnt,itemname,avg(star) star from itemreview NATURAL join iteminfo group by itemname ) aa where rownum <11";;
+		if(num==0) {
+		sql = "select aa.* from(select count(revid) cnt,itemname,avg(star) star from itemreview NATURAL join iteminfo group by itemname order by cnt desc) aa where rownum <11";
+		}else if(num1==1) {
+			sql="select aa.* from(select count(revid) cnt,itemname,avg(star) star from itemreview NATURAL join iteminfo group by itemname order by star desc) aa where rownum <11";
+		}else if(num1==0) {
+			sql= "select aa.* from(select count(revid) cnt,itemname,avg(star) star from itemreview NATURAL join iteminfo group by itemname) aa where rownum <11";
+		}
+		try {
+		ArrayList<Admin_review_Vo> list=new ArrayList<Admin_review_Vo>();
+		con=DBCPBean.getConn();
+		pstmt=con.prepareStatement(sql);
+		rs=pstmt.executeQuery();
+		while(rs.next()) {
+			Admin_review_Vo vo=new Admin_review_Vo(rs.getString("itemname"),rs.getInt("cnt"),rs.getInt("star"));
+			list.add(vo);
+		}
+		return list;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
+	public int getItem(String itemname) {
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			String sql="select itemid from iteminfo where itemname=?";
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, itemname);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("itemid");
+			}else {
+				return -1;
+			}
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
+	
 }
