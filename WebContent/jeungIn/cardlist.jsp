@@ -22,7 +22,9 @@
 						var card=document.createElement("div");
 						card.className="card";
 						var imglink = document.createElement("img");
-						imglink.src = img;
+						imglink.src = "<%=request.getContextPath()%>/product/"+img;
+						imglink.style.width="193px";
+						imglink.style.height="150px";
 						imglink.alt = "";
 						var cardbody = document.createElement("div");
 						cardbody.className="card-body";
