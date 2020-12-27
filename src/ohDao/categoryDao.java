@@ -96,9 +96,9 @@ public class categoryDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String a = String.valueOf(bigCateid);
-
 		String a1 = a.substring(0,5);
-		String sql = "SELECT CATNAME FROM CATEGORY WHERE CATID LIKE '"+a1+"%'";
+
+		String sql = "SELECT CATNAME FROM CATEGORY WHERE CATID LIKE '"+a1+"%' AND CATID NOT IN('"+a+"')";
 		ArrayList<CategoryNameVo> list = new ArrayList<CategoryNameVo>();
 		
 		try {
@@ -116,6 +116,29 @@ public class categoryDao {
 			return null;
 		}finally {
 			DBCPBean.close(con,pstmt,rs);
+		}
+	}
+	
+	public ArrayList<CategoryNameVo> bigCateList(){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT CATNAME FROM CATEGORY WHERE CATID LIKE '%000'";
+		ArrayList<CategoryNameVo> bigCateList = new ArrayList<CategoryNameVo>();
+		try {
+			con = DBCPBean.getConn();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String catname = rs.getString("catname");
+				CategoryNameVo vo = new CategoryNameVo(catname);
+				bigCateList.add(vo);
+			}
+			return bigCateList;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
 		}
 	}
 }

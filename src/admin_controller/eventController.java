@@ -1,10 +1,7 @@
-package ohController;
+package admin_controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -19,39 +16,22 @@ import org.json.JSONObject;
 import ohDao.iteminfoDao;
 import semiVo.IteminfoVo;
 
-@WebServlet("/cateList.do")
-public class categoryListController extends HttpServlet{
+@WebServlet("/eventManage")
+public class eventController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String catid = req.getParameter("catid");
+		
+		String menu = req.getParameter("menu");
+		String word = req.getParameter("word");
 		iteminfoDao dao = iteminfoDao.getInstance();
-		String spageNum = req.getParameter("pageNum");
-		int pageNum=1;
-		if(spageNum!=null) {
-			pageNum=Integer.parseInt(spageNum);
-		}
-		int startRow=(pageNum-1)*10+1;
-		int endRow=startRow+9;
-		int pageCount=(int)Math.ceil(dao.getItemidCount(catid)/10.0);
-		System.out.println(pageCount);
-		int startPageNum=(pageNum-1)/10*10+1;
-		int endPageNum=startPageNum+9;
-		if(endPageNum>pageCount) {
-			endPageNum=pageCount;
-		}
+		ArrayList<IteminfoVo> list = dao.select(menu, word);
 		
-		JSONObject pageJson = new JSONObject();
-		pageJson.put("startPageNum", startPageNum);
-		pageJson.put("endPageNum", endPageNum);
-		pageJson.put("catid",catid);
-		
-		ArrayList<IteminfoVo> list = dao.bigcatelist(startRow,endRow,Integer.parseInt(catid));
 		JSONArray arr = new JSONArray();
-		for(IteminfoVo vo:list) {
+		for(IteminfoVo vo :list) {
 			JSONObject json = new JSONObject();
 			json.put("itemid",vo.getItemid());
 			json.put("itemname",vo.getItemname());
-			//json.put("catid",vo.getCatid());
+			json.put("catid",vo.getCatid());
 			json.put("price",vo.getPrice());
 			json.put("factory",vo.getFactory());
 			json.put("origin",vo.getOrigin());
@@ -63,10 +43,13 @@ public class categoryListController extends HttpServlet{
 			
 			arr.put(json);
 		}
-		pageJson.put("arr", arr);
 		
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
-		pw.print(pageJson.toString());
+		pw.print(arr.toString());
+		req.getRequestDispatcher("/admin_jeungin/eventManager");
 	}
+	
+	
+	
 }

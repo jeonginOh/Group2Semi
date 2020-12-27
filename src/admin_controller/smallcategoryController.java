@@ -16,8 +16,8 @@ import org.json.JSONObject;
 import ohDao.categoryDao;
 import semiVo.CategoryNameVo;
 
-@WebServlet("/cateName")
-public class categoryController extends HttpServlet{
+@WebServlet("/smallCateName")
+public class smallcategoryController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		

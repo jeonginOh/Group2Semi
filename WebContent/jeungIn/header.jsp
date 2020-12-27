@@ -15,7 +15,7 @@
 					</c:otherwise>
 				</c:choose>
 				<li> | </li>
-				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage="><i class="fas fa-headset"></i></a></li>
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/ask_list"><i class="fas fa-headset"></i></a></li>
 			</ul>
 			<a href="<%=request.getContextPath() %>/jeungIn/main.jsp" ><img src = "<%=request.getContextPath() %>/images/mainimage.png" id="mainimg"></a>
 	  	</div>
@@ -35,7 +35,6 @@
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/dibsListpage.jsp"><i class="fas fa-heart"></i></a></li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/basketListpage.jsp"><i class="fas fa-shopping-cart"></i></a></li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/logistic.do"><i class="fas fa-shipping-fast"></i></a></li>
-				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/ask_list"><i class="fas fa-question"></i></a></li>
 			</ul>
 		</div>
 	</div>

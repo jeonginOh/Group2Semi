@@ -66,11 +66,10 @@ public class iteminfoDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM ITEMINFO WHERE "+menu+" = ?";
+		String sql = "SELECT * FROM ITEMINFO WHERE "+menu+" LIKE '%"+word+"%'";
 		try {
 			con = DBCPBean.getConn();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,word);
 			rs = pstmt.executeQuery();
 			ArrayList<IteminfoVo> list = new ArrayList<IteminfoVo>();
 			while(rs.next()) {
@@ -257,19 +256,13 @@ public class iteminfoDao {
 	
 	
 	//移댄뀒怨좊━ 由ъ뒪�듃
-	public ArrayList<IteminfoVo> bigcatelist(int startRow,int endRow,int catid) {
+	public ArrayList<IteminfoVo> bigcatelist(int startRow,int endRow,int incatid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM "+
-				"("+
-				"SELECT BB.*,ROWNUM RNUM FROM "+
-				"("+
-					"SELECT * FROM ITEMINFO "+
-					"ORDER BY ITEMID DESC "+
-				")"+
-			"BB)"+
-				"WHERE RNUM>=? AND RNUM<=? AND CATID LIKE'"+catid+"%'";
+		String sql = "SELECT * FROM (SELECT BB.*,ROWNUM RNUM FROM (\r\n" + 
+				"SELECT * FROM ITEMINFO WHERE CATID LIKE '"+incatid+"%' ORDER BY ITEMID DESC,CATID )BB)\r\n" + 
+				"WHERE RNUM>=? AND RNUM<=?";
 		try {
 			con = DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
@@ -279,8 +272,10 @@ public class iteminfoDao {
 			ArrayList<IteminfoVo> list = new ArrayList<IteminfoVo>();
 			while(rs.next()) {
 				int itemid = rs.getInt("itemid");
+				System.out.println(rs.getString("itemname"));
 				String itemname = rs.getString("itemname");
 				int price = rs.getInt("price");
+				int catid = rs.getInt("catid");
 				String factory = rs.getString("factory");
 				String origin = rs.getString("origin");
 				int stock = rs.getInt("stock");
@@ -330,7 +325,7 @@ public class iteminfoDao {
 			con=DBCPBean.getConn();
 			String sql ="SELECT NVL(COUNT(ITEMID),0) CNT FROM ITEMINFO";
 			if(!catid.equals("") && catid!=null ) {
-				sql+="WHERE CATID LIKE '"+catid+"%'";
+				sql+=" WHERE CATID LIKE '"+catid+"%'";
 			}
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();

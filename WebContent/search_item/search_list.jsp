@@ -69,7 +69,7 @@
 						var origin=paging.itemlist[i].origin;
 						var regdate=paging.itemlist[i].regdate;
 
-						all_list="<a href='<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid+"'>"+"<img src='<%=request.getContextPath()%>/fileFolder/"+itemimg+"'style=width:100px></a>"+
+						all_list="<a href='<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid+"'>"+"<img src='<%=request.getContextPath()%>/product/"+itemimg+"'style=width:100px></a>"+
 						"<br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
 						+"<br>제조사: "+factory+"<br>제조일:"+regdate;
 					

@@ -1,4 +1,4 @@
-insert into category values(111000000,'콩나물/버섯류');
+insert into category values(111000000,'채소');
 insert into category values(111000100,'콩나물/버섯류');
 insert into category values(111000200,'시금치/부추/나물');
 insert into category values(111000300,'양파/마늘/생강/파');
