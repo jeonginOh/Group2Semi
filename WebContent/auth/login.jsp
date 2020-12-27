@@ -148,8 +148,7 @@
 							else if (json.errMsg="-1") {err = "아이디가 존재하지 않습니다.";}
 							else if (json.errMsg="0") {err = "아이디와 비밀번호가 맞지 않습니다.";}
 							errMsg.innerText=err;
-	                    }else history.back();
-	                    // }else location.href='<%=url%>';
+	                    }else location.href='../<%=url%>';
 	                }
 	            }
 	            xhr.open('post', "../auth/login.do", true);
