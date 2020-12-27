@@ -37,7 +37,8 @@ for(let i=0;i<cnt.length;i++){
 }
 
 var options = {
-	title: '판매량 가장 높은 순위5개'
+	title: '판매량 가장 높은 순위5개',
+	backgroundColor: "#d2d2d2"
 };
 
 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -61,6 +62,7 @@ function drawChart2() {
 			title: '날짜별 판매금액', 
 			fontSize: '12',
 			fontName: '굴림체',
+			backgroundColor: "#d2d2d2",
 			hAxis: {
 				title: '날짜', 
 				titleTextStyle: {color: 'red', fontName: '굴림체'}

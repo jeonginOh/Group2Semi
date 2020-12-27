@@ -42,6 +42,6 @@ public class Admin_DetailLogiController extends HttpServlet{
 		req.setAttribute("buyvo", buyvo);
 		req.setAttribute("logivo", logivo);
 		req.setAttribute("itemname",itemname);
-		req.getRequestDispatcher("/yang_admin/admin_logidetail.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin_jeungin/adminFrame.jsp?spage=/yang_admin/admin_logidetail.jsp").forward(req, resp);
 	}
 }
