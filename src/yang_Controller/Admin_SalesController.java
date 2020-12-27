@@ -26,6 +26,6 @@ public class Admin_SalesController extends HttpServlet{
 		req.setAttribute("sales", sales);
 		req.setAttribute("code", "sales");
 		req.setAttribute("tblsales", tblsales);
-		req.getRequestDispatcher("/yang_admin/admin_board.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin_jeungin/adminFrame.jsp?spage=/yang_admin/admin_board.jsp").forward(req, resp);
 	}
 }

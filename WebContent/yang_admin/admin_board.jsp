@@ -112,7 +112,7 @@ function showSales(){
 <div id="wrap" style="width: 800px;">
 <input type="button" value="판매순위" onclick="showRank()">
 <input type="button" value="매출표" onclick="showSales()">
-<div id="rank" style="text-align: center; visibility: hidden; position: absolute; left: 300px; top: 150px;">
+<div id="rank" style="text-align: center; visibility: hidden; position: relative;top: 150px;">
 <h1>판매순위(상위 5개)</h1>
 <form action="<%=request.getContextPath() %>/admbuystats.do" method="post">
 <input type="radio" name="ymd" value="y" checked="checked"><span>연도별</span>
@@ -131,7 +131,7 @@ function showSales(){
 </div>
 
 
-<div id="sales" style="text-align: center; visibility: hidden; position: absolute; left: 300px; top: 150px;">
+<div id="sales" style="text-align: center; visibility: hidden; position: relative; top: -450px;">
 <form action="<%=request.getContextPath() %>/admsales.do" method="post">
 <select onchange="categoryChange(this)" name="ymd">
 	<option value="y">연도별 매출</option>
