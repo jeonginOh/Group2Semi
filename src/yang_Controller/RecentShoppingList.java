@@ -45,15 +45,18 @@ public class RecentShoppingList extends HttpServlet{
 		arr.put(json2);
 		for(int i=startRow;i<=endRow;i++) {
 			
-			int itemid=Integer.parseInt(cookies[i].getValue());
-			iteminfoDao dao=iteminfoDao.getInstance();
-			IteminfoVo vo=dao.detail(itemid);
-			JSONObject json=new JSONObject();
-			json.put("itemid", vo.getItemid());
-			json.put("itemname",vo.getItemname());
-			json.put("image",vo.getImage());
-			json.put("avail", vo.getAvail());
-			arr.put(json);
+			String itemname=cookies[i].getName();
+			if(!itemname.equals("token")) { //자동로그인정보를 제외
+				int itemid=Integer.parseInt(cookies[i].getValue());
+				iteminfoDao dao=iteminfoDao.getInstance();
+				IteminfoVo vo=dao.detail(itemid);
+				JSONObject json=new JSONObject();
+				json.put("itemid", vo.getItemid());
+				json.put("itemname",vo.getItemname());
+				json.put("image",vo.getImage());
+				json.put("avail", vo.getAvail());
+				arr.put(json);
+			}
 		}
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();

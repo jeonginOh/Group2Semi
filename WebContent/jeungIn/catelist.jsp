@@ -37,7 +37,7 @@
 						jang.href="jang.jsp?itemid="+arr[i].itemid;
 						jang.innerHTML="장바구니";
 						div2.style.display="inline-block";
-						img1.src=img;
+						img1.src="<%=request.getContextPath()%>/product/"+img;
 						itemname1.innerHTML = itemname;
 						price1.innerHTML=price;
 						

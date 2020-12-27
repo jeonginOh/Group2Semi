@@ -29,6 +29,11 @@ if(msg=="fail"){
 				var image = json.image;
 				var avail = json.avail;
 				
+				
+				var itemimg=document.getElementById("itemimage");
+				itemimg.src="<%=request.getContextPath()%>/product/"+image;
+				itemimg.style.width="400px";
+				itemimg.style.height="300px";
 				document.getElementById('itemname').innerHTML=itemname;
 				document.getElementById('itemid').value=json.itemid; /*아이템아이디를 컨트롤러로 가져가게 추가*/
 				document.getElementById('itemprice').innerHTML=price;
@@ -102,7 +107,9 @@ if(msg=="fail"){
 
 
 <div id = "detail">
-	<div id = "detailimg"></div>
+	<div id = "detailimg">
+	<img id= "itemimage">
+	</div>
 	<p class = "detailtitle">
 		<span id = "itemname"></span>
 		<input type="hidden" id="itemid">
