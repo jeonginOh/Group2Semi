@@ -314,5 +314,8 @@
 		
 		/*전체 리스트*/
 		.card p { margin:20px 0px;}
+		.card-body{border:none; background-color: #d2d2d2;}
+		.card{background-color: #d2d2d2;}
+		.col-3{background-color: #d2d2d2; margin-top:20px;}
      	 #paging{text-align:center;}
 		

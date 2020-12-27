@@ -57,6 +57,6 @@ public class storListAllController extends HttpServlet{
 		req.setAttribute("stDate", stDate);
 		req.setAttribute("endDate", endDate);
 		
-		req.getRequestDispatcher("/admin_jeungin/storageinfo.jsp").forward(req,resp);
+		req.getRequestDispatcher("/admin_jeungin/adminFrame.jsp?spage=/admin_jeungin/storageinfo.jsp").forward(req,resp);
 	}
 }

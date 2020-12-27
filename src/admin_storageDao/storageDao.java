@@ -58,15 +58,15 @@ public class storageDao {
 					sql+=" AND ITEMINFO.AVAIL=0";}else {}
 				
 				if(!itemname.equals("") && itemname!=null) {
-					sql+=" AND ITEMINFO.ITEMNAME="+itemname;
+					sql+=" AND ITEMINFO.ITEMNAME like '%"+itemname+"%'";
 				}else {}
 				
 				if(!factory.equals("") && factory!=null) {
-					sql+=" AND ITEMINFO.FACTORY="+factory;
+					sql+=" AND ITEMINFO.FACTORY like '%"+factory+"%'";
 				}else {}
 				
 				if(!origin.equals("") && origin!=null) {
-					sql+=" AND ITEMINFO.ORIGIN="+origin;
+					sql+=" AND ITEMINFO.ORIGIN LIKE '%"+origin+"%'";
 				}else {}
 				
 				if(!stDate.equals("") && stDate!=null && !endDate.equals("") && endDate!=null) {
@@ -75,7 +75,7 @@ public class storageDao {
 				
 				
 			}else if(!bigCate.equals("전체") && !smallCate.equals("전체")) {
-				sql+=" WHERE CATEGORY.CATNAME='"+smallCate+"'";
+				sql+=" WHERE CATEGORY.CATNAME like '%"+smallCate+"%'";
 				
 				if(avail.equals("재고")) {
 					sql+=" AND ITEMINFO.AVAIL=1";
@@ -83,15 +83,15 @@ public class storageDao {
 					sql+=" AND ITEMINFO.AVAIL=0";}else {}
 				
 				if(!itemname.equals("") && itemname!=null) {
-					sql+=" AND ITEMINFO.ITEMNAME="+itemname;
+					sql+=" AND ITEMINFO.ITEMNAME like '%"+itemname+"%'";
 				}else {}
 				
 				if(!factory.equals("") && factory!=null) {
-					sql+=" AND ITEMINFO.FACTORY="+factory;
+					sql+=" AND ITEMINFO.FACTORY like '%"+factory+"%'";
 				}else {}
 				
 				if(!origin.equals("") && origin!=null) {
-					sql+=" AND ITEMINFO.ORIGIN="+origin;
+					sql+=" AND ITEMINFO.ORIGIN LIKE '%"+origin+"%'";
 				}else {}
 				
 				if(!stDate.equals("") && stDate!=null && !endDate.equals("") && endDate!=null) {
@@ -105,15 +105,15 @@ public class storageDao {
 					sql+=" WHERE ITEMINFO.AVAIL=0";}else {}
 				
 				if(!itemname.equals("") && itemname!=null) {
-					sql+=" AND ITEMINFO.ITEMNAME="+itemname;
+					sql+=" AND ITEMINFO.ITEMNAME LIKE '%"+itemname+"%'";
 				}else {}
 				
 				if(!factory.equals("") && factory!=null) {
-					sql+=" AND ITEMINFO.FACTORY="+factory;
+					sql+=" AND ITEMINFO.FACTORY like '%"+factory+"%'";
 				}else {}
 				
 				if(!origin.equals("") && origin!=null) {
-					sql+=" AND ITEMINFO.ORIGIN="+origin;
+					sql+=" AND ITEMINFO.ORIGIN LIKE '%"+origin+"%'";
 				}else {}
 				
 				if(!stDate.equals("") && stDate!=null && !endDate.equals("") && endDate!=null) {
@@ -167,15 +167,15 @@ public class storageDao {
 				sql+=" AND ITEMINFO.AVAIL=0";}else {}
 			
 			if(!itemname.equals("") && itemname!=null) {
-				sql+=" AND ITEMINFO.ITEMNAME="+itemname;
+				sql+=" AND ITEMINFO.ITEMNAME LIKE '%"+itemname+"%'";
 			}else {}
 			
 			if(!factory.equals("") && factory!=null) {
-				sql+=" AND ITEMINFO.FACTORY="+factory;
+				sql+=" AND ITEMINFO.FACTORY LIKE '%"+factory+"%'";
 			}else {}
 			
 			if(!origin.equals("") && origin!=null) {
-				sql+=" AND ITEMINFO.ORIGIN="+origin;
+				sql+=" AND ITEMINFO.ORIGIN LIKE '%"+origin+"%'";
 			}else {}
 			
 			if(!stDate.equals("") && stDate!=null && !endDate.equals("") && endDate!=null) {
@@ -192,15 +192,15 @@ public class storageDao {
 				sql+=" AND ITEMINFO.AVAIL=0";}else {}
 			
 			if(!itemname.equals("") && itemname!=null) {
-				sql+=" AND ITEMINFO.ITEMNAME="+itemname;
+				sql+=" AND ITEMINFO.ITEMNAME LIKE '%"+itemname+"%'";
 			}else {}
 			
 			if(!factory.equals("") && factory!=null) {
-				sql+=" AND ITEMINFO.FACTORY="+factory;
+				sql+=" AND ITEMINFO.FACTORY LIKE '%"+factory+"%'";
 			}else {}
 			
 			if(!origin.equals("") && origin!=null) {
-				sql+=" AND ITEMINFO.ORIGIN="+origin;
+				sql+=" AND ITEMINFO.ORIGIN LIKE '%"+origin+"%'";
 			}else {}
 			
 			if(!stDate.equals("") && stDate!=null && !endDate.equals("") && endDate!=null) {
@@ -214,15 +214,15 @@ public class storageDao {
 				sql+=" WHERE ITEMINFO.AVAIL=0";}else {}
 			
 			if(!itemname.equals("") && itemname!=null) {
-				sql+=" AND ITEMINFO.ITEMNAME="+itemname;
+				sql+=" AND ITEMINFO.ITEMNAME LIKE '%"+itemname+"%'";
 			}else {}
 			
 			if(!factory.equals("") && factory!=null) {
-				sql+=" AND ITEMINFO.FACTORY="+factory;
+				sql+=" AND ITEMINFO.FACTORY LIKE '%"+factory+"%'";
 			}else {}
 			
 			if(!origin.equals("") && origin!=null) {
-				sql+=" AND ITEMINFO.ORIGIN="+origin;
+				sql+=" AND ITEMINFO.ORIGIN LIKE '%"+origin+"%'";
 			}else {}
 			
 			if(!stDate.equals("") && stDate!=null && !endDate.equals("") && endDate!=null) {
@@ -313,6 +313,25 @@ public class storageDao {
 			return -1;
 		}finally {
 			DBCPBean.close(con,pstmt,rs);
+		}
+	}
+	
+	public int delstor(String itemname) {
+		Connection con =null;
+		PreparedStatement pstmt = null;
+		String sql = "DELETE FROM ITEMINFO WHERE ITEMNAME=?";
+		try {
+			con=DBCPBean.getConn();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, itemname);
+
+			int n = pstmt.executeUpdate();
+			return n;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt);
 		}
 	}
 }

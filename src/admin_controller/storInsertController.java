@@ -39,13 +39,11 @@ public class storInsertController extends HttpServlet{
 		String stock = mr.getParameter("stock");
 		int expire = Integer.parseInt(mr.getParameter("expire"));
 		
-		String fileFullPath = saveDir +"/"+fileName;
-		
 		storageDao dao = storageDao.getInstance();
 		int maxnum = dao.getMaxNum();
 		int catid = dao.storCatid(catname);
-		int in = dao.storageInsert(maxnum+1, itemname, catid, price, factory, origin, stock, expire, fileFullPath);
+		int in = dao.storageInsert(maxnum+1, itemname, catid, price, factory, origin, stock, expire, fileName);
 		resp.setContentType("text/plain;charset=utf-8");
-		req.getRequestDispatcher("/admin_jeungin/storageinfo.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin_jeungin/adminFrame.jsp?spage=/admin_jeungin/storageinfo.jsp").forward(req, resp);
 	}
 }
