@@ -3,3 +3,4 @@
 .classpath
 **/MailSender.java
 **/test
+.DS_Store

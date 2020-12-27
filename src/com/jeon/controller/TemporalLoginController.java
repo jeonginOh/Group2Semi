@@ -1,15 +1,12 @@
 package com.jeon.controller;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.jeon.Dao.MemberinfoDao;
 
@@ -33,6 +30,6 @@ public class TemporalLoginController extends HttpServlet {
             req.getSession().setAttribute("memid", memid);
             req.getSession().setAttribute("tempuser", true);
         }
-        resp.sendRedirect(url);
+        resp.sendRedirect(req.getContextPath()+"/"+url);
     }
 }

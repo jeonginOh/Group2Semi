@@ -87,7 +87,8 @@ public class FindPwController extends HttpServlet{
         ldao.expire(memid);//보안 - 자동로그인 모두 폐기
         ldao.renew(new LoginauthVo(0, token, memid, identifier, -1, null));//접속기록 재생성
         req.setAttribute("memid", memid);
+        req.setAttribute("tempuser", true);
         //TODO:비밀번호 변경 페이지
-        req.getRequestDispatcher("비밀번호변경페이지").forward(req, resp);
+        req.getRequestDispatcher("../user/editpw.jsp").forward(req, resp);
     }
 }

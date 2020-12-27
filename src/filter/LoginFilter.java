@@ -87,6 +87,7 @@ public class LoginFilter implements Filter{
         System.out.println("LOGINFILTER:"+request.getRequestURI().replace(request.getContextPath(), ""));
         // -> /user/editinfo.jsp
         // -> /user/myinfo.do
+        String FILTEREDURL = request.getRequestURI().replace(request.getContextPath(), "");
 
         //session에서 memid확인
         if (session.getAttribute("memid")!=null) {
@@ -95,16 +96,17 @@ public class LoginFilter implements Filter{
                 arg2.doFilter(arg0, arg1);
             } else if (session.getAttribute("tempuser")!=null && (boolean) session.getAttribute("tempuser")) {
                 //임시회원일 경우
-                if (request.getRequestURI().replace(request.getContextPath(), "").equals("/logistic.do")) {
-                    // 임시회원 로그인 기능
-                    //arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
+                // 임시회원 로그인 기능
+                //arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
+                if (FILTEREDURL.equals("/logistic.do")) {
+                }else if (FILTEREDURL.equals("/logistic.do")) {
                 } else arg2.doFilter(arg0, arg1);
             } else if (session.getAttribute("admin")!=null && (boolean) session.getAttribute("admin")) {
                 //관리자일 경우
             } else {
                 //자동 로그인일 경우
                 //url에 따라서 로그인 페이지 요청
-                // if (request.getRequestURI().replace(request.getContextPath(), "").equals("")) {
+                // if (filteredurl.equals("")) {
 
                 // }
                 arg2.doFilter(arg0, arg1);
