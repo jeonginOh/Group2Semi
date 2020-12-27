@@ -41,6 +41,19 @@
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
+  
+<!--   <filter>
+    <filter-name>AdminLoginFilter</filter-name>
+    <filter-class>filter.AdminLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminLoginFilter</filter-name>
+    <url-pattern>/logistic.do</url-pattern>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping> -->
+  
   <filter>
     <filter-name>TestFilter</filter-name>
     <filter-class>filter.TestFilter</filter-class>

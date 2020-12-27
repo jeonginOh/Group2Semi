@@ -80,7 +80,16 @@
             <input type="button" value="검색하기" id="searchbtn">
 
             <!-- TODO: -->
-            
+            <label for="batchedittype">일괄수정</label>
+                <select name="batchedittype" id="batchedittype">
+                    <option value="point">포인트</option>
+                    <option value="status">회원종류</option>
+                </select>
+            </label>
+            <input type="text" id="batcheditpoint" placeholder="+, -, *, /">
+            <select id="batcheditstatus"><option value="-1">탈퇴회원</option><option value="1">일반회원</option><option value="2">관리자</option></select>
+
+            <input type="button" value="변경하기" id='batcheditbtn'>
 
             <div id="detailsearch">
                 <!-- 상세검색 -->
@@ -117,6 +126,13 @@
         let searchbtn = document.getElementById('searchbtn');
         detailsearch.style="display:none";
         searchbtn.addEventListener('click', showlist, false);
+        let batchedittype = document.getElementById('batchedittype');
+        let batcheditpoint = document.getElementById('batcheditpoint');
+        let batcheditstatus = document.getElementById('batcheditstatus');
+        
+        let batcheditbtn = document.getElementById('batcheditbtn');
+        
+
 
 
         let agemin = document.getElementById('agemin');
@@ -214,13 +230,66 @@
             });
             return box;
         }
-        
-        function batchedit() {
-            if (selected.length>0) {
+//#endregion
+//#region 일괄수정기능
+        batcheditstatus.style.display="none";
+        batchedittype.addEventListener("change", batchedittypeevent);
+        batcheditbtn.addEventListener('click', function(e) {
+            batchedit();
+        });
 
+        function batchedittypeevent(e) {
+            if (e.target.value=='point') {
+                batcheditstatus.style.display="none";
+                batcheditpoint.style.display="";
+            }else {
+                batcheditstatus.style.display="";
+                batcheditpoint.style.display="none";
             }
         }
-        //^[+-/*]??\d+$ 
+
+        function batchedit() {
+            if (selected.length>0) {
+                let pass=false;
+                let param="";
+                selected.forEach(function (elem) {
+                    param+="memids="+elem+"&";
+                });
+                param+="type="+batchedittype.value;
+                if (batchedittype.value=='point') {
+                    if (/^[+-/*]??\d+$/.test(batcheditpoint.value)) {
+                        param+="&value="+encodeURIComponent(batcheditpoint.value);
+                        pass=true;
+                    } else {
+                        alert("잘못된 입력입니다.");
+                        batcheditpoint.value="";
+                    }
+                }else {
+                    param+="&value="+batcheditstatus.value;
+                    pass=true;
+                }
+                console.log(param+pass);
+
+                if (pass) {
+                    let xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange=function() {
+                        if (xhr.readyState==4 && xhr.status==200) {
+                            let json = JSON.parse(xhr.responseText);
+                            if (JSON.parse(json.result)) {
+                                alert("변경되었습니다.");
+                            }else alert("에러 발생");
+                            showlist();
+                        }
+                    };
+                    xhr.open('post', '../admin/memberlist.edit', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send(param);
+                    
+                    // console.log("aaa"+scl.findIndex((element)=>element=='일반회원'));
+                }
+            }
+        }
+        //^[+-/*]??\d+$
 //#endregion
 
 
@@ -232,7 +301,7 @@
         const scl = ["탈퇴회원", "에러", "일반회원", "관리자", "임시회원"];
         const sex = ["", "남자", "여자", "남자", "여자"];
         const ageexp = /(.{6})(.)/;
-
+        
         /** 
          *페이지 내에서 유지되는 파라미터(검색조건이 수정되었지만 검색하지 않을 때 필요함)
          *검색어를 입력했지만 검색버튼을 누르지 않고 페이지 버튼을 눌렀을때 사용
@@ -470,7 +539,7 @@
             };
             xhr.open('post', '../admin/memberlist.edit', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            let param = "memid="+edittarget+"&"+elem.className+"="+elem.value;
+            let param = "memids="+edittarget+"&type="+elem.className+"&value="+elem.value;
             console.log(param);
             xhr.send(param);
         }

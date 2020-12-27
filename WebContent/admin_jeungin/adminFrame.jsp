@@ -10,7 +10,7 @@
 <%
 	String spage=request.getParameter("spage");
 	if(spage==null){
-		spage="totalcontent.jsp";
+		spage="/jeungIn/totalcontent.jsp";
 	}
 	
 %>

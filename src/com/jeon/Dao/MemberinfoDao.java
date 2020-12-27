@@ -682,7 +682,7 @@ public int size(String[] search) {
  * @param memids
  * @return
  */
-public boolean batchchange(String type, String value, int[] memids) {
+public boolean batchChange(String type, String value, String[] memids) {
     Connection conn=null;
     PreparedStatement pstmt =null;
     try {
@@ -691,8 +691,10 @@ public boolean batchchange(String type, String value, int[] memids) {
         // String sql = "update memberinfo set email=?, addr=?, phone=?, point=?, status=? where memid=?";
         StringBuilder sb = new StringBuilder();
         sb.append("update memberinfo set ");
-        if (value.startsWith("+") || value.startsWith("-") || value.startsWith("/") || value.startsWith("*")) 
-            sb.append(type+"="+type+value);
+        if (type.equals("point")) {
+            if (value.startsWith("+") || value.startsWith("-") || value.startsWith("/") || value.startsWith("*")) sb.append(type+"="+type+value);
+            else sb.append(type+"="+value);
+        }
         else sb.append(type+"="+value);
         sb.append(" where memid in(");
         for(int i=0; i<memids.length; i++) {
@@ -700,10 +702,11 @@ public boolean batchchange(String type, String value, int[] memids) {
         }
         sb.delete(sb.length()-2, sb.length());
         sb.append(")");
+        System.out.println("batcheditsql="+sb.toString());
         pstmt = conn.prepareStatement(sb.toString());
         
         for(int i=0; i<memids.length; i++) {
-            pstmt.setInt(i+1, memids[i]);
+            pstmt.setString(i+1, memids[i]);
         }
         if (pstmt.executeUpdate()==memids.length) {
             conn.commit();

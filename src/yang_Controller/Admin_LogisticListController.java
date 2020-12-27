@@ -40,6 +40,6 @@ public class Admin_LogisticListController extends HttpServlet{
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("field", field);
 		req.setAttribute("keyword", keyword);
-		req.getRequestDispatcher("/yang_admin/logiAdmin.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin_jeungin/adminFrame.jsp?spage=/yang_admin/logiAdmin.jsp").forward(req, resp);
 	}
 }

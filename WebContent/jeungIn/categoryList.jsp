@@ -19,7 +19,9 @@
 						var card=document.createElement("div");
 						card.className="card";
 						var imglink = document.createElement("img");
-						imglink.src = img;
+						imglink.src = "<%=request.getContextPath()%>/product/"+img;
+						imglink.style.width="193px";
+						imglink.style.height="150px";
 						imglink.alt = "";
 						var cardbody = document.createElement("div");
 						cardbody.className="card-body";
@@ -30,7 +32,7 @@
 						cardtext.className="card-text";
 						cardtext.innerHTML=price;
 						var btn = document.createElement("a");
-						btn.href="itemdetail.jsp?itemid="+json.arr[i].itemid;
+						btn.href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+json.arr[i].itemid;
 						btn.className="btn btn-primary";
 						btn.innerHTML="More";
 						var btn2 = document.createElement("a");
@@ -58,19 +60,19 @@
 					if(json.startPageNum>10){l
 						var prev = document.creatElement("a");
 						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
-						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+json.startPageNum+" &catid="+json.arr[i].catid;
+						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+json.startPageNum+" &catid="+json.catid;
 						prev.innerHTML="이전";
 						paging.appendChild(prev);
 					}
 					for(var i = json.startPageNum;i<=json.endPageNum;i++){
 						var pageN = document.createElement("a");
 						<%-- pageN.href="<%= request.getContextPath() %>/list.do?pageNum="+i; --%>
-						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+i+" &catid="+json.arr[i].catid;
-						pageN.innerHTML=i;
+						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+i+" &catid="+json.catid;
+						pageN.innerHTML="["+i+"]";
 						paging.appendChild(pageN);
 					}if(json.endPageNum<json.pageCount){
 						var next = document.createElement("a");
-						next.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+(endPagenum+1)+" &catid="+json.arr[i].catid;
+						next.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+(endPagenum+1)+" &catid="+json.catid;
 						next.innerHTML="다음";
 						paging.appendChild(next);
 					}
@@ -99,7 +101,7 @@
 					}
 				}
 			}
-			xhr.open('get','../basketinsert.do?&bd=d&itemid='+itemid,true);
+			xhr.open('get','<%=request.getContextPath()%>/basketinsert.do?&bd=d&itemid='+itemid,true);
 			xhr.send();
 		}
 	</script>

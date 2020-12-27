@@ -24,7 +24,7 @@
 <span>결제수단:${paywith }</span>
 <br><br>
 <h3>이용상점정보</h3>
-<span>판매자 상호 : 마켓컬리</span>
+<span>판매자 상호 : 신토불이 슈퍼마켓</span>
 <br>
 <span>판매자 사업자등록번호 : 123-45-67890</span>
 <br>

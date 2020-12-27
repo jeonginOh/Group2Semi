@@ -56,12 +56,12 @@
             align-items: center;
             margin:auto;
             padding: auto;
-            width:400px;
+            width:600px;
         }
         .agreements{
             /* width:80%; */
             position: relative;
-            height: 150px;
+            height: 200px;
             overflow: auto;
             border: 1px solid black;
         }
@@ -75,6 +75,13 @@
         #btnarea input{
             height:40px;
             width:50%;
+        }
+        h1{
+            margin-top:100px;
+            text-align: center;
+	    }
+        #next{
+            background-color: #0062cc;
         }
     </style>
 </head>
@@ -105,8 +112,8 @@
             </div>
             <div id="btnarea">
                 <div id="errMsg"></div>
-                <input type="button" value="취소" onclick="history.back()">
-                <input type="submit" value="확인">
+                <input type="button" value="취소" onclick="history.back()" class='btn'>
+                <input type="submit" value="확인" class='btn' id='next'>
             </div>
         </form>
     </div>
