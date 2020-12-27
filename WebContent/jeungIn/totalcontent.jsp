@@ -44,18 +44,28 @@
 				var arr=JSON.parse(xhr.responseText);
 				
 				for(var i=0; i<arr.toparr.length;i++){
+					var linka	= document.getElementsByClassName("linka");
+					linka[i].href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+arr.toparr[i].itemid;
 					var topsimg = document.getElementById("topsimg"+i);
 					topsimg.src = "<%=request.getContextPath()%>/product/"+arr.toparr[i].image;
 					var toplink = document.getElementById("toplink"+i);
-					toplink.innerHTML = arr.toparr[i].itemname;
+					var golink	= document.createElement("a");
+					golink.href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+arr.toparr[i].itemid;
+					golink.innerHTML = arr.toparr[i].itemname;
+					toplink.appendChild(golink);
 					var topstock = document.getElementById("topstock"+i);
 					topstock.innerHTML =arr.toparr[i].stock+"개"
 				}
 				for(var i=0;i<arr.bottomarr.length;i++){
+					var linkb	= document.getElementsByClassName("linkb");
+					linkb[i].href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+arr.bottomarr[i].itemid;
 					var bottomimg = document.getElementById("bottomsimg"+i);
 					bottomimg.src="<%=request.getContextPath()%>/product/"+arr.bottomarr[i].image;
 					var bottomlink = document.getElementById("bottomlink"+i);
-					bottomlink.innerHTML = arr.bottomarr[i].itemname;
+					var gobtmlink	= document.createElement("a");
+					gobtmlink.href="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+arr.bottomarr[i].itemid;
+					gobtmlink.innerHTML = arr.bottomarr[i].itemname;
+					bottomlink.appendChild(gobtmlink);
 					var bottomdate = document.getElementById("bottomdate"+i);
 					bottomdate.innerHTML="입고일 : "+arr.bottomarr[i].storedate;
 				}
@@ -71,30 +81,30 @@
         <h1 class="silder-title">품절 임박</h1>
         <div class="post-wrapper" id="wrapper1">
           <div class="post">
-            <img class="slider-image" id="topsimg0">
+            <a class="linka"><img class="slider-image" id="topsimg0"></a>
             <div class="post-info">
-              <h4><a href="#" id ="toplink0"></a></h4>
+              <h4 id ="toplink0"></h4>
               <i class="fas fa-boxes" style="height:10%;" id="topstock0"></i>
             </div>
           </div>
           <div class="post">
-            <img class="slider-image" id="topsimg1">
+            <a class="linka"><img class="slider-image" id="topsimg1"></a>
             <div class="post-info">
-              <h4><a href="#" id ="toplink1"></a></h4>
+              <h4 id ="toplink1"></h4>
               <i class="fas fa-boxes" style="height:10%;" id="topstock1"></i>
             </div>
           </div>
           <div class="post">
-            <img class="slider-image" id="topsimg2">
+           <a class="linka"> <img class="slider-image" id="topsimg2"></a>
             <div class="post-info">
-              <h4><a href="#" id ="toplink2"></a></h4>
+              <h4 id ="toplink2"></h4>
               <i class="fas fa-boxes" style="height:10%;" id="topstock2"></i>
             </div>
           </div>
           <div class="post">
-            <img class="slider-image" id="topsimg3">
+            <a class="linka"><img class="slider-image" id="topsimg3"></a>
             <div class="post-info">
-              <h4><a href="#" id ="toplink3"></a></h4>
+              <h4 id ="toplink3"></h4>
               <i class="fas fa-boxes" style="height:10%;" id="topstock3"></i>
             </div>
           </div>        
@@ -127,30 +137,30 @@
       <h1 class="silder-title">최근 입고 상품</h1>
         <div class="post-wrapper" id="wrapper2">
           <div class="post">
-            <img class="slider-image" id="bottomsimg0">
+           <a class="linkb"><img class="slider-image" id="bottomsimg0"></a>
             <div class="post-info">
-              <h4><a href="#" id="bottomlink0"></a></h4>
+              <h4 id="bottomlink0"></h4>
               <i class="fas fa-calendar-day" style="height:10%;" id="bottomdate0"></i>
             </div>
           </div>
           <div class="post">
-            <img class="slider-image" id="bottomsimg1">
+            <a class="linkb"><img class="slider-image" id="bottomsimg1"></a>
             <div class="post-info">
-              <h4><a href="#" id="bottomlink1"></a></h4>
+              <h4 id="bottomlink1"></h4>
               <i class="fas fa-calendar-day" style="height:10%;" id="bottomdate1"></i>
             </div>
           </div>
           <div class="post">
-            <img class="slider-image" id="bottomsimg2">
+            <a class="linkb"><img class="slider-image" id="bottomsimg2"></a>
             <div class="post-info">
-              <h4><a href="#" id="bottomlink2"></a></h4>
+              <h4 id="bottomlink2"></h4>
               <i class="fas fa-calendar-day" style="height:10%;" id="bottomdate2"></i>
             </div>
           </div>
           <div class="post">
-            <img class="slider-image" id="bottomsimg3">
+            <a class="linkb"><img class="slider-image" id="bottomsimg3"></a>
             <div class="post-info">
-              <h4><a href="#" id="bottomlink3"></a></h4>
+              <h4 id="bottomlink3"></h4>
               <i class="fas fa-calendar-day" style="height:10%;" id="bottomdate3"></i>
             </div>
           </div>
