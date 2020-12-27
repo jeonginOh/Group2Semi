@@ -330,7 +330,7 @@ public class iteminfoDao {
 			con=DBCPBean.getConn();
 			String sql ="SELECT NVL(COUNT(ITEMID),0) CNT FROM ITEMINFO";
 			if(!catid.equals("") && catid!=null ) {
-				sql+="WHERE CATID LIKE '"+catid+"%'";
+				sql+=" WHERE CATID LIKE '"+catid+"%'";
 			}
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
