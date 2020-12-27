@@ -58,19 +58,19 @@
 					if(json.startPageNum>10){l
 						var prev = document.creatElement("a");
 						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
-						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+json.startPageNum+" &catid="+json.arr[0].catid;
+						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+json.startPageNum+" &catid="+json.arr[i].catid;
 						prev.innerHTML="이전";
 						paging.appendChild(prev);
 					}
 					for(var i = json.startPageNum;i<=json.endPageNum;i++){
 						var pageN = document.createElement("a");
 						<%-- pageN.href="<%= request.getContextPath() %>/list.do?pageNum="+i; --%>
-						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+i+" &catid="+json.arr[0].catid;
+						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+i+" &catid="+json.arr[i].catid;
 						pageN.innerHTML=i;
 						paging.appendChild(pageN);
 					}if(json.endPageNum<json.pageCount){
 						var next = document.createElement("a");
-						next.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+(endPagenum+1)+" &catid="+json.arr[0].catid;
+						next.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=categoryList.jsp?pageNum="+(endPagenum+1)+" &catid="+json.arr[i].catid;
 						next.innerHTML="다음";
 						paging.appendChild(next);
 					}

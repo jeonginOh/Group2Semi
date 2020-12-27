@@ -256,7 +256,7 @@ public class iteminfoDao {
 	
 	
 	//移댄뀒怨좊━ 由ъ뒪�듃
-	public ArrayList<IteminfoVo> bigcatelist(int startRow,int endRow,int catid) {
+	public ArrayList<IteminfoVo> bigcatelist(int startRow,int endRow,int incatid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -268,7 +268,7 @@ public class iteminfoDao {
 					"ORDER BY ITEMID DESC "+
 				")"+
 			"BB)"+
-				"WHERE RNUM>=? AND RNUM<=? AND CATID LIKE'"+catid+"%'";
+				"WHERE RNUM>=? AND RNUM<=? AND CATID LIKE '"+incatid+"%'";
 		try {
 			con = DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
@@ -280,6 +280,7 @@ public class iteminfoDao {
 				int itemid = rs.getInt("itemid");
 				String itemname = rs.getString("itemname");
 				int price = rs.getInt("price");
+				int catid = rs.getInt("catid");
 				String factory = rs.getString("factory");
 				String origin = rs.getString("origin");
 				int stock = rs.getInt("stock");
