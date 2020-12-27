@@ -23,8 +23,8 @@ public class eventDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "select * from (select * from iteminfo inner join category"+
-					" on iteminfo.catid=category.catid"+
-					" order by stock asc) where rownum<=4";
+				" on iteminfo.catid=category.catid"+
+				" order by storedate desc) where rownum<=4";
 		try {
 			con=DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
@@ -61,9 +61,10 @@ public class eventDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select * from iteminfo inner join category"+
+		String sql ="select * from (select * from iteminfo inner join category"+
 					" on iteminfo.catid=category.catid"+
-					" order by storedate asc) where rownum<=4";
+					" order by stock asc) where rownum<=4";
+		
 		try {
 			con=DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
