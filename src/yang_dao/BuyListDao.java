@@ -21,7 +21,7 @@ public class BuyListDao {
 	public int insert(BuylistVo vo) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
-		String sql="INSERT INTO BUYLIST VALUES(BUYID_SEQ.NEXTVAL,?,?,?,0,SYSDATE,100)";
+		String sql="INSERT INTO BUYLIST VALUES(BUYID_SEQ.NEXTVAL,?,?,?,0,SYSDATE)";
 		try {
 			con=DBCPBean.getConn();
 			pstmt=con.prepareStatement(sql);
@@ -63,7 +63,7 @@ public class BuyListDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		ArrayList<BuylistVo> list=new ArrayList<BuylistVo>();
-		String sql="SELECT BUYID,MEMID,ITEMID,COUNT,STATUS,BUYDATE,COUPID "
+		String sql="SELECT BUYID,MEMID,ITEMID,COUNT,STATUS,BUYDATE "
 				+ "FROM BUYLIST NATURAL JOIN LOGISTIC WHERE MEMID=? AND LOGIINFO=? ORDER BY BUYID DESC";
 		try {
 			con=DBCPBean.getConn();
@@ -78,8 +78,7 @@ public class BuyListDao {
 						rs.getInt("itemid"),
 						rs.getInt("count"),
 						rs.getInt("status"),
-						rs.getDate("buydate"),
-						rs.getInt("coupid"));
+						rs.getDate("buydate"));
 				list.add(vo);
 			}
 			return list;

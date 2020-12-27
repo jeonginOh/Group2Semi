@@ -9,14 +9,13 @@ public class BuylistVo {
 	private int count;
 	private int status;
 	private Date buydate;
-	private int coupid;
 	public BuylistVo() {}
 	public BuylistVo(int itemid,int count) {
 		super();
 		this.itemid = itemid;
 		this.count = count;
 	}
-	public BuylistVo(int buyid, int memid, int itemid, int count, int status, Date buydate, int coupid) {
+	public BuylistVo(int buyid, int memid, int itemid, int count, int status, Date buydate) {
 		super();
 		this.buyid = buyid;
 		this.memid = memid;
@@ -24,7 +23,6 @@ public class BuylistVo {
 		this.count = count;
 		this.status = status;
 		this.buydate = buydate;
-		this.coupid = coupid;
 	}
 	public int getBuyid() {
 		return buyid;
@@ -61,11 +59,5 @@ public class BuylistVo {
 	}
 	public void setBuydate(Date buydate) {
 		this.buydate = buydate;
-	}
-	public int getCoupid() {
-		return coupid;
-	}
-	public void setCoupid(int coupid) {
-		this.coupid = coupid;
 	}
 }
