@@ -61,7 +61,7 @@
 						cardbody.appendChild(hdHeart);
 					}
 					if(json.startPageNum>10){
-						var prev = document.creatElement("a");
+						var prev = document.createElement("a");
 						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
 						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.startPageNum;
 						prev.innerHTML="이전";
@@ -71,7 +71,8 @@
 						var pageN = document.createElement("a");
 						<%-- pageN.href="<%= request.getContextPath() %>/list.do?pageNum="+i; --%>
 						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+i;
-						pageN.innerHTML=i;
+						pageN.innerHTML="["+i+"]";
+						
 						paging.appendChild(pageN);
 					}if(json.endPageNum<json.pageCount){
 						var next = document.createElement("a");

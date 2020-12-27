@@ -19,12 +19,12 @@ public class Review_con_list2 extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession ss=req.getSession();
-		String memid1=String.valueOf(ss.getAttribute("memid"));
+	
 		int memid=0;		
-		if(memid1.equals("null") ) {
-			memid=15616589;
+		if(ss!=null && ss.getAttribute("memid") !=null && !ss.getAttribute("memid").equals("")) {
+			memid=(Integer)ss.getAttribute("memid");
 		}else {
-			memid=Integer.parseInt(memid1);
+			memid=0;
 		}
 		
 		req.setCharacterEncoding("utf-8");
