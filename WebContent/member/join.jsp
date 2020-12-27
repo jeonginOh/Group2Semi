@@ -8,29 +8,41 @@
     <title>member/join.html</title>
     <script src="<%=request.getContextPath()%>/member/join.js"></script>
     <style type="text/css">
-        #content{
-            width:400px;
-        }
-        .inputrow{
-            border: 1px solid black;
-            /* padding:10px; */
-            width:100%;
-        }
-        .inputtext{
-            width:100%;
-            height: 2.0em;
-        }
-        .btns {
-            white-space: nowrap;
-            width:50%;
-        }
-        .btn{
-            width:100%;
-        }
+    #content{
+        position: relative;
+        left:auto;
+        width:600px;
+    }
+    .inputrow{
+        border: 1px solid grey;
+        margin: 10px 0 10px 0;
+    }
+    .inputtext{
+        border:none;
+        background:transparent;
+        width:100%;
+        font-size: 1.5em;
+    }
+    .btn{
+        width:100%;
+    }
+    .btns {
+        white-space: nowrap;
+        width:50%;
+    }
+    .next{
+        width:100%;
+        background-color: #0062cc;
+    }
+    h1{
+		margin-top:100px;
+		text-align: center;
+	}
     </style>
 </head>
 <body>
     <div id="content">
+        <h1>회원가입</h1>
         <form action="<%=request.getContextPath()%>/member/join.do" method="post" onsubmit="return canpass()">
             <div class="join">
                 <div>
@@ -61,8 +73,8 @@
                         <input type="button" value="인증코드발송" id="emailauth" class='btn'>
                         <input type="text" name="" id="emailcode" class='inputtext' placeholder="인증코드 입력">
                         <div id='emailcodebtns' class="btns">
-                            <input type="button" value="이메일 다시 입력" id="mailcancel">
-                            <input type="button" value="인증" id="usemail">
+                            <input type="button" value="이메일 다시 입력" id="mailcancel" class='btn'>
+                            <input type="button" value="인증" id="usemail" class='btn next'>
                         </div>
                     </div>
                 </div>
@@ -77,7 +89,7 @@
                     <div id="phonerow" class="inputrow"><input type="text" name="phone" id="phone" class='inputtext' placeholder="01011112222" required></div>
                 </div>
             </div>
-            <input type="submit" value="가입하기" class='btn'>
+            <input type="submit" value="가입하기" class='btn next'>
         </form>
     </div>
 </body>

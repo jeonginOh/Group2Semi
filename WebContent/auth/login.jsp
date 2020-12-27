@@ -8,30 +8,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>auth/login.html</title>
 <!--     <script src="login.js"></script> -->
-    <style type="text/css">
-        #content{
-            text-align: center;
-            width:400px;
-        }
-        fieldset{
-            padding:5px;
-        }
-        fieldset div input{
-            /* border:0px; */
-            width:100%;
-            margin:5px;
-        }
-        #login{
-            height:50px;
-        }
-        h1{text-align: center;}
-        legend{
-            text-align: center;
-        }
-        .btn{
-            width: 100%;
-        }
-    </style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<style type="text/css">
+	#content{
+		padding-top: auto;
+		position: relative;
+		left:auto;
+		/* text-align: center; */
+		width:400px;
+		margin: auto;
+		white-space: nowrap;
+	}
+	fieldset{
+		padding:5px;
+	}
+	fieldset div input{
+		/* border:0px; */
+		width:100%;
+		margin:5px;
+	}
+	#login{
+		/* height:50px; */
+		display: inline-block;
+		width: 25%;
+		float:right;
+		background-color: #0062cc;
+	}
+	.checkboxlabel{
+		width:25%;
+		margin:0px;
+	}
+	#tempuser{
+		display: inline-block;
+		width:50%;
+	}
+	#tempuserlogin{
+		display: inline-block;
+		width:50%;
+	}
+	h1{
+		margin-top:100px;
+		text-align: center;
+	}
+	legend{
+		text-align: center;
+	}
+	.btn{
+		/* border-color: #005cbf; */
+	}
+	#member{
+		text-align: center;
+	}
+	#idrow{
+		border: 1px solid grey;
+		margin: 10px 0 10px 0;
+	}
+	#id{
+		border:none;
+		background:transparent;
+	}
+	#pwdrow{
+		border: 1px solid grey;
+		margin: 10px 0 10px 0;
+	}
+	#pwd{
+		border:none;
+		background:transparent;
+	}
+</style>
     
 </head>
 <body>
@@ -56,31 +100,31 @@
 	if (request.getAttribute("url")!=null) url= (String) request.getAttribute("url"); 
 	if (request.getAttribute("ref")!=null) ref= (String) request.getAttribute("ref"); 
 %>
-    <div id="content">
-        <h1>쇼핑몰</h1>
-        <fieldset>
-            <legend>로그인</legend>
-            <div id="idrow">
-                <input type="text" name="" id="id" placeholder="아이디 / 전화번호(비회원)">
-            </div>
-            <div id="pwdrow">
-                <input type="password" name="" id="pwd" placeholder="비밀번호">
-            </div>
-            <div id="errMsg"></div>
-            <label for="">
-                <input type="checkbox" name="자동로그인" id="autologin">
-                자동로그인
-            </label>
-            <input type="button" value="로그인" id="login">
-        </fieldset>
-        <input type="button" value="임시회원으로 진행하기" id='tempuser' class='btn'>
-        <input type="button" value="임시회원 로그인" id='tempuserlogin' class='btn'>
-        <div id="member">
-            <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/agree.jsp">회원가입</a>
-            <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/findid.jsp">아이디찾기</a>
-            <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/findpw.jsp">비밀번호찾기</a>
-        </div>
-    </div>
+	<div id="content">
+		<h1>쇼핑몰</h1>
+		<fieldset>
+			<legend>로그인</legend>
+			<div id="idrow">
+				<input type="text" name="" id="id" placeholder="아이디 / 전화번호(비회원)">
+			</div>
+			<div id="pwdrow">
+				<input type="password" name="" id="pwd" placeholder="비밀번호">
+			</div>
+			<div id="errMsg"></div>
+			<label for="autologin" class='checkbox'>
+				<input type="checkbox" name="자동로그인" id="autologin">
+				자동로그인
+			</label>
+			<input type="button" value="로그인" id="login" class='btn'>
+		</fieldset>
+		<input type="button" value="임시회원으로 진행하기" id='tempuser' class='btn'>
+		<input type="button" value="임시회원 로그인" id='tempuserlogin' class='btn'>
+		<div id="member">
+			<a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/agree.jsp">회원가입</a>
+			<a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/findid.jsp">아이디찾기</a>
+			<a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/findpw.jsp">비밀번호찾기</a>
+		</div>
+	</div>
    	<script type="text/javascript">
 	// Map<String, String[]> map= request.getParameterMap();
     // StringBuilder sb = new StringBuilder();
