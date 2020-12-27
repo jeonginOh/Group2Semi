@@ -210,7 +210,6 @@ function checkDel(){
 			itemid+=checkbox[i].getAttribute("name")+",";
 		}
 	}
-	console.log(itemid);
 	xhr=new XMLHttpRequest();
 	xhr.onreadystatechange=function(){
 		if(xhr.readyState==4 && xhr.status==200){

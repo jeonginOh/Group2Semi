@@ -74,7 +74,6 @@ if(logiinfo=='배송완료'){
 		var memid=e.target.previousSibling.previousSibling.previousSibling.previousSibling.value;
 		var logiinfo=e.target.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.value;
 		var itemid=e.target.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.childNodes[5].value;
-		console.log(itemid);
 		if(confirm("배송상태를 바꾸시겠습니까?")){
 			if(elogiinfo=='배송완료' || elogiinfo=='반품처리'){
 				alert("배송완료 또는 반품상태입니다");
