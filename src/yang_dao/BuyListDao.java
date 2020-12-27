@@ -147,7 +147,7 @@ public class BuyListDao {
 		}else if(ymd.equals("m") && !detail.equals("전")) {
 			sql="SELECT NVL(TO_CHAR(BUYDATE,'yyyymm'),'총합') BDATE,SUM(COUNT*PRICE) SPRICE FROM BUYLIST "
 					+ "NATURAL JOIN ITEMINFO "
-					+ "WHERE TO_CHAR(BUYDATE,'yy')="+detail+" GROUP BY ROLLUP(TO_CHAR(BUYDATE,'yyyymm'))";
+					+ "WHERE TO_CHAR(BUYDATE,'yyyy')="+detail+" GROUP BY ROLLUP(TO_CHAR(BUYDATE,'yyyymm'))";
 		}else if(ymd.equals("d") && detail.equals("전")) {
 			sql="SELECT NVL(TO_CHAR(BUYDATE,'yyyymmdd'),'총합') BDATE,SUM(COUNT*PRICE) SPRICE FROM BUYLIST "
 					+ "NATURAL JOIN ITEMINFO GROUP BY ROLLUP(TO_CHAR(BUYDATE,'yyyymmdd'))";

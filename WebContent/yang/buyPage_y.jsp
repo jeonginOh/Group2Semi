@@ -123,7 +123,6 @@ function commitDes(){
 	var changeDes=document.getElementById("changeD");
 	var addr=document.getElementById("addr");
 	var changebtn=document.getElementById("changebtn");
-	console.log(changeDes.value);
 	if(changeDes.value==""){
 		alert("주소를 입력해주세요.");
 		return;

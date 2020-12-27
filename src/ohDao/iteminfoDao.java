@@ -274,7 +274,6 @@ public class iteminfoDao {
 			ArrayList<IteminfoVo> list = new ArrayList<IteminfoVo>();
 			while(rs.next()) {
 				int itemid = rs.getInt("itemid");
-				System.out.println(rs.getString("itemname"));
 				String itemname = rs.getString("itemname");
 				int price = rs.getInt("price");
 				int catid = rs.getInt("catid");

@@ -264,7 +264,6 @@
                                 tgt.textContent=text;
                             }
                         }else {
-                            console.log("error");
                             if (einput.id=="email") {
                                 emailauth.style.display="none";
                                 emailauthready=false;
@@ -303,7 +302,6 @@
                 xhr.open('post', '<%=request.getContextPath()%>/user/myinfo.do', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 let param = "pwd="+pwd.value+"&email="+email.value+"&addr="+addr.value+"&phone="+phone.value;
-                console.log(param);
                 xhr.send(param);
             }
         }

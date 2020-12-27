@@ -203,7 +203,6 @@
 					
 				}
 				var dpgdwn=document.createElement("a");
-				console.log(dpageNum);
 				if(dpageNum>=json[0].lastpage){ //마지막페이지보다 같거나 클때 아래화살표를 안보이게 하기
 					dpgdwn.style.visibility="hidden";
 				}
