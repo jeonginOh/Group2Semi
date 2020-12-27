@@ -11,7 +11,7 @@
 				<li><span title="로그아웃"><a href="<%=request.getContextPath() %>/auth/logout.do"><i class="fas fa-sign-in-alt"></i></a></span></li>		
 					</c:when>
 					<c:otherwise>
-				<li><span title="로그인"><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/auth/login.jsp"><i class="fas fa-sign-in-alt"></i></a></span></li>
+				<li><span title="로그인"><a href="<%=request.getContextPath() %>/auth/login.jsp"><i class="fas fa-sign-in-alt"></i></a></span></li>
 					</c:otherwise>
 				</c:choose>
 				<li> | </li>
