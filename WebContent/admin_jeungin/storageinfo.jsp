@@ -261,6 +261,8 @@
 </head>
 <c:set var="cp" value="${pageContext.request.contextPath }"/>
 <body>
+	<div align="center">
+	<h1>물품 조회</h1>
 	<form action="<%= request.getContextPath() %>/storList.do" method="get">
 	<div id = "opt">
 		<label>구분</label>
@@ -322,6 +324,7 @@
 			<th>원산지</th>
 			<th>입고일</th>
 			<th>유통기한</th>
+			<th>삭제</th>
 		</tr>
 		<c:forEach var="vo" items="${list }">
 			<tr>
@@ -334,6 +337,7 @@
 				<td>${vo.origin }</td>
 				<td>${vo.storedate }</td>
 				<td>${vo.expire }</td>
+				<td><a href="${cp }/stordelete.do?itemname=${vo.itemname }">삭제</a></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -347,6 +351,7 @@
 		<c:if test="${endPageNum<pageCount }">
 			<a href ="${cp }/storList.do?pageNum=${endPageNum+1}">[다음]</a>
 		</c:if>
+	</div>
 	</div>
 </body>
 </html>

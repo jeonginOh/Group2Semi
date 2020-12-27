@@ -69,6 +69,8 @@
 </script>
 </head>
 <body>
+	<div align="center">
+	<h1>물품 등록</h1>
 	<form method ="post" enctype="multipart/form-data" action="<%= request.getContextPath()%>/storInsert.do">
 		<div id = "cateselect">
 			<label>분류</label>
@@ -102,5 +104,6 @@
 			<input type="submit" value = "등록">
 		</div>
 	</form>
+	</div>
 </body>
 </html>
