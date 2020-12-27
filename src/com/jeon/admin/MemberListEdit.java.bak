@@ -31,7 +31,8 @@ public class MemberListEdit extends HttpServlet {
         }
         
         JSONObject json = new JSONObject();
-        json.put("result", dao.change(vo));
+        json.append("result", dao.batchChange(type, value, memids))
+        // json.put("result", dao.change(vo));
         resp.getWriter().print(json);
     }
 }
