@@ -33,6 +33,7 @@ public class categoryListController extends HttpServlet{
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
 		int pageCount=(int)Math.ceil(dao.getItemidCount(catid)/10.0);
+		System.out.println(pageCount);
 		int startPageNum=(pageNum-1)/10*10+1;
 		int endPageNum=startPageNum+9;
 		if(endPageNum>pageCount) {
@@ -42,6 +43,7 @@ public class categoryListController extends HttpServlet{
 		JSONObject pageJson = new JSONObject();
 		pageJson.put("startPageNum", startPageNum);
 		pageJson.put("endPageNum", endPageNum);
+		pageJson.put("catid",catid);
 		
 		ArrayList<IteminfoVo> list = dao.bigcatelist(startRow,endRow,Integer.parseInt(catid));
 		JSONArray arr = new JSONArray();
@@ -49,7 +51,7 @@ public class categoryListController extends HttpServlet{
 			JSONObject json = new JSONObject();
 			json.put("itemid",vo.getItemid());
 			json.put("itemname",vo.getItemname());
-			json.put("catid",vo.getCatid());
+			//json.put("catid",vo.getCatid());
 			json.put("price",vo.getPrice());
 			json.put("factory",vo.getFactory());
 			json.put("origin",vo.getOrigin());
