@@ -3,7 +3,7 @@
     "width": 2000,
     "height": 2000,
     "scrollTop": 0,
-    "scrollLeft": 563,
+    "scrollLeft": 888,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -298,7 +298,7 @@
           "active": false,
           "left": 927,
           "top": 30,
-          "zIndex": 1572,
+          "zIndex": 1687,
           "widthName": 71,
           "widthComment": 60
         },
@@ -306,7 +306,7 @@
       },
       {
         "name": "coupon",
-        "comment": "",
+        "comment": "미완성",
         "columns": [
           {
             "name": "coupid",
@@ -428,7 +428,7 @@
           "active": false,
           "left": 1557,
           "top": 582,
-          "zIndex": 1674,
+          "zIndex": 1685,
           "widthName": 60,
           "widthComment": 60
         },
@@ -2111,7 +2111,7 @@
           "active": false,
           "left": 1584,
           "top": 322,
-          "zIndex": 1683,
+          "zIndex": 1688,
           "widthName": 60,
           "widthComment": 77
         },

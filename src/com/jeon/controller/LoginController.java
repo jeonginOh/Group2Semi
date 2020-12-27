@@ -29,8 +29,8 @@ public class LoginController extends HttpServlet{
         // System.out.println((String) req.getParameter("id"));
         map.put("id", req.getParameter("id"));
         map.put("pwd", req.getParameter("pwd"));
-        System.out.println("LOGIN:ID="+req.getParameter("id"));
-        System.out.println("LOGIN:PWD="+req.getParameter("pwd"));
+        // System.out.println("LOGIN:ID="+req.getParameter("id"));
+        // System.out.println("LOGIN:PWD="+req.getParameter("pwd"));
         MemberinfoDao dao = MemberinfoDao.getInstance();
         LoginauthDao ldao = LoginauthDao.getInstance();
         JSONObject json = new JSONObject();
