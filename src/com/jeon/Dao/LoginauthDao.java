@@ -61,7 +61,7 @@ public class LoginauthDao {
     }
 
     /**
-     * token을 폐기한다.(per=-1)
+     * 단일 token을 폐기한다.(per=-1)
      * @param token
      */
     public void expire(String token) {
@@ -96,6 +96,25 @@ public class LoginauthDao {
             DBCPBean.close(conn, pstmt);
         }
     }
+
+    public void expireAll(String token) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet res = null;
+        try {
+            conn = DBCPBean.getConn();
+            pstmt = conn.prepareStatement("update loginauth set per=-1 where memid=(select memid from loginauth where token=?)");
+            pstmt.setString(1, token);
+            pstmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            
+        } finally {
+            DBCPBean.close(conn, pstmt, res);
+        }
+    }
+
+
     /**
      * 로그아웃용. memid와 identifier를 받아서 폐기한다.
      * @param memid

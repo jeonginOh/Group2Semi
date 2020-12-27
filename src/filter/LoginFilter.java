@@ -145,9 +145,7 @@ public class LoginFilter implements Filter{
                         }else if(memid==0) {//다시 로그인해야함
                             // response.sendRedirect(request.getContextPath()+"/auth/login.html");
                         }else if(memid==-1) {
-                            //쿠키유출
-                            //사용자에게 경고해야함
-                    		//일단 다시 로그인
+                            ldao.expireAll(token);
                             // response.sendRedirect(request.getContextPath()+"/auth/loginError.html");
                         }
                         arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
