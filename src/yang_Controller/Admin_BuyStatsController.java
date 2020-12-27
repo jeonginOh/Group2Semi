@@ -33,6 +33,6 @@ public class Admin_BuyStatsController extends HttpServlet{
 		req.setAttribute("list", list);
 		req.setAttribute("itemname",itemname);
 		req.setAttribute("code", "rank");
-		req.getRequestDispatcher("/yang_admin/admin_board.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin_jeungin/adminFrame.jsp?spage=/yang_admin/admin_board.jsp").forward(req, resp);
 	}
 }
