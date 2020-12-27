@@ -106,7 +106,7 @@
 					}
 				}
 			}
-			xhr.open('get','../basketinsert.do?&bd=d&itemid='+itemid,true);
+			xhr.open('get','<%=request.getContextPath()%>/basketinsert.do?&bd=d&itemid='+itemid,true);
 			xhr.send();
 		}
 	</script>
