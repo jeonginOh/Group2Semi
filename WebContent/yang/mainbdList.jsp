@@ -115,7 +115,9 @@
 	}
 </script>
 
-<h1 style="font-size: 2rem; margin-top: 32px;">장바구니목록</h1>
+<h1 style="font-size: 2rem; margin-top: 32px;">
+	<a style="text-decoration: none; color:black;" href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/yang/basketListpage.jsp">장바구니</a>
+</h1>
 <div id="wholeBasket">
 <div id="basketWrap">
 </div>
