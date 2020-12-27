@@ -22,7 +22,9 @@
 						var card=document.createElement("div");
 						card.className="card";
 						var imglink = document.createElement("img");
-						imglink.src = img;
+						imglink.src = "<%=request.getContextPath()%>/product/"+img;
+						imglink.style.width="193px";
+						imglink.style.height="150px";
 						imglink.alt = "";
 						var cardbody = document.createElement("div");
 						cardbody.className="card-body";
@@ -59,7 +61,7 @@
 						cardbody.appendChild(hdHeart);
 					}
 					if(json.startPageNum>10){
-						var prev = document.creatElement("a");
+						var prev = document.createElement("a");
 						<%-- prev.href="<%=request.getContextPath() %>/list.do?pageNum="+json.startPageNum; --%>
 						prev.href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+json.startPageNum;
 						prev.innerHTML="이전";
@@ -69,7 +71,8 @@
 						var pageN = document.createElement("a");
 						<%-- pageN.href="<%= request.getContextPath() %>/list.do?pageNum="+i; --%>
 						pageN.href="<%= request.getContextPath() %>/jeungIn/main.jsp?spage=cardlist.jsp?pageNum="+i;
-						pageN.innerHTML=i;
+						pageN.innerHTML="["+i+"]";
+						
 						paging.appendChild(pageN);
 					}if(json.endPageNum<json.pageCount){
 						var next = document.createElement("a");

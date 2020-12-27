@@ -80,7 +80,7 @@
             <input type="button" value="검색하기" id="searchbtn">
 
             <!-- TODO: -->
-            input:b
+            
 
             <div id="detailsearch">
                 <!-- 상세검색 -->

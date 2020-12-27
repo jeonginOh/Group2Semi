@@ -36,7 +36,7 @@ public class BuyItemsSaveController extends HttpServlet{ //구매한목록,배�
 					memid,
 					Integer.parseInt(item[i]),
 					Integer.parseInt(amount[i]),
-					0,null,0);
+					0,null);
 			LogisticVo logivo=new LogisticVo(0, memid, 0,
 					Integer.parseInt(item[i]),
 					addr,null);

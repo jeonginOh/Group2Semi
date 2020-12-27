@@ -34,7 +34,7 @@ public class MemberinfoDao {
     public final static int DELETED=-1;
     public final static int MEMBER=1;
     public final static int ADMIN=2;
-    public final static int TEMPMEMBER=3;
+    public final static int TEMPUSER=3;
 
 
 
@@ -104,10 +104,12 @@ public class MemberinfoDao {
         }
     }
 
+    public boolean isTempMember(int memid) {
+        return getStatus(memid)==TEMPUSER;
+    }
     public boolean isMember(int memid) {
         return getStatus(memid)==MEMBER;
     }
-    
     public boolean isDeleted(int memid) {
         return getStatus(memid)==DELETED;
     }

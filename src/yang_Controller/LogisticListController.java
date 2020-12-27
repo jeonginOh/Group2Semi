@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jeon.Dao.MemberinfoDao;
 
@@ -24,7 +25,14 @@ import yang_dao.LogisticDao;
 public class LogisticListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int memid=(int)req.getSession().getAttribute("memid");
+		HttpSession ss=req.getSession();
+		int memid=0;		
+		if(ss!=null && ss.getAttribute("memid") !=null && !ss.getAttribute("memid").equals("")) {
+			memid=(Integer)ss.getAttribute("memid");
+		}else {
+			memid=0;
+		}
+		
 		LogisticDao logidao=LogisticDao.getInstance();
 		iteminfoDao itemdao=iteminfoDao.getInstance();
 		BuyListDao buydao=BuyListDao.getInstance();

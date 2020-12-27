@@ -29,8 +29,8 @@ public class LoginController extends HttpServlet{
         // System.out.println((String) req.getParameter("id"));
         map.put("id", req.getParameter("id"));
         map.put("pwd", req.getParameter("pwd"));
-        System.out.println("LOGIN:ID="+req.getParameter("id"));
-        System.out.println("LOGIN:PWD="+req.getParameter("pwd"));
+        // System.out.println("LOGIN:ID="+req.getParameter("id"));
+        // System.out.println("LOGIN:PWD="+req.getParameter("pwd"));
         MemberinfoDao dao = MemberinfoDao.getInstance();
         LoginauthDao ldao = LoginauthDao.getInstance();
         JSONObject json = new JSONObject();
@@ -47,6 +47,9 @@ public class LoginController extends HttpServlet{
             boolean autologin = Boolean.parseBoolean(req.getParameter("autologin"));
             //로그인성공 상황 : session에 memid가 없고 cookie에도 memid가 없음. 
             String token = UUID.randomUUID().toString();
+            if (dao.isAdmin(memid)) req.setAttribute("admin", true);
+            if (dao.isTempMember(memid)) req.setAttribute("tempuser", true);
+
             //자동로그인
             if (autologin) {
                 //쿠키생성
