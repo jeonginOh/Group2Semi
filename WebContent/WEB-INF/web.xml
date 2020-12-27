@@ -32,8 +32,12 @@
   <filter-mapping>
     <filter-name>LoginFilter</filter-name>
     <url-pattern>/user/*</url-pattern>
-    <url-pattern>/yang/*</url-pattern>
-    <!-- <dispatcher>INCLUDE</dispatcher> -->
+    <!-- <url-pattern>/yang/*</url-pattern> -->
+    <url-pattern>/yang/ibsListpage.jsp</url-pattern>
+    <url-pattern>/yang/basketlist.do</url-pattern>
+    <url-pattern>/yang/basketListpage.jsp</url-pattern>
+    <url-pattern>/logistic.do</url-pattern>
+    <dispatcher>INCLUDE</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>

@@ -89,6 +89,9 @@ public class LoginFilter implements Filter{
         // -> /user/myinfo.do
         String FILTEREDURL = request.getRequestURI().replace(request.getContextPath(), "");
 
+        if (FILTEREDURL.equals("recentShop.jsp")) arg2.doFilter(arg0, arg1);
+
+
         //session에서 memid확인
         if (session.getAttribute("memid")!=null) {
             if (session.getAttribute("menual")!=null && (boolean) session.getAttribute("menual")) {
@@ -128,12 +131,16 @@ public class LoginFilter implements Filter{
                         LoginauthDao ldao = LoginauthDao.getInstance();
                         int memid = ldao.autologin(token, identifier);
                         System.out.println("memid"+memid);
+                        System.out.println("token"+token);
+                        System.out.println("identifier"+identifier);
                         if (memid>0) {
+                            System.out.println("autologin success, new cookie");
+                            session.setAttribute("memid", memid);
                             //테이블, 쿠키 갱신. 로그인 진행
-                            cookie.setValue(ldao.renew(new LoginauthVo(0, token, memid, identifier, 0, null)));
-                            cookie.setMaxAge(60*60*24*expiredate);
-                            cookie.setPath("/");
-                            response.addCookie(cookie);
+                            Cookie nck = new Cookie("token", ldao.renew(new LoginauthVo(0, token, memid, identifier, 0, null)));
+                            nck.setMaxAge(60*60*24*expiredate);
+                            nck.setPath("/");
+                            response.addCookie(nck);
                             arg2.doFilter(arg0, arg1);
                         }else if(memid==0) {//다시 로그인해야함
                             // response.sendRedirect(request.getContextPath()+"/auth/login.html");
