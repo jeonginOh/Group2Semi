@@ -14,7 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import ohDao.iteminfoDao;
-import semiVo.IteminfoVo;
+import semiVo.storageVo;
 
 @WebServlet("/eventManage")
 public class eventController extends HttpServlet{
@@ -24,10 +24,10 @@ public class eventController extends HttpServlet{
 		String menu = req.getParameter("menu");
 		String word = req.getParameter("word");
 		iteminfoDao dao = iteminfoDao.getInstance();
-		ArrayList<IteminfoVo> list = dao.select(menu, word);
+		ArrayList<storageVo> list = dao.select(menu, word);
 		
 		JSONArray arr = new JSONArray();
-		for(IteminfoVo vo :list) {
+		for(storageVo vo :list) {
 			JSONObject json = new JSONObject();
 			json.put("itemid",vo.getItemid());
 			json.put("itemname",vo.getItemname());
@@ -49,7 +49,4 @@ public class eventController extends HttpServlet{
 		pw.print(arr.toString());
 		req.getRequestDispatcher("/admin_jeungin/eventManager");
 	}
-	
-	
-	
 }

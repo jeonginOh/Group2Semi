@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import db.DBCPBean;
 import semiVo.IteminfoVo;
+import semiVo.storageVo;
 
 public class iteminfoDao {
 	
@@ -62,16 +63,16 @@ public class iteminfoDao {
 	 * @param menu = 寃��깋議곌굔, word = 寃��깋�뼱
 	 * @return �뼱�젅�씠由ъ뒪�듃(�븘�씠�뀥�씤�룷)
 	 */
-	public ArrayList<IteminfoVo> select(String menu,String word) {
+	public ArrayList<storageVo> select(String menu,String word) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM ITEMINFO WHERE "+menu+" LIKE '%"+word+"%'";
+		String sql = "SELECT * FROM ITEMINFO INNER JOIN CATEGORY ON ITEMINFO.CATID = CATEGORY.CATID WHERE "+menu+" LIKE '%"+word+"%'";
 		try {
 			con = DBCPBean.getConn();
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			ArrayList<IteminfoVo> list = new ArrayList<IteminfoVo>();
+			ArrayList<storageVo> list = new ArrayList<storageVo>();
 			while(rs.next()) {
 				int itemid = rs.getInt("itemid");
 				String itemname = rs.getString("itemname");
@@ -84,9 +85,10 @@ public class iteminfoDao {
 				Date storedate = rs.getDate("storedate");
 				String image = rs.getString("image");
 				int avail = rs.getInt("avail");
+				String catname = rs.getString("catname");
 				
-				IteminfoVo vo = 
-					new IteminfoVo(itemid,itemname,catid,price,factory,origin,stock,expire,storedate,image,avail);
+				storageVo vo = 
+					new storageVo(itemid,itemname,catid,price,factory,origin,stock,expire,storedate,image,avail,catname);
 				list.add(vo);
 			}
 			return list;

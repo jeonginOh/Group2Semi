@@ -17,7 +17,7 @@
 				<li> | </li>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/ask_list"><i class="fas fa-headset"></i></a></li>
 			</ul>
-			<a href="<%=request.getContextPath() %>/jeungIn/main.jsp" ><img src = "<%=request.getContextPath() %>/images/mainimage.png" id="mainimg"></a>
+			<a href="<%=request.getContextPath() %>/jeungIn/main.jsp" ><img src = "<%=request.getContextPath() %>/images/mainimage2.png" id="mainimg"></a>
 	  	</div>
 	  	<div id = top2>
 		  	<ul>
