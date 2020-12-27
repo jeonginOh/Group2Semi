@@ -115,7 +115,7 @@
 	}
 </script>
 
-<h1>장바구니목록</h1>
+<h1 style="font-size: 2rem; margin-top: 32px;">장바구니목록</h1>
 <div id="wholeBasket">
 <div id="basketWrap">
 </div>
@@ -238,7 +238,7 @@
 	}
 </script>
 
-<h1>찜목록</h1>
+<h1 style="font-size: 2rem;">찜목록</h1>
 <div id="wholeDibs">
 <div id="dibsWrap">
 </div>

@@ -244,8 +244,8 @@
 		}
 		
 		/*장바구니 페이지 css*/
-	 	.buyFloating { position: fixed; left: 1400px; top: 250px; margin-right: -720px; text-align:center;  
-					width: 300px; height:300px; border: 1px solid purple; padding-top:150px;} 
+	 	#buyFloating { position: fixed; right:0px; text-align:center;  
+					width: 300px; height:350px; border: 1px solid purple; padding-top:100px;} 
  		.bkpgitem{width: 150px; height: 150px;} 
 	 	.itemname{display:inline-block; width: 150px;} 
 	 	#pgBasketTbl{width: 890px; border: 1px solid black;} 
@@ -260,7 +260,8 @@
 		.dibslisttr{text-align: center;}
 		
 		/*오른쪽 장바구니 목록*/
-		#wholeBasket{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+		#wholeBasket{border: 1px solid black; width:230px; height: 430px;
+		 padding-left: 15px; margin-left: 15px;}
 		#whole{width: 300px;}
 		.pg{position: relative; left: 80px;}
 		.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
@@ -268,10 +269,11 @@
 		.pg:active{color:black;}
 		.bkbox{display: inline-block;}
 		.bkitem{width:100px; height: 100px; }
-		.bkspan{font-size: 0.8em;}
+		.bksspan{font-size: 0.8em;}
 		
 		/*오른쪽 찜 목록*/
-		#wholeDibs{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+		#wholeDibs{border: 1px solid black; width:230px; height: 430px;
+		 padding-left: 15px; margin-left: 15px;}
 		.pg{position: relative; left: 80px;}
 		.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
 		.pg:visited{color:black;}
@@ -281,7 +283,9 @@
 		.dibsspan{font-size: 0.8em;}
 		
 		/*최근본 목록*/
-		#recWhole{border: 1px solid black; width:180px; height: 400px; padding-top: 30px; padding-left: 20px;}
+		#recWhole{border: 1px solid black; width:230px; height: 430px; 
+		margin-top:30px; padding-left: 15px; margin-left: 15px;}
+		#rwrap{width: 200px;}
 		.pg{position: relative; left: 80px;}
 		.pg:link{color: black;} /* a태그 색 : 링크가 걸려있는경우,방문한경우,현재활동페이지인경우 모두 검정으로 처리 */
 		.pg:visited{color:black;}

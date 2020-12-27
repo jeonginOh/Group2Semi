@@ -175,4 +175,30 @@ public class BuyListDao {
 			DBCPBean.close(con,pstmt,rs);
 		}
 	}
+	public ArrayList<SalesVo> sales(){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		ArrayList<SalesVo> list=new ArrayList<SalesVo>();
+		String sql="SELECT NVL(ITEMNAME,'합계') INAME,NVL(TO_CHAR(BUYDATE,'yyyymmdd'),'총합') BDATE,SUM(COUNT*PRICE) SPRICE FROM BUYLIST \r\n" + 
+				"NATURAL JOIN ITEMINFO GROUP BY ROLLUP(TO_CHAR(BUYDATE,'yyyymmdd'),ITEMNAME)";
+		try {
+			con=DBCPBean.getConn();
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				SalesVo vo=new SalesVo(
+						rs.getString("INAME"),
+						rs.getString("BDATE"),
+						rs.getInt("SPRICE"));
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			DBCPBean.close(con,pstmt,rs);
+		}
+	}
 }

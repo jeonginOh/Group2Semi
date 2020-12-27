@@ -21,8 +21,13 @@ public class Ask_insert extends HttpServlet{
 		String path=req.getSession().getServletContext().getRealPath("/fileFolder");
 		int size=1024 * 1024 * 10;
 		int field1=0;
-		HttpSession se=req.getSession();
-		int memid=Integer.parseInt((String)se.getAttribute("memid"));
+		HttpSession ss=req.getSession();
+		int memid=0;		
+		if(ss!=null && ss.getAttribute("memid") !=null && !ss.getAttribute("memid").equals("")) {
+			memid=(Integer)ss.getAttribute("memid");
+		}else {
+			memid=0;
+		}
 		try {
 			MultipartRequest mr=new MultipartRequest(req,path,size,"utf-8",new DefaultFileRenamePolicy());
 			String askcat=mr.getParameter("askcat");

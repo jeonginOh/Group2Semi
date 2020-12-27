@@ -66,7 +66,7 @@ border: 2px solid black; width: 200px; height: 200px; text-align: center;">
 		${mem.addr }
 	</div>
 	<div>
-		<input type="button" value="배송지 변경" onclick="changeDes()">
+		<input type="button" value="배송지 변경" onclick="changeDes()" id="changebtn">
 		<div id="logiChange"></div>
 	</div>
 </div>
@@ -104,7 +104,9 @@ if(msg!=""){
 }
 function changeDes(){
 	var logichange=document.getElementById("logiChange");
+	var changebtn=document.getElementById("changebtn");
 	var destination=document.createElement("input");
+	changebtn.style.visibility="hidden";
 	destination.setAttribute("id", "changeD");
 	destination.type="text";
 	destination.style.width="450px";
@@ -120,6 +122,7 @@ function commitDes(){
 	var des=document.getElementById("destination");
 	var changeDes=document.getElementById("changeD");
 	var addr=document.getElementById("addr");
+	var changebtn=document.getElementById("changebtn");
 	console.log(changeDes.value);
 	if(changeDes.value==""){
 		alert("주소를 입력해주세요.");
@@ -127,6 +130,7 @@ function commitDes(){
 	}else{
 		des.innerHTML=changeDes.value;
 		addr.value=changeDes.value;
+		changebtn.style.visibility="visible";
 	}
 	
 	var logichange=document.getElementById("logiChange");

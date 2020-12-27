@@ -18,12 +18,11 @@ public class Ask_list extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		req.setCharacterEncoding("utf-8");
+
 		HttpSession ss=req.getSession();
-		int memid=0;
-		String memid1=String.valueOf(ss.getAttribute("memid"));
-	
-		if(!memid1.equals("null")) {
-			memid=Integer.parseInt(memid1);
+		int memid=0;		
+		if(ss!=null && ss.getAttribute("memid") !=null && !ss.getAttribute("memid").equals("")) {
+			memid=(Integer)ss.getAttribute("memid");
 		}else {
 			memid=0;
 		}

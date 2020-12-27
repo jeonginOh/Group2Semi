@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+
+#askbox{width:850px; height:1000px;   margin-top:50px; border: 2px solid black}
+</style>
 </head>
 <body>
 <div id="askbox" align="center">

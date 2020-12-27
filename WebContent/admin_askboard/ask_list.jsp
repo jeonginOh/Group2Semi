@@ -41,10 +41,10 @@
 				</td>
 				<c:choose>
 					<c:when test="${vo.image==null }">
-				<td style="width: 150px;" align="center"><img src="<%=request.getContextPath() %>/fileFolder/base.jpg" style="width:150px"></td>
+				<td style="width: 150px;" align="center"><img src="${cp }/fileFolder/base.jpg" style="width:150px"></td>
 					</c:when>
 					<c:when test="${vo.image!=null }">
-				<td style="width: 150px;" align="center"><img src="<%=request.getContextPath() %>/fileFolder/${vo.image }" style="width:150px"></td>
+				<td style="width: 150px;" align="center"><img src="${cp }/fileFolder/${vo.image }" style="width:150px"></td>
 				</c:when>
 				</c:choose>
 				<td style="width: 300px;" align="center"><a href="${cp}/ask_detail?askid=${vo.askid}">${vo.title }</a><br>
@@ -92,6 +92,7 @@
 		 <select name="field">
 			<option value="title"  <c:if test="${field=='title'}">selected</c:if>>제목</option>
 			<option value="context" <c:if test="${field=='context'}">selected</c:if>>내용</option>
+			<option value="id" <c:if test="${field=='id'}">selected</c:if>>작성자</option>
 		
 		</select> <input type="submit" value="검색">
 	</form>

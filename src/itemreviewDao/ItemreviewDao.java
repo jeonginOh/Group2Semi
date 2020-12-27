@@ -334,8 +334,8 @@ public class ItemreviewDao {
 		ResultSet rs=null;
 		try {
 			con=DBCPBean.getConn();
-			String sql = "select count(revid)  from itemreview inner join memberinfo on \r\n" + 
-					"memberinfo.memid=itemreview.memid inner join iteminfo on\r\n" + 
+			String sql = "select count(revid)  from itemreview inner join memberinfo on  "+
+					"memberinfo.memid=itemreview.memid inner join iteminfo on " + 
 					"iteminfo.itemid=itemreview.itemid where itemreview.revid=? and iteminfo.itemid=? and memberinfo.memid=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, revid);

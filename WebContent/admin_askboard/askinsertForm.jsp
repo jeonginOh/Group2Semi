@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-#askbox{padding-left: 150px; padding-top: 100px; background-color: gray;}
+#askbox{width:850px; height:1000px;  padding-left: 150px; padding-top: 100px;  margin-top:50px; border: 2px solid black}
 
 </style>
 </head>
@@ -48,7 +48,8 @@ function cktitle(){
 		<br>
 		<textarea rows="20" cols="65" id="context" name="context" style="width: 600px"></textarea>
 		<br>
-		<input type="submit" value="등록">
+		<input type="submit" value="등록"><br>
+			<label>사진미리보기</label>
 		</form>
 		</div>
 <script type="text/javascript">

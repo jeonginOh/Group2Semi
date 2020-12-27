@@ -50,7 +50,7 @@
 	String method=null;
 	String ref=request.getHeader("referer");
 	System.out.println("ref:"+request.getHeader("referer"));
-	String url=null;
+	String url="jeungIn/main.jsp";
 
 	if (request.getAttribute("method")!=null) method = (String) request.getAttribute("method"); 
 	if (request.getAttribute("url")!=null) url= (String) request.getAttribute("url"); 
@@ -61,7 +61,7 @@
         <fieldset>
             <legend>로그인</legend>
             <div id="idrow">
-                <input type="text" name="" id="id" placeholder="아이디">
+                <input type="text" name="" id="id" placeholder="아이디 / 전화번호(비회원)">
             </div>
             <div id="pwdrow">
                 <input type="password" name="" id="pwd" placeholder="비밀번호">
@@ -74,6 +74,7 @@
             <input type="button" value="로그인" id="login">
         </fieldset>
         <input type="button" value="임시회원으로 진행하기" id='tempuser' class='btn'>
+        <input type="button" value="임시회원 로그인" id='tempuserlogin' class='btn'>
         <div id="member">
             <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/agree.jsp">회원가입</a>
             <a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/findid.jsp">아이디찾기</a>
@@ -103,17 +104,28 @@
 	    let errMsg = document.getElementById('errMsg');
 	    let autologin = document.getElementById('autologin');
 	    let tempuser = document.getElementById('tempuser');
+	    let tempuserlogin = document.getElementById('tempuserlogin');
+		
 	    
-	    
-	    loginbtn.addEventListener('click', login, false);
-	    tempuser.addEventListener('click', tmpuser, false);
+		loginbtn.addEventListener('click', loginbutton, false);
+		tempuserlogin.addEventListener('click', loginbutton, false);
+		function loginbutton(e) {
+			if (e.target.id=='login') login('user');
+			else if (e.target.id=='tempuserlogin') login('tempuser');
+		}
+
+
+	    tempuser.addEventListener('click', newtmpuser, false);
 
 	    function login() {
-	        errMsg.innerHTML="";
+			errMsg.innerHTML="";
+			let idexp = (arguments[0]=='tempuser') ? /^(\d{3})-?(\d{4})-?(\d{4})$/ : /^(?:[a-z]{1,}[0-9a-z]*)$/;
+			// let idexp = /^(?:[a-z]{1,}[0-9a-z]*)$/;
+			console.log(idexp);
 	        let em="";
 	        let pty="";
-	        let idexp = /^(?:[a-z]{1,}[0-9a-z]*)$/;
-	        let pwexp = /^(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{6,15}$/;;
+	        let pwexp = /^(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{6,15}$/;
+			console.log(idexp.test(id.value));
 	        if (/\s/.test(id.value) || id.value.length<=6 ||!idexp.test(id.value)) em+="아이디";
 	        if (!pwexp.test(pwd.value)) {
 	            if (em!="") em+="와 ";
@@ -136,16 +148,15 @@
 							else if (json.errMsg="-1") {err = "아이디가 존재하지 않습니다.";}
 							else if (json.errMsg="0") {err = "아이디와 비밀번호가 맞지 않습니다.";}
 							errMsg.innerText=err;
-	                    }else {
-	                    	//console.log('<%=ref%>');
-							//passparam();
-							location.href='<%=url%>';
-						}
+	                    }else location.href='<%=url%>';
 	                }
 	            }
 	            xhr.open('post', "../auth/login.do", true);
 	            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	            let param = "id="+id.value+"&pwd="+pwd.value+"&autologin="+autologin.checked;
+				let param = "id=";
+				param+= (arguments[0]=='tempuser') ? id.value.replace(idexp, $1$2$3) : id.value;
+				param+="&pwd="+pwd.value;
+				param+="&autologin="+autologin.checked;
 	            xhr.send(param);
 	        }
 		}
@@ -166,7 +177,7 @@
 			console.log(param);
 			xhr.send(param);
 		} --%> */
-		function tmpuser() {
+		function newtmpuser() {
 			location.href='<%=request.getContextPath()%>/auth/tmpuser.do?url=<%=url%>';
 		}
 	}

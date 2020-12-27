@@ -30,7 +30,7 @@ public class LogoutController extends HttpServlet{
         cookie.setMaxAge(0); 
         cookie.setPath("/");
         resp.addCookie(cookie);
-        
         resp.sendRedirect(req.getHeader("referer"));
+        // resp.sendRedirect("/");
     }
 }

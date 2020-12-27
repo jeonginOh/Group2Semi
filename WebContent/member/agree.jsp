@@ -81,7 +81,7 @@
 <body>
     <div id="content">
         <h1>회원가입</h1>
-        <form action="join.jsp" method="POST" onsubmit="return checkagree()">
+        <form action="<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/member/join.jsp" method="POST" onsubmit="return checkagree()">
             <label for="checkall"><input type="checkbox" name="" id="checkall">이용약관, 개인정보 수집 및 이용 및 만점 채점에 동의합니다.</label>
             <div id="service">
                 <label for="agree1"><input type="checkbox" name="" id="agree1">이용약관 동의</label>
@@ -105,7 +105,7 @@
             </div>
             <div id="btnarea">
                 <div id="errMsg"></div>
-                <input type="button" value="취소" onclick="location.href='/auth/login.html'">
+                <input type="button" value="취소" onclick="history.back()">
                 <input type="submit" value="확인">
             </div>
         </form>

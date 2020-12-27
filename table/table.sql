@@ -70,7 +70,7 @@ COMMENT ON COLUMN anstable.ansdate IS '작성일 ';
 CREATE TABLE asktable
 (
   askid   number(10)     NOT NULL,
-  memid	  number(10)	,
+  memid   number(10)    ,
   askcat  number(2)     ,
   title   varchar2(50)  ,
   context varchar2(2000),
@@ -477,11 +477,6 @@ ALTER TABLE anstable
     FOREIGN KEY (askid)
     REFERENCES asktable (askid);
 
-ALTER TABLE asktable
-  ADD CONSTRAINT FK_memberinfo_TO_asktable
-    FOREIGN KEY (memid)
-    REFERENCES memberinfo (memid);
-
 ALTER TABLE coupon
   ADD CONSTRAINT FK_memberinfo_TO_coupon
     FOREIGN KEY (memid)
@@ -497,4 +492,40 @@ ALTER TABLE loginauth
     FOREIGN KEY (memid)
     REFERENCES memberinfo (memid);
 
-      
+ALTER TABLE asktable
+  ADD CONSTRAINT FK_memberinfo_TO_asktable
+    FOREIGN KEY (memid)
+    REFERENCES memberinfo (memid);
+
+
+INSERT INTO ITEMINFO VALUES(5,'석류',222000300,4000,'캘리포니아','미국',400,SYSDATE+90,SYSDATE,'pomegranate.PNG',1);
+INSERT INTO ITEMINFO VALUES(6,'자몽',222000300,1400,'애리조나','미국',320,SYSDATE+80,SYSDATE,'grapefruit.PNG',1);
+INSERT INTO ITEMINFO VALUES(7,'냉동바나나',222000400,6500,'민다나오','필리핀',333,SYSDATE+60,SYSDATE,'freezebanana.PNG',1);
+INSERT INTO ITEMINFO VALUES(8,'냉동아보카도',222000400,9800,'리마','페루',333,SYSDATE+76,SYSDATE,'freezeavocado.PNG',1);
+INSERT INTO ITEMINFO VALUES(9,'아몬드',222000500,5900,'캘리포니아','미국',590,SYSDATE+150,SYSDATE,'almonds.PNG',1);
+INSERT INTO ITEMINFO VALUES(10,'하루견과',222000500,19500,'남양주','한국',1030,SYSDATE+150,SYSDATE,'dailynut.PNG',1);
+INSERT INTO ITEMINFO VALUES(11,'생연어',333000100,14000,'마린하베스트','노르웨이',360,SYSDATE+45,SYSDATE,'rowsalmon.PNG',1);
+INSERT INTO ITEMINFO VALUES(12,'삼치',333000100,8900,'여수','한국',600,SYSDATE+45,SYSDATE,'cero.PNG',1);
+INSERT INTO ITEMINFO VALUES(13,'손질새우',333000200,10500,'짱왓','태국',400,SYSDATE+270,SYSDATE,'shrimp.PNG',0);
+INSERT INTO ITEMINFO VALUES(14,'랍스터치즈구이',333000200,19800,'노바스코샤','캐나다',190,SYSDATE+200,SYSDATE-80,'lobster.PNG',1);
+INSERT INTO ITEMINFO VALUES(15,'전복',333000300,11500,'완도','한국',470,SYSDATE+40,SYSDATE-30,'abalone.PNG',1);
+INSERT INTO ITEMINFO VALUES(16,'슬라이스문어',333000300,13300,'거제','한국',500,SYSDATE+70,SYSDATE,'octopus.PNG',1);
+INSERT INTO ITEMINFO VALUES(17,'낙지볶음',333000400,6800,'하이즈엉','베트남',890,SYSDATE+320,SYSDATE-70,'smalloctopus.PNG',1);
+INSERT INTO ITEMINFO VALUES(18,'명란젓',333000400,29500,'블라디보스토크','러시아',400,SYSDATE+250,SYSDATE,'pollackroe.PNG',1);
+INSERT INTO ITEMINFO VALUES(19,'광천파래김',333000500,4250,'홍성','한국',1300,SYSDATE+150,SYSDATE,'laver.PNG',1);
+INSERT INTO ITEMINFO VALUES(20,'미역',333000500,8900,'부산','한국',940,SYSDATE+170,SYSDATE-34,'seaweed.PNG',1);
+
+insert into iteminfo values(50,'삼겹살',444000200,15000,'한돈','한국',150,sysdate+60,sysdate,'sam.png',1);
+insert into iteminfo values(51,'목살',444000200,13000,'한돈','한국',180,sysdate+50,sysdate,'mok.png',1);
+insert into iteminfo values(52,'꽃등심',444000100,25000,'횡성','한국',100,sysdate+30,sysdate,'flower.png',1);
+insert into iteminfo values(53,'안심',444000100,23000,'횡성','한국',110,sysdate+30,sysdate,'rest.png',1);
+insert into iteminfo values(54,'생닭',444000300,8000,'하림','한국',200,sysdate+30,sysdate,'dak.png',1);
+insert into iteminfo values(55,'오리',444000300,12000,'하림','한국',110,sysdate+30,sysdate,'ori.png',1);
+insert into iteminfo values(56,'제육',444000400,16000,'더본','한국',80,sysdate+15,sysdate,'je.png',1);
+insert into iteminfo values(57,'불고기',444000400,20000,'더본','한국',110,sysdate+15,sysdate,'bull.png',1);
+insert into iteminfo values(58,'계란6구',444000500,3000,'양','한국',60,sysdate+20,sysdate,'smallegg.png',1);
+insert into iteminfo values(59,'계란30구',444000500,5000,'양','한국',110,sysdate+20,sysdate,'bigegg.png',1);
+insert into iteminfo values(60,'닭가슴살샐러드',444000500,8000,'오빠닭','한국',110,sysdate+7,sysdate,'dakga.png',1);
+insert into iteminfo values(61,'모듬샐러드',555000100,9000,'샐러드코리아','한국',110,sysdate+7,sysdate,'allsal.png',1);
+insert into iteminfo values(62,'백도시락',555000200,5000,'더본','한국',110,sysdate+7,sysdate,'backdo.png',1);
+insert into iteminfo values(63,'옛날도시락',555000100,3000,'도시락킹','한국',110,sysdate+7,sysdate,'olddo.png',1);

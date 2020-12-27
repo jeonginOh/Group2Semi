@@ -22,8 +22,10 @@ public class Admin_SalesController extends HttpServlet{
 		
 		BuyListDao bdao=BuyListDao.getInstance();
 		ArrayList<SalesVo> sales=bdao.sales(ymd, detail);
+		ArrayList<SalesVo> tblsales=bdao.sales();
 		req.setAttribute("sales", sales);
 		req.setAttribute("code", "sales");
+		req.setAttribute("tblsales", tblsales);
 		req.getRequestDispatcher("/yang_admin/admin_board.jsp").forward(req, resp);
 	}
 }
