@@ -155,7 +155,7 @@
 	            xhr.open('post', "../auth/login.do", true);
 	            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 				let param = "id=";
-				param+= (arguments[0]=='tempuser') ? id.value.replace(idexp, $1$2$3) : id.value;
+				param+= (arguments[0]=='tempuser') ? id.value.replace(idexp, '$1$2$3') : id.value;
 				param+="&pwd="+pwd.value;
 				param+="&autologin="+autologin.checked;
 	            xhr.send(param);
