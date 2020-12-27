@@ -40,11 +40,18 @@
 		<div id = "totalcontent" class ="main">
 			<jsp:include page="<%=spage %>"/>
 		</div>
-		<c:if test="${param.spage!='/yang/basketListpage.jsp' }">
+		<c:choose>
+		<c:when test="${param.spage!='/yang/basketListpage.jsp' }">
 		<div id = "rightcontent" class ="main">
 			<jsp:include page="<%=rpage %>"/>
 		</div>
-		</c:if>
+		</c:when>
+		<c:otherwise>
+		<div id = "rightcontent" class ="main">
+			<jsp:include page="/jeungIn/rightcontent.jsp"/>
+		</div>
+		</c:otherwise>
+		</c:choose>
 		<div id = "footer" class ="main">
 			<jsp:include page="footer.jsp"/>
 		</div>
