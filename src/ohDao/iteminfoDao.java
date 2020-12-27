@@ -66,11 +66,10 @@ public class iteminfoDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM ITEMINFO WHERE "+menu+" = ?";
+		String sql = "SELECT * FROM ITEMINFO WHERE "+menu+" LIKE '%"+word+"%'";
 		try {
 			con = DBCPBean.getConn();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,word);
 			rs = pstmt.executeQuery();
 			ArrayList<IteminfoVo> list = new ArrayList<IteminfoVo>();
 			while(rs.next()) {
