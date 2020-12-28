@@ -4,6 +4,10 @@
 	<div id = "headerTop">
 		<div id = "toptop">
 			<ul>
+				<c:if test="${sessionScope.admin eq true }">
+					<li><a href="<%=request.getContextPath() %>/admin_jeungin/adminFrame.jsp"><i class="fas fa-users-cog"></i></a></li>
+					<li> | </li>
+				</c:if>
 				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/join.jsp"><i class="fas fa-user-plus"></i></a></li>
 				<li> | </li>
 				<c:choose>
