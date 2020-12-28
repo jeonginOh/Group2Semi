@@ -101,11 +101,14 @@ public class LoginFilter implements Filter{
                 //임시회원일 경우
                 // 임시회원 로그인 기능
                 //arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
-                if (FILTEREDURL.equals("/logistic.do")) {
-                }else if (FILTEREDURL.equals("/logistic.do")) {
+                if (FILTEREDURL.equals("/logistic.do")) { 
+                    // arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
+                } else if (FILTEREDURL.equals("/logistic.do")) {
+                    // arg0.getRequestDispatcher("/auth/login.jsp").forward(arg0, arg1);
                 } else arg2.doFilter(arg0, arg1);
             } else if (session.getAttribute("admin")!=null && (boolean) session.getAttribute("admin")) {
                 //관리자일 경우
+                arg2.doFilter(arg0, arg1);
             } else {
                 //자동 로그인일 경우
                 //url에 따라서 로그인 페이지 요청
