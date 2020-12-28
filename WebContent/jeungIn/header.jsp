@@ -8,11 +8,11 @@
 					<li><a href="<%=request.getContextPath() %>/admin_jeungin/adminFrame.jsp"><i class="fas fa-users-cog"></i></a></li>
 					<li> | </li>
 				</c:if>
-				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/join.jsp"><i class="fas fa-user-plus"></i></a></li>
+				<li><a href="<%=request.getContextPath() %>/jeungIn/main.jsp?spage=/member/agree.jsp"><i class="fas fa-user-plus"></i></a></li>
 				<li> | </li>
 				<c:choose>
 					<c:when test="${not empty sessionScope.memid }">
-				<li><span title="로그아웃"><a href="<%=request.getContextPath() %>/auth/logout.do"><i class="fas fa-sign-in-alt"></i></a></span></li>		
+				<li><span title="로그아웃"><a href="<%=request.getContextPath() %>/auth/logout.do"><i class="far fa-times-circle"></i></a></span></li>		
 					</c:when>
 					<c:otherwise>
 				<li><span title="로그인"><a href="<%=request.getContextPath() %>/auth/login.jsp"><i class="fas fa-sign-in-alt"></i></a></span></li>
