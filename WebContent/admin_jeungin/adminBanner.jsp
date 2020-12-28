@@ -13,5 +13,6 @@
 		<li><a href="<%=request.getContextPath()%>/admLogistic.do">배송관리</a></li>
 		<li><a href="<%=request.getContextPath()%>/admin_jeungin/adminFrame.jsp?spage=/yang_admin/admin_board.jsp">매출관리</a></li>
 		<li><a href="<%=request.getContextPath()%>/admin_jeungin/adminFrame.jsp?spage=/admin_review/adminlist2.jsp">리뷰조회</a></li>
+		<li><a href="<%=request.getContextPath()%>/admin_jeungin/adminFrame.jsp?spage=/admin_euokyun/memberlist.jsp">회원관리</a></li>
 	</ul>
 </div>

@@ -15,6 +15,7 @@
     .paging_after{padding:20px;}
     #currpage{font-size: 2em;}
     #errMsg{text-align: center;}
+    #eukyunpoint{width:80px;}
 </style>
 </head>
 <body>
@@ -487,6 +488,7 @@
             const input = document.createElement("input");
             input.type="text";
             input.className="point";
+            input.id="eukyunpoint";
             input.value=value;
             input.setAttribute("data-orig", value);
             input.addEventListener('keyup', function (e) {
