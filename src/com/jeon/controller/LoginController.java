@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jeon.Dao.LoginauthDao;
 import com.jeon.Dao.MemberinfoDao;
@@ -36,6 +37,7 @@ public class LoginController extends HttpServlet{
         JSONObject json = new JSONObject();
         int memid = dao.login(map);
         
+        
         //자동로그인 등록
         //uuid생성, 쿠키에 signed : uuid 생성, db에 uuid 저장
         if (memid<=0) {
@@ -47,8 +49,8 @@ public class LoginController extends HttpServlet{
             boolean autologin = Boolean.parseBoolean(req.getParameter("autologin"));
             //로그인성공 상황 : session에 memid가 없고 cookie에도 memid가 없음. 
             String token = UUID.randomUUID().toString();
-            if (dao.isAdmin(memid)) req.setAttribute("admin", true);
-            if (dao.isTempMember(memid)) req.setAttribute("tempuser", true);
+            if (dao.isAdmin(memid)) req.getSession().setAttribute("admin", true);
+            if (dao.isTempMember(memid)) req.getSession().setAttribute("tempuser", true);
 
             //자동로그인
             if (autologin) {

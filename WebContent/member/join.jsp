@@ -10,12 +10,15 @@
     <style type="text/css">
     #content{
         position: relative;
-        left:auto;
+        margin:auto;
+        padding: auto;
+        /* left:auto; */
         width:600px;
     }
     .inputrow{
         border: 1px solid grey;
         margin: 10px 0 10px 0;
+        background-color: white;
     }
     .inputtext{
         border:none;

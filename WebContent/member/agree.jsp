@@ -60,6 +60,7 @@
         }
         .agreements{
             /* width:80%; */
+            background-color: white;
             position: relative;
             height: 200px;
             overflow: auto;

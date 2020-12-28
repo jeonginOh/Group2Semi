@@ -10,6 +10,9 @@
 <!--     <script src="login.js"></script> -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <style type="text/css">
+	body{
+		background-color: #E9E9E9;
+	}
 	#content{
 		padding-top: auto;
 		position: relative;
@@ -46,9 +49,10 @@
 		display: inline-block;
 		width:50%;
 	}
-	h1{
+	#mainimg{
 		margin-top:100px;
 		text-align: center;
+		/* text-align: center; */
 	}
 	legend{
 		text-align: center;
@@ -101,7 +105,7 @@
 	if (request.getAttribute("ref")!=null) ref= (String) request.getAttribute("ref"); 
 %>
 	<div id="content">
-		<h1>쇼핑몰</h1>
+		<a href="<%=request.getContextPath() %>/jeungIn/main.jsp" ><img src = "<%=request.getContextPath() %>/images/mainimage_mini.png" id="mainimg"></a>
 		<fieldset>
 			<legend>로그인</legend>
 			<div id="idrow">
