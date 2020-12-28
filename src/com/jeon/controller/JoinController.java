@@ -34,7 +34,7 @@ public class JoinController extends HttpServlet{
         if (memid>0) {
             req.getSession().setAttribute("memid", memid);
             req.getSession().setAttribute("menual", true);
-            resp.sendRedirect(req.getContextPath()+"/jeungin/main.jsp");
+            resp.sendRedirect(req.getContextPath()+"/jeungIn/main.jsp");
         }
         else {
             //TODO: ERRORPAGE

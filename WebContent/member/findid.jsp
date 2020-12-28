@@ -70,7 +70,7 @@
                             result.append(resultMsg);
                         }
                     };
-                    xhr.open('post', 'findid.do', true);
+                    xhr.open('post', '../member/findid.do', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                     xhr.send(param);
                 }

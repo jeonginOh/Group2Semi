@@ -63,17 +63,14 @@
 	#member{
 		text-align: center;
 	}
-	#idrow{
+	.inputrow{
+		background-color: white;
 		border: 1px solid grey;
 		margin: 10px 0 10px 0;
 	}
 	#id{
 		border:none;
 		background:transparent;
-	}
-	#pwdrow{
-		border: 1px solid grey;
-		margin: 10px 0 10px 0;
 	}
 	#pwd{
 		border:none;
@@ -108,10 +105,10 @@
 		<a href="<%=request.getContextPath() %>/jeungIn/main.jsp" ><img src = "<%=request.getContextPath() %>/images/mainimage_mini.png" id="mainimg"></a>
 		<fieldset>
 			<legend>로그인</legend>
-			<div id="idrow">
+			<div id="idrow" class='inputrow'>
 				<input type="text" name="" id="id" placeholder="아이디 / 전화번호(비회원)">
 			</div>
-			<div id="pwdrow">
+			<div id="pwdrow" class='inputrow'>
 				<input type="password" name="" id="pwd" placeholder="비밀번호">
 			</div>
 			<div id="errMsg"></div>
