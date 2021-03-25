@@ -4,33 +4,44 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style type="text/css">
 #commList {
 	display:inline-block;
-	position: relative;
+	    float: right;
 	left: 505px;
-	bottom: 512px;
+	bottom: 440px;
+}
+#setAll a:link{
+color:red;
+}
+textarea{
+ resize: none;
 }
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>상세보기</h1>
-	<table border="1" width="500" id="table1">
-		<tr>
-			<td>제목</td>
-			<td>${vo.title }</td>
+<div id='setAll'>
+		<a href="${pageContext.request.contextPath }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${vo.itemid }"><button type="button" class="btn btn-danger">
+리뷰목록으로....</button></a>
+	<table border="1" width="500" id="table1" class='table'>
+		<tr class="active"> 
+			<td class="active">제목</td>
+			<td class="active">${vo.title }</td>
 		</tr>
-		<tr>
+		<tr class="success">
 			<td>작성일</td>
 			<td>${vo.revdate }</td>
 		</tr>
-		<tr>
+		<tr class="warning">
 			<td>작성자</td>
 			<td>${username }</td>
-		<tr>
-			<td>이미지</td>
+		<tr class="active">
+			<td >이미지</td>
 			<td><c:choose>
 					<c:when test="${ vo.image==null }">
 						등록된 사진이 없습니다.
@@ -41,66 +52,67 @@
 					</c:when>
 				</c:choose></td>
 		</tr>
-		<tr>
+		<tr class="success">
 			<td>물품명</td>
 			<td>${itemname }</td>
 		</tr>
-		<tr>
-			<td>현재별점</td>
-			<td><c:choose>
+		<tr class="warning">
+			<td class="warning">현재별점</td>
+			<td class="warning"><c:choose>
 					<c:when test="${vo.star>4.6 }">
-						<br>
-		평점 : ${ vo.star} <BR>
-		★★★★★
+						
+		평점 : ${ vo.star} 
 		<br>
+		★★★★★
+		
 					</c:when>
 					<c:when test="${vo.star>3.6 }">
-						<br>
+						
  	평점 : ${ vo.star}  
 		<br>
 		★★★★
-		<br>
+		
 
 					</c:when>
 					<c:when test="${vo.star>2.6 }">
-						<br>
+						
 		평점 : ${ vo.star}  
 		<br>
 		★★★
-		<br>
+		
 
 					</c:when>
 					<c:when test="${vo.star>1.6 }">
-						<br>
+						
 		평점 : ${ vo.star}  
 		<br>
 		★★
-		<br>
+		
 
 					</c:when>
 					<c:when test="${vo.star>0.6 }">
-						<br>
+						
 		평점 : ${ vo.star}  
 		<br>
 		★
-		<br>
+		
 					</c:when>
 
 				</c:choose></td>
-		<tr>
-			<td>글내용</td>
+		<tr class="success">
+			<td >내용</td>
 			<td><textarea rows="5" cols="50" readonly="readonly">${vo.context }</textarea></td>
 		</tr>
-	
-	</table>
-	<c:if test="${revcount>0 }">
+		<c:if test="${revcount>0 }">
 	<a
 		href="${pageContext.request.contextPath }/reviewdelete?revid=${vo.revid }&itemid=${vo.itemid}">삭제</a>
 	<a
 		href="${pageContext.request.contextPath }/reviewupdate?revid=${vo.revid }&itemid=${vo.itemid}">수정</a>
 		</c:if>
-	<a 
-		href="${pageContext.request.contextPath }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${vo.itemid }">리뷰목록으로....</a>	
+	</table>
+	
+
+		
 	<div id="commAdd">
 		<input type="hidden" value=${username } id="user" name="user"
 			readonly="readonly">
@@ -108,14 +120,26 @@
 
 	</div>
 	<div id="box">
+	<div style="display: inline-block;float: left;">
 		<label>댓글: </label>
-		<textarea rows="1" cols="60" id="context"></textarea>
-		<br>
-		<c:if test="${revcount>0 }">  
-		 <input type="button" value="등록" onclick="insertComm()">
-		</c:if>
+		<textarea rows="2" cols="1" style='width: 450px;' id="context" class="form-control"></textarea>
+		
+		<c:choose>
+	<c:when test="${empty memid  }">
+	
+		</c:when>
+		<c:otherwise>
+			 <input type="button" value="등록" onclick="insertComm()"  class="btn btn-success">
+		</c:otherwise>
+		</c:choose>
+		</div>
+		<div id="commList" ></div>
 	</div>
-	<div id="commList"></div>
+
+	
+
+		
+		</div>
 	<script type="text/javascript">
 		function insertComm() {
 			var xhr = new XMLHttpRequest();
@@ -124,6 +148,7 @@
 					var xml = xhr.responseXML;
 					var code = xml.getElementsByTagName("code")[0].textContent;
 					alert("입력완료");
+					$("#context").val("");
 					getList();
 				}
 			};
@@ -147,6 +172,7 @@
 						var child = childs.item(i);
 						commList.removeChild(child);
 					}
+				
 					for (let i = 0; i < comm.length; i++) {
 						var context = comm[i].getElementsByTagName("context")[0].textContent;
 						var userid = comm[i].getElementsByTagName("userid")[0].textContent;
@@ -154,13 +180,22 @@
 								.getElementsByTagName("rchilddate")[0].textContent;
 						var rchildid = comm[i].getElementsByTagName("rchildid")[0].textContent;
 						var div = document.createElement("div");
-
-						div.innerHTML = "  " + userid + "  :" + context
+						console.log(rchildid);
+						if(rchildid==userid){
+						div.innerHTML = " 내용  :" + context
 								+ "<br>작성일: " + rchilddate
 								+ "<a href='javascript:removeComm(" + rchildid
 								+ ")'>삭제</a>";
+						}else{
+							div.innerHTML = " 내용 :" + context
+							+ "<br>작성일: " + rchilddate
+							+ "<a href='javascript:removeComm(" + rchildid
+							+ ")'></a>";
+						    
+						}
 						div.className = "comm";
-						div.style.border = "solid 2px black";
+						div.style.backgroundColor='white';
+						div.style.border = "solid";
 						div.style.marginTop = "10px";
 						div.style.width = "380px";
 						commList.appendChild(div);

@@ -20,7 +20,7 @@ if(msg=="fail"){
 				var itemid = json.itemid;
 				var itemname = json.itemname;
 				var catid = json.catid;
-				var price = json.price;
+				var price = "가격:"+json.price+"원";
 				var factory = json.factory;
 				var origin = json.origin;
 				var stock = json.stock;
@@ -108,48 +108,63 @@ if(msg=="fail"){
 
 <div id = "detail">
 	<div id = "detailimg">
+	<div style='float:left;'>
 	<img id= "itemimage">
 	</div>
-	<p class = "detailtitle">
-		<span id = "itemname"></span>
+	<div  class="form-group has-success has-feedback">
+		<p class = "detailtitle">
+	
+		<button id = "itemname" class="btn btn-lg btn-primary" disabled="disabled"></button>
 		<input type="hidden" id="itemid">
 	</p>
+		<div id='teamset'>
+	
 	<p class = "detailprice">
-		<span>가격</span>
-		<span id = "itemprice">|</span>
+		
+		<button type="button" class="btn btn-success" id="itemprice"></button>
 	</p>
 	<p class = "adv">
 		<span id = "salenonsale"></span>
 	<div class = "detailitem">
-		<dl class = "list">
+		<dl class="dl-horizontal" style="float: right;">
 			<dt class ="tit">제조사</dt>
 			<dd id = "detailfactory">|</dd>
-		</dl>
-		<dl class = "list">
 			<dt class ="tit">원산지</dt>
 			<dd id = "detailorigin">|</dd>
-		</dl>
-		<dl class = "list">
 			<dt class ="tit">유통기한</dt>
 			<dd id = "detailexpire">|</dd>
-		</dl>
-	</div>
-	<div class = "detailamount">
-		<dl class = "list">
 			<dt class ="tit">남은 재고</dt>
 			<dd id = "detailstock">|</dd>
 		</dl>
+		<dl class = "list">
+			
+		</dl>
+		<dl class = "list">
+			
+		</dl>
 	</div>
-	<input type="hidden" id="detailavail">
-	<div class = "purchase">
+	</div>
+	<div class = "detailamount">
+		<dl class = "list">
+			
+		</dl>
+	</div>
 		<button type = "button" onclick="insertBasket()">
 			<img src = "<%=request.getContextPath() %>/icon/구매버튼.png" style="width:50px;height:50px">
 		</button>
 		<button type = "button" onclick="insertDibs()">
 			<img src = "<%=request.getContextPath() %>/icon/heart.PNG" style="width:50px;height:50px">
 		</button>
-<c:import url="/reviewlist2.do?itemid=${param.itemid }&pageNum=${param.pageNum }"></c:import>
-		
+	<c:import url="/reviewlist2.do?itemid=${param.itemid }&pageNum=${param.pageNum }"></c:import>
+	
+	</div>
+	
+	
+
+	</div>
+	<input type="hidden" id="detailavail">
+	<div class = "purchase">
+	
 
 	</div>
 	

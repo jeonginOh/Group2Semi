@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import db.DBCPBean;
 import semiVo.BuylistVo;
@@ -29,6 +28,30 @@ public class BuyListDao {
 			pstmt.setInt(2, vo.getItemid());
 			pstmt.setInt(3, vo.getCount());
 			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			DBCPBean.close(con,pstmt);
+		}
+	}
+	public int insert(ArrayList<BuylistVo> list) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=DBCPBean.getConn();
+			con.setAutoCommit(false);
+			String sql="INSERT INTO BUYLIST VALUES(BUYID_SEQ.NEXTVAL,?,?,?,0,SYSDATE)";
+			pstmt=con.prepareStatement(sql);
+			for(BuylistVo vo:list) {
+				pstmt.setInt(1, vo.getMemid());
+				pstmt.setInt(2, vo.getItemid());
+				pstmt.setInt(3, vo.getCount());
+				pstmt.addBatch();		
+				}
+			pstmt.executeBatch();
+			con.commit();
+			return 1;
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return -1;

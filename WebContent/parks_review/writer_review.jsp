@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -18,23 +21,33 @@ function cktitle(){
 }
 
 </script>
+<h1>리뷰작성 <small>item review</small></h1>
+	<form method="post" enctype="multipart/form-data" 
+		action="${pageContext.request.contextPath }/reviewinsert.do" onsubmit="return cktitle()"  class="form-horizontal">
+			<input type="hidden" id="itemid" name="itemid" value="${itemid }"><br>
+		
+			  <div class="form-group">
 
-	<form method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath }/reviewinsert.do" onsubmit="return cktitle()" style="margin:0 auto; width: 40%; margin-top: 100px" >
-			<input type="hidden" id="itemid" name="itemid" value="${itemid }">
-		<div id="red"
-			style="width: 500px; height: 700px; border: 2px solid red" align="center">
-			제목:<input type="text"  id="title" name="title"  required="required" onclick="if(this.value==this.defaultValue){this.value=''}" 
-		onblur="if (this.value == '') { this.value = this.defaultValue;" value="제목을입력하세요 " placeholder="제목을입력하세요">
-<br>
-			<textarea rows="20" cols="50" style="margin-top: 0px; margin-bottom: 0px; height: 315px; resize: none;"
+    <div class="col-sm-10" id='red'>
+    <input type="text"  id="title" name="title"  required="required" onclick="if(this.value==this.defaultValue){this.value=''}" 
+		onblur="if (this.value == '') { this.value = this.defaultValue;"  placeholder="제목을입력하세요" class='form-control input-lg'>
+		<textarea rows="10"  style="resize: none;"
 			 id="context" name="context" onclick="if(this.value==this.defaultValue){this.value=''}" 
-		onblur="if (this.value == '') { this.value = this.defaultValue;" placeholder="내용을 입력하세요"></textarea>
-			<br> <input type="file" value="image" id="image"
-				onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif"><br> <input
-				type="submit" value="저장" ><br>
+		onblur="if (this.value == '') { this.value = this.defaultValue;" placeholder="내용을 입력하세요" class="form-control"></textarea>
+		 <input type="file" value="image" id="image"
+				onchange="setimg(event);"  name="image" accept=".jpg, .png, .gif" class="btn btn-danger"><input
+				type="submit" value="저장" class="btn btn-primary btn-lg" ><br>
 				
-		<input type="radio" name="star" id="star" value=1>
+		
+    </div>
+  </div>
+
+		
+			
+		
+		
+	
+<input type="radio" name="star" id="star" value=1>
 		<label  >★</label>
 		<input type="radio" name="star" id="star" value=2>
 		<label  >★★</label>
@@ -44,13 +57,7 @@ function cktitle(){
 		<label >★★★★</label>
 		<input type="radio" name="star" id="star" value=5 checked="checked">
 		<label  >★★★★★</label>
-		<br>
-			
-		</div>
-		<a href="${pageContext.request.contextPath }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${itemid }">리뷰목록으로....</a>
-	
-
-
+<br><a href="${pageContext.request.contextPath }/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid=${itemid }">리뷰목록으로....</a>
 	</form>
  	<script type="text/javascript">
 /*  			function insertReview() {

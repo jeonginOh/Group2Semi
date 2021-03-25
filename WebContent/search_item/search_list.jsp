@@ -4,6 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style type="text/css">
 .search_item{display: inline-block; padding-left: 40px;}
 .numbox{display: inline-block; padding-left: 10px;}
@@ -15,13 +18,13 @@
 	<c:set var="cp" value="${pageContext.request.contextPath }" />
 
 
-	<select name="field" id="field">
+	<select name="field" id="field" class="form-control">
 		<option value="itemname" selected="selected">상품명</option>
 		<option value="factory">제조사</option>
 		<option value="origin">원산지</option>
-	</select>>
-	<input type="text" id="search" name="search">
-	<input type="button" value="조회" onclick="getList()">
+	</select>
+	<input type="text" id="search" name="search" class="form-control" placeholder="검색">
+	<input type="button" value="조회" onclick="getList()" class="btn btn-info">
 	<div id="imgbox">
 	<div id="commlist"></div>
 	</div>
@@ -68,8 +71,8 @@
 						var origin=paging.itemlist[i].origin;
 						var regdate=paging.itemlist[i].regdate;
 
-						all_list="<a href='<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid+"'>"+"<img src='<%=request.getContextPath()%>/product/"+itemimg+"'style=width:100px></a>"+
-						"<br>상품명: "+itemName+"<br>가격: "+price+"<br>원산지:  "+origin
+						all_list="<a href='<%=request.getContextPath()%>/jeungIn/main.jsp?spage=/jeungIn/itemdetail.jsp?itemid="+itemid+"'>"+"<img src='<%=request.getContextPath()%>/product/"+itemimg+"'style=width:100px></a>"
+						+"<br><mark>"+itemName+"</mark><br>가격: <u>"+price+"원</u><br>원산지:  "+origin
 						+"<br>제조사: "+factory+"<br>제조일:"+regdate;
 					
 						div.className="search_item";
